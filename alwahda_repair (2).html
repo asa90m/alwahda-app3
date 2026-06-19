@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نظام الوحدة للبرمجيات - إدارة صيانة الهواتف</title>
+<style>
+  :root {
+    --bg: #f4f6fb;
+    --surface: #ffffff;
+    --surface2: #f0f3fa;
+    --primary: #1a4fa8;
+    --primary-light: #e8eef9;
+    --primary-dark: #123580;
+    --accent: #0ea5e9;
+    --success: #16a34a;
+    --success-light: #dcfce7;
+    --danger: #dc2626;
+    --danger-light: #fee2e2;
+    --warning: #d97706;
+    --warning-light: #fef3c7;
+    --text: #1e293b;
+    --text2: #475569;
+    --text3: #94a3b8;
+    --border: #e2e8f0;
+    --border2: #cbd5e1;
+    --radius: 10px;
+    --radius-lg: 16px;
+    --shadow: 0 2px 8px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  }
+  [data-theme="dark"] {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --surface2: #273549;
+    --primary: #3b82f6;
+    --primary-light: #1e3a5f;
+    --primary-dark: #60a5fa;
+    --accent: #38bdf8;
+    --success: #22c55e;
+    --success-light: #14532d;
+    --danger: #ef4444;
+    --danger-light: #7f1d1d;
+    --warning: #f59e0b;
+    --warning-light: #78350f;
+    --text: #f1f5f9;
+    --text2: #94a3b8;
+    --text3: #64748b;
+    --border: #334155;
+    --border2: #475569;
+    --shadow: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 14px; transition: background 0.3s, color 0.3s; }
+  
+  /* Login */
+  #login-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; background: linear-gradient(135deg, #1a4fa8 0%, #0ea5e9 100%); }
+  .login-box { background: var(--surface); border-radius: var(--radius-lg); padding: 40px; width: 360px; box-shadow: var(--shadow-lg); }
+  .login-logo { text-align: center; margin-bottom: 28px; }
+  .login-logo h1 { color: var(--primary); font-size: 22px; font-weight: 700; }
+  .login-logo p { color: var(--text2); font-size: 13px; margin-top: 4px; }
+  .form-group { margin-bottom: 16px; }
+  label { display: block; font-size: 13px; font-weight: 600; color: var(--text2); margin-bottom: 6px; }
+  input, select, textarea { width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: var(--radius); font-size: 14px; background: var(--surface); color: var(--text); transition: border-color 0.2s; font-family: inherit; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 18px; border: none; border-radius: var(--radius); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-primary:hover { background: var(--primary-dark); }
+  .btn-success { background: var(--success); color: white; }
+  .btn-danger { background: var(--danger); color: white; }
+  .btn-outline { background: transparent; color: var(--primary); border: 1.5px solid var(--primary); }
+  .btn-outline:hover { background: var(--primary-light); }
+  .btn-sm { padding: 6px 12px; font-size: 12px; }
+  .btn-block { width: 100%; }
+  
+  /* App Layout */
+  #app { display: none; min-height: 100vh; }
+  .app-header { background: var(--primary); color: white; padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }
+  .header-brand { font-size: 16px; font-weight: 700; }
+  .header-brand span { font-size: 11px; font-weight: 400; opacity: 0.8; display: block; }
+  .header-actions { display: flex; align-items: center; gap: 12px; }
+  .icon-btn { background: rgba(255,255,255,0.15); border: none; color: white; width: 36px; height: 36px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: background 0.2s; }
+  .icon-btn:hover { background: rgba(255,255,255,0.25); }
+  
+  /* Sidebar + Main */
+  .app-body { display: flex; }
+  .sidebar { width: 220px; background: var(--surface); min-height: calc(100vh - 56px); border-left: 1px solid var(--border); padding: 16px 0; position: sticky; top: 56px; height: calc(100vh - 56px); overflow-y: auto; }
+  @media (max-width: 768px) {
+    .sidebar { position: fixed; top: 56px; right: -220px; height: calc(100vh - 56px); z-index: 99; transition: right 0.3s; box-shadow: var(--shadow-lg); }
+    .sidebar.open { right: 0; }
+    .main-content { margin-right: 0 !important; }
+  }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; cursor: pointer; color: var(--text2); font-size: 13px; font-weight: 500; border-right: 3px solid transparent; transition: all 0.2s; }
+  .nav-item:hover { background: var(--primary-light); color: var(--primary); }
+  .nav-item.active { background: var(--primary-light); color: var(--primary); border-right-color: var(--primary); font-weight: 600; }
+  .nav-icon { font-size: 18px; }
+  .nav-section { padding: 12px 16px 4px; font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; }
+  .main-content { flex: 1; padding: 24px; overflow-x: hidden; }
+  
+  /* Cards */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 16px; }
+  .card-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  
+  /* Stats */
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; text-align: center; }
+  .stat-num { font-size: 26px; font-weight: 700; color: var(--primary); }
+  .stat-label { font-size: 11px; color: var(--text2); margin-top: 4px; }
+  
+  /* Form Grid */
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+  .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  @media (max-width: 600px) { .form-grid-3 { grid-template-columns: 1fr; } }
+  .span2 { grid-column: span 2; }
+  @media (max-width: 600px) { .span2 { grid-column: span 1; } }
+  
+  /* Readonly field */
+  .field-readonly { background: var(--surface2); border-color: var(--border); color: var(--text2); cursor: not-allowed; }
+  
+  /* Badge */
+  .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .badge-success { background: var(--success-light); color: var(--success); }
+  .badge-danger { background: var(--danger-light); color: var(--danger); }
+  .badge-warning { background: var(--warning-light); color: var(--warning); }
+  .badge-info { background: var(--primary-light); color: var(--primary); }
+  .badge-gray { background: var(--surface2); color: var(--text2); }
+  
+  /* Table */
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--surface2); padding: 10px 12px; text-align: right; font-weight: 600; color: var(--text2); border-bottom: 2px solid var(--border); font-size: 12px; }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text); }
+  tr:hover td { background: var(--primary-light); }
+  
+  /* Autocomplete */
+  .autocomplete-wrap { position: relative; }
+  .autocomplete-list { position: absolute; top: 100%; right: 0; left: 0; background: var(--surface); border: 1.5px solid var(--primary); border-radius: var(--radius); max-height: 180px; overflow-y: auto; z-index: 50; box-shadow: var(--shadow-lg); }
+  .autocomplete-item { padding: 8px 12px; cursor: pointer; font-size: 13px; color: var(--text); }
+  .autocomplete-item:hover { background: var(--primary-light); color: var(--primary); }
+  
+  /* Currency row */
+  .amount-row { display: flex; gap: 8px; }
+  .amount-row input { flex: 1; }
+  .amount-row select { width: 100px; }
+  
+  /* Alert */
+  .alert { padding: 12px 16px; border-radius: var(--radius); margin-bottom: 16px; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+  .alert-warning { background: var(--warning-light); color: var(--warning); border: 1px solid #fbbf24; }
+  .alert-success { background: var(--success-light); color: var(--success); border: 1px solid #86efac; }
+  .alert-info { background: var(--primary-light); color: var(--primary); border: 1px solid #93c5fd; }
+  
+  /* Modal */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--surface); border-radius: var(--radius-lg); width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); }
+  .modal-header { padding: 20px 24px 0; display: flex; align-items: center; justify-content: space-between; }
+  .modal-title { font-size: 16px; font-weight: 700; }
+  .modal-close { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--text2); line-height: 1; padding: 4px; }
+  .modal-body { padding: 20px 24px; }
+  .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; }
+  
+  /* Print area */
+  @media print {
+    body * { visibility: hidden; }
+    #print-area, #print-area * { visibility: visible; }
+    #print-area { position: fixed; top: 22mm; right: 10mm; width: 191mm; }
+    @page { size: A4; margin: 0; }
+  }
+  
+  /* Tabs */
+  .tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 20px; }
+  .tab { padding: 10px 18px; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--text2); border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s; }
+  .tab.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 600; }
+  .tab:hover { color: var(--primary); }
+  
+  /* Notification bar */
+  #notif-bar { display: none; background: var(--warning); color: white; padding: 8px 16px; font-size: 13px; text-align: center; position: sticky; top: 56px; z-index: 98; }
+  
+  .section-page { display: none; }
+  .section-page.active { display: block; }
+  
+  /* receipt number display */
+  .receipt-num-badge { background: var(--primary); color: white; padding: 6px 16px; border-radius: 20px; font-size: 18px; font-weight: 700; display: inline-block; }
+  
+  /* Permissions checkboxes */
+  .perm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .perm-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .perm-item input[type=checkbox] { width: 16px; height: 16px; cursor: pointer; }
+  
+  /* Search result row */
+  .result-row { padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 8px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: space-between; }
+  .result-row:hover { border-color: var(--primary); background: var(--primary-light); }
+  
+  /* Action buttons row */
+  .action-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+  
+  /* Divider */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+  
+  .mobile-menu-btn { display: none; }
+  @media (max-width: 768px) { .mobile-menu-btn { display: flex; } .sidebar-toggle-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 98; } .sidebar-toggle-overlay.open { display: block; } }
+  
+  select option { background: var(--surface); color: var(--text); }
+</style>
+</head>
+<body>
+
+<!-- Login Screen -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div style="font-size:48px;margin-bottom:8px">📱</div>
+      <h1>الوحدة للبرمجيات</h1>
+      <p>نظام إدارة صيانة الهواتف</p>
+    </div>
+    <div class="form-group">
+      <label>اسم المستخدم</label>
+      <input type="text" id="login-user" placeholder="admin" autocomplete="username">
+    </div>
+    <div class="form-group">
+      <label>كلمة المرور</label>
+      <input type="password" id="login-pass" placeholder="••••••" autocomplete="current-password">
+    </div>
+    <div id="login-err" style="color:var(--danger);font-size:13px;margin-bottom:12px;display:none">❌ اسم المستخدم أو كلمة المرور غير صحيحة</div>
+    <button class="btn btn-primary btn-block" onclick="doLogin()">تسجيل الدخول 🔐</button>
+    <p style="text-align:center;font-size:11px;color:var(--text3);margin-top:16px">تصميم المهندس عبدالرحمن الأحمر • 772364042</p>
+  </div>
+</div>
+
+<!-- Notification Bar -->
+<div id="notif-bar">⚠️ <span id="notif-text"></span></div>
+
+<!-- Main App -->
+<div id="app">
+  <div class="app-header">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="icon-btn mobile-menu-btn" onclick="toggleSidebar()" title="القائمة">☰</button>
+      <div class="header-brand">
+        📱 الوحدة للبرمجيات
+        <span>نظام إدارة صيانة الهواتف</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <span style="font-size:12px;opacity:0.85" id="header-user"></span>
+      <button class="icon-btn" onclick="toggleTheme()" title="الوضع الليلي" id="theme-btn">🌙</button>
+      <button class="icon-btn" onclick="doLogout()" title="تسجيل الخروج">🚪</button>
+    </div>
+  </div>
+
+  <div class="sidebar-toggle-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+  
+  <div class="app-body">
+    <div class="sidebar" id="sidebar">
+      <div class="nav-section">القائمة الرئيسية</div>
+      <div class="nav-item active" onclick="showSection('dashboard')" id="nav-dashboard">
+        <span class="nav-icon">📊</span> لوحة التحكم
+      </div>
+      <div class="nav-section">العملاء</div>
+      <div class="nav-item" onclick="showSection('new-receipt')" id="nav-new-receipt">
+        <span class="nav-icon">🧾</span> إيصال جديد
+      </div>
+      <div class="nav-item" onclick="showSection('search')" id="nav-search">
+        <span class="nav-icon">🔍</span> بحث وتقارير
+      </div>
+      <div class="nav-item" onclick="showSection('eng-reports')" id="nav-eng-reports">
+        <span class="nav-icon">🔧</span> تقارير المهندسين
+      </div>
+      <div class="nav-section">الإدارة</div>
+      <div class="nav-item" onclick="showSection('employees')" id="nav-employees">
+        <span class="nav-icon">👥</span> الموظفون
+      </div>
+      <div class="nav-item" onclick="showSection('engineers')" id="nav-engineers">
+        <span class="nav-icon">⚙️</span> المهندسون
+      </div>
+      <div class="nav-section">النظام</div>
+      <div class="nav-item" onclick="showSection('maintenance')" id="nav-maintenance">
+        <span class="nav-icon">💾</span> صيانة النظام
+      </div>
+    </div>
+
+    <div class="main-content" id="main-content">
+      
+      <!-- Dashboard -->
+      <div class="section-page active" id="section-dashboard">
+        <div style="margin-bottom:20px">
+          <h2 style="font-size:18px;font-weight:700">لوحة التحكم</h2>
+          <p style="color:var(--text2);font-size:13px" id="dashboard-date"></p>
+        </div>
+        <div class="stats-grid" id="stats-grid"></div>
+        <div class="card">
+          <div class="card-title">🔧 أجهزة قيد العمل</div>
+          <div id="in-progress-list"><p style="color:var(--text3);font-size:13px">لا توجد أجهزة قيد العمل حالياً</p></div>
+        </div>
+        <div class="card">
+          <div class="card-title">⚠️ أجهزة تجاوزت موعد التسليم</div>
+          <div id="overdue-list"><p style="color:var(--text3);font-size:13px">لا توجد أجهزة متأخرة</p></div>
+        </div>
+      </div>
+
+      <!-- New Receipt -->
+      <div class="section-page" id="section-new-receipt">
+        <div style="margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+          <h2 style="font-size:18px;font-weight:700">🧾 إيصال جديد</h2>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:13px;color:var(--text2)">رقم الإيصال:</span>
+            <span class="receipt-num-badge" id="receipt-num-display">—</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>📞 رقم الهاتف</label>
+              <input type="tel" id="r-phone" placeholder="أدخل رقم الهاتف" oninput="onPhoneInput(this.value)">
+            </div>
+            <div class="form-group">
+              <label>👤 اسم العميل</label>
+              <input type="text" id="r-name" placeholder="سيُملأ تلقائياً أو اكتب الاسم">
+            </div>
+            <div class="form-group autocomplete-wrap">
+              <label>📱 الشركة / اسم الجهاز</label>
+              <input type="text" id="r-brand" placeholder="مثال: Apple, Samsung" oninput="acBrand(this.value)" autocomplete="off">
+              <div class="autocomplete-list" id="ac-brand" style="display:none"></div>
+            </div>
+            <div class="form-group autocomplete-wrap">
+              <label>🔢 الموديل</label>
+              <input type="text" id="r-model" placeholder="مثال: iPhone 14, A54" oninput="acModel(this.value)" autocomplete="off">
+              <div class="autocomplete-list" id="ac-model" style="display:none"></div>
+            </div>
+            <div class="form-group">
+              <label>🔑 الرقم التسلسلي (اختياري)</label>
+              <input type="text" id="r-serial" placeholder="IMEI / Serial">
+            </div>
+            <div class="form-group">
+              <label>⚡ نوع العطل</label>
+              <select id="r-fault-type">
+                <option value="">— اختر نوع العطل —</option>
+                <option value="software">برمجي 💻</option>
+                <option value="hardware">هاردوير 🔩</option>
+              </select>
+            </div>
+            <div class="form-group span2">
+              <label>📝 وصف العطل</label>
+              <textarea id="r-fault-desc" rows="2" placeholder="اكتب وصف العطل بالتفصيل..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>💰 المبلغ الإجمالي</label>
+              <div class="amount-row">
+                <input type="number" id="r-total" placeholder="0" oninput="calcRemaining()" min="0">
+                <select id="r-currency" style="width:110px">
+                  <option value="YER">ريال يمني</option>
+                  <option value="USD">دولار</option>
+                  <option value="SAR">ريال سعودي</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>💳 الدفع المسبق</label>
+              <input type="number" id="r-prepaid" placeholder="0" oninput="calcRemaining()" min="0">
+            </div>
+            <div class="form-group">
+              <label>⏳ المبلغ المتبقي</label>
+              <input type="number" id="r-remaining" class="field-readonly" readonly>
+            </div>
+            <div class="form-group">
+              <label>📅 تاريخ الإيصال</label>
+              <input type="text" id="r-date" class="field-readonly" readonly>
+            </div>
+            <div class="form-group">
+              <label>🕐 موعد التسليم المتوقع</label>
+              <input type="text" id="r-delivery-date" class="field-readonly" readonly>
+            </div>
+          </div>
+          <hr class="divider">
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="saveReceipt()">💾 حفظ وطباعة</button>
+            <button class="btn btn-outline" onclick="clearReceiptForm()">🗑️ مسح الحقول</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search -->
+      <div class="section-page" id="section-search">
+        <h2 style="font-size:18px;font-weight:700;margin-bottom:16px">🔍 بحث في الإيصالات</h2>
+        <div class="card">
+          <div class="tabs">
+            <div class="tab active" onclick="switchSearchTab('receipt')">رقم الإيصال</div>
+            <div class="tab" onclick="switchSearchTab('phone')">رقم الهاتف</div>
+            <div class="tab" onclick="switchSearchTab('name')">اسم العميل</div>
+          </div>
+          <div style="display:flex;gap:8px;margin-bottom:16px">
+            <input type="text" id="search-input" placeholder="أدخل قيمة البحث..." style="flex:1">
+            <button class="btn btn-primary" onclick="doSearch()">🔍 بحث</button>
+          </div>
+          <div id="search-results"></div>
+        </div>
+      </div>
+
+      <!-- Engineer Reports -->
+      <div class="section-page" id="section-eng-reports">
+        <h2 style="font-size:18px;font-weight:700;margin-bottom:16px">🔧 تقارير المهندسين</h2>
+        <div class="card">
+          <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+            <input type="text" id="eng-search-input" placeholder="ابحث برقم الإيصال..." style="flex:1;min-width:180px">
+            <button class="btn btn-primary" onclick="doEngSearch()">🔍 بحث</button>
+            <button class="btn btn-outline" onclick="loadAllPending()">📋 الكل المعلق</button>
+          </div>
+          <div id="eng-search-results"></div>
+        </div>
+      </div>
+
+      <!-- Employees -->
+      <div class="section-page" id="section-employees">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px">
+          <h2 style="font-size:18px;font-weight:700">👥 إدارة الموظفين</h2>
+          <button class="btn btn-primary btn-sm" onclick="openAddEmployee()">➕ إضافة موظف</button>
+        </div>
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>#</th><th>الاسم</th><th>اسم المستخدم</th><th>الصلاحيات</th><th>إجراءات</th></tr></thead>
+              <tbody id="employees-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Engineers -->
+      <div class="section-page" id="section-engineers">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px">
+          <h2 style="font-size:18px;font-weight:700">⚙️ إدارة المهندسين</h2>
+          <button class="btn btn-primary btn-sm" onclick="openAddEngineer()">➕ إضافة مهندس</button>
+        </div>
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>#</th><th>الاسم</th><th>التخصص</th><th>الأجهزة المسندة</th><th>إجراءات</th></tr></thead>
+              <tbody id="engineers-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Maintenance -->
+      <div class="section-page" id="section-maintenance">
+        <h2 style="font-size:18px;font-weight:700;margin-bottom:16px">💾 صيانة النظام</h2>
+        <div class="card">
+          <div class="card-title">🗄️ النسخ الاحتياطي</div>
+          <p style="color:var(--text2);font-size:13px;margin-bottom:16px">قم بتصدير جميع بيانات النظام كملف JSON للحفظ الاحتياطي.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-primary" onclick="doBackup()">⬇️ تصدير نسخة احتياطية</button>
+            <button class="btn btn-outline" onclick="document.getElementById('restore-file').click()">⬆️ استرجاع نسخة</button>
+            <input type="file" id="restore-file" accept=".json" style="display:none" onchange="doRestore(this)">
+          </div>
+          <hr class="divider">
+          <div class="card-title">📊 تقرير يومي</div>
+          <button class="btn btn-outline" onclick="generateDailyReport()">📄 إنشاء تقرير اليوم</button>
+          <div id="daily-report" style="margin-top:16px"></div>
+          <hr class="divider">
+          <div style="font-size:12px;color:var(--text3)">
+            تصميم المهندس عبدالرحمن الأحمر | 772364042<br>
+            آخر تحديث: <span id="last-backup">لم يتم النسخ الاحتياطي بعد</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end main-content -->
+  </div><!-- end app-body -->
+</div><!-- end app -->
+
+<!-- Print Area (hidden) -->
+<div id="print-area" style="display:none;font-family:Arial,sans-serif;font-size:12px;direction:rtl"></div>
+
+<!-- Modal: Receipt Detail / Engineer Report -->
+<div class="modal-overlay" id="receipt-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modal-title">تفاصيل الإيصال</h3>
+      <button class="modal-close" onclick="closeModal('receipt-modal')">×</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-footer" id="modal-footer"></div>
+  </div>
+</div>
+
+<!-- Modal: Add Employee -->
+<div class="modal-overlay" id="employee-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title" id="emp-modal-title">إضافة موظف جديد</h3>
+      <button class="modal-close" onclick="closeModal('employee-modal')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="emp-edit-id">
+      <div class="form-group">
+        <label>الاسم الكامل</label>
+        <input type="text" id="emp-name" placeholder="اسم الموظف">
+      </div>
+      <div class="form-group">
+        <label>اسم المستخدم</label>
+        <input type="text" id="emp-username" placeholder="username">
+      </div>
+      <div class="form-group">
+        <label>كلمة المرور</label>
+        <input type="password" id="emp-pass" placeholder="••••••">
+      </div>
+      <div class="form-group">
+        <label>الصلاحيات</label>
+        <div class="perm-grid">
+          <label class="perm-item"><input type="checkbox" id="perm-new-receipt"> إيصال جديد</label>
+          <label class="perm-item"><input type="checkbox" id="perm-edit"> تعديل</label>
+          <label class="perm-item"><input type="checkbox" id="perm-delete"> حذف</label>
+          <label class="perm-item"><input type="checkbox" id="perm-reports"> التقارير</label>
+          <label class="perm-item"><input type="checkbox" id="perm-eng"> إضافة مهندسين</label>
+          <label class="perm-item"><input type="checkbox" id="perm-users"> إضافة مستخدمين</label>
+          <label class="perm-item"><input type="checkbox" id="perm-backup"> النسخ الاحتياطي</label>
+          <label class="perm-item"><input type="checkbox" id="perm-admin"> مسؤول كامل</label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" onclick="saveEmployee()">💾 حفظ</button>
+      <button class="btn btn-outline" onclick="closeModal('employee-modal')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Add Engineer -->
+<div class="modal-overlay" id="engineer-modal">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-header">
+      <h3 class="modal-title">إضافة مهندس</h3>
+      <button class="modal-close" onclick="closeModal('engineer-modal')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="eng-edit-id">
+      <div class="form-group">
+        <label>اسم المهندس</label>
+        <input type="text" id="eng-name" placeholder="الاسم الكامل">
+      </div>
+      <div class="form-group">
+        <label>التخصص</label>
+        <input type="text" id="eng-spec" placeholder="مثال: أجهزة Apple، برمجيات Android">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" onclick="saveEngineer()">💾 حفظ</button>
+      <button class="btn btn-outline" onclick="closeModal('engineer-modal')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== DATA STORE =====
+let DB = {
+  receipts: [],
+  clients: {},
+  employees: [],
+  engineers: [],
+  brands: ['Apple','Samsung','Huawei','Xiaomi','OPPO','Vivo','Nokia','LG','Sony','OnePlus','Realme','Tecno','Infinix','Honor'],
+  models: {
+    'Apple':['iPhone 6','iPhone 6S','iPhone 7','iPhone 7 Plus','iPhone 8','iPhone 8 Plus','iPhone X','iPhone XR','iPhone XS','iPhone 11','iPhone 11 Pro','iPhone 12','iPhone 12 Pro','iPhone 13','iPhone 13 Pro','iPhone 14','iPhone 14 Pro','iPhone 15','iPhone 15 Pro','iPad Air','iPad Pro'],
+    'Samsung':['Galaxy A10','Galaxy A20','Galaxy A30','Galaxy A50','Galaxy A52','Galaxy A54','Galaxy A71','Galaxy A72','Galaxy S20','Galaxy S21','Galaxy S22','Galaxy S23','Galaxy Note 20','Galaxy Note 10'],
+    'Huawei':['P30','P40','Mate 30','Mate 40','Y9','Y7','Nova 5T','Nova 7'],
+    'Xiaomi':['Redmi 9','Redmi 10','Redmi Note 10','Redmi Note 11','Mi 11','POCO X3','POCO M3'],
+    'OPPO':['A15','A16','A54','A72','Reno 5','Reno 6','Find X3'],
+  },
+  nextReceiptId: 1,
+  lastBackup: null
+};
+
+let currentUser = null;
+let searchTab = 'receipt';
+let editingReceiptId = null;
+
+// ===== INIT =====
+function init() {
+  loadFromStorage();
+  // Default admin
+  if (DB.employees.length === 0) {
+    DB.employees.push({
+      id: 1, name: 'مدير النظام', username: 'admin', password: 'admin',
+      permissions: { newReceipt:true, edit:true, delete:true, reports:true, eng:true, users:true, backup:true, admin:true }
+    });
+    saveToStorage();
+  }
+  updateReceiptNum();
+  setInterval(checkNotifications, 60000);
+  document.getElementById('dashboard-date').textContent = new Date().toLocaleDateString('ar-YE', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+}
+
+function loadFromStorage() {
+  try {
+    const d = localStorage.getItem('wahda_db');
+    if (d) DB = {...DB, ...JSON.parse(d)};
+  } catch(e) {}
+}
+
+function saveToStorage() {
+  localStorage.setItem('wahda_db', JSON.stringify(DB));
+}
+
+// ===== AUTH =====
+function doLogin() {
+  const u = document.getElementById('login-user').value.trim();
+  const p = document.getElementById('login-pass').value;
+  const emp = DB.employees.find(e => e.username === u && e.password === p);
+  if (!emp) {
+    document.getElementById('login-err').style.display = 'block';
+    return;
+  }
+  currentUser = emp;
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('header-user').textContent = '👤 ' + emp.name;
+  updateReceiptNum();
+  renderDashboard();
+  renderEmployeesTable();
+  renderEngineersTable();
+  updateReceiptDateFields();
+  checkNotifications();
+}
+
+function doLogout() {
+  currentUser = null;
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-err').style.display = 'none';
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+}
+
+// ===== NAVIGATION =====
+function showSection(id) {
+  document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  const nav = document.getElementById('nav-' + id);
+  if (nav) nav.classList.add('active');
+  if (id === 'dashboard') renderDashboard();
+  if (id === 'employees') renderEmployeesTable();
+  if (id === 'engineers') renderEngineersTable();
+  if (id === 'new-receipt') { clearReceiptForm(); updateReceiptNum(); }
+  closeSidebar();
+}
+
+function toggleSidebar() {
+  const s = document.getElementById('sidebar');
+  const o = document.getElementById('sidebar-overlay');
+  s.classList.toggle('open');
+  o.classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+// ===== THEME =====
+function toggleTheme() {
+  const d = document.documentElement;
+  const dark = d.getAttribute('data-theme') === 'dark';
+  d.setAttribute('data-theme', dark ? '' : 'dark');
+  document.getElementById('theme-btn').textContent = dark ? '🌙' : '☀️';
+}
+
+// ===== RECEIPT =====
+function updateReceiptNum() {
+  document.getElementById('receipt-num-display').textContent = '#' + DB.nextReceiptId;
+}
+
+function updateReceiptDateFields() {
+  const now = new Date();
+  const delivery = new Date(now.getTime() + 24*60*60*1000);
+  document.getElementById('r-date').value = now.toLocaleString('ar-YE');
+  document.getElementById('r-delivery-date').value = delivery.toLocaleString('ar-YE');
+}
+
+function onPhoneInput(val) {
+  if (val.length >= 7) {
+    const client = DB.clients[val];
+    if (client) {
+      document.getElementById('r-name').value = client.name;
+    }
+  }
+}
+
+function acBrand(val) {
+  const list = document.getElementById('ac-brand');
+  if (!val) { list.style.display = 'none'; return; }
+  const filtered = DB.brands.filter(b => b.toLowerCase().includes(val.toLowerCase()));
+  if (!filtered.length) { list.style.display = 'none'; return; }
+  list.innerHTML = filtered.map(b => `<div class="autocomplete-item" onclick="selectBrand('${b}')">${b}</div>`).join('');
+  list.style.display = 'block';
+}
+
+function selectBrand(b) {
+  document.getElementById('r-brand').value = b;
+  document.getElementById('ac-brand').style.display = 'none';
+  document.getElementById('r-model').value = '';
+  // Update model autocomplete next time
+}
+
+function acModel(val) {
+  const brand = document.getElementById('r-brand').value;
+  const list = document.getElementById('ac-model');
+  const allModels = DB.models[brand] || [];
+  
+  // Also collect from saved receipts
+  const savedModels = DB.receipts
+    .filter(r => r.brand === brand && r.model)
+    .map(r => r.model)
+    .filter((v,i,a) => a.indexOf(v) === i);
+  
+  const combined = [...new Set([...allModels, ...savedModels])];
+  
+  if (!val) { list.style.display = 'none'; return; }
+  const filtered = combined.filter(m => m.toLowerCase().includes(val.toLowerCase()));
+  if (!filtered.length) { list.style.display = 'none'; return; }
+  list.innerHTML = filtered.map(m => `<div class="autocomplete-item" onclick="selectModel('${m}')">${m}</div>`).join('');
+  list.style.display = 'block';
+}
+
+function selectModel(m) {
+  document.getElementById('r-model').value = m;
+  document.getElementById('ac-model').style.display = 'none';
+}
+
+function calcRemaining() {
+  const total = parseFloat(document.getElementById('r-total').value) || 0;
+  const prepaid = parseFloat(document.getElementById('r-prepaid').value) || 0;
+  document.getElementById('r-remaining').value = Math.max(0, total - prepaid);
+}
+
+function saveReceipt() {
+  const phone = document.getElementById('r-phone').value.trim();
+  const name = document.getElementById('r-name').value.trim();
+  const brand = document.getElementById('r-brand').value.trim();
+  const model = document.getElementById('r-model').value.trim();
+  
+  if (!phone || !name || !brand || !model) {
+    alert('⚠️ يرجى ملء الحقول الإلزامية: رقم الهاتف، الاسم، الشركة، الموديل');
+    return;
+  }
+  
+  const now = new Date();
+  const delivery = new Date(now.getTime() + 24*60*60*1000);
+  const currency = document.getElementById('r-currency').value;
+  const currencyLabels = {YER:'ريال يمني', USD:'دولار', SAR:'ريال سعودي'};
+  
+  const receipt = {
+    id: DB.nextReceiptId,
+    phone, name, brand, model,
+    serial: document.getElementById('r-serial').value.trim(),
+    faultType: document.getElementById('r-fault-type').value,
+    faultDesc: document.getElementById('r-fault-desc').value.trim(),
+    total: parseFloat(document.getElementById('r-total').value) || 0,
+    currency, currencyLabel: currencyLabels[currency],
+    prepaid: parseFloat(document.getElementById('r-prepaid').value) || 0,
+    remaining: parseFloat(document.getElementById('r-remaining').value) || 0,
+    createdAt: now.toISOString(),
+    deliveryAt: delivery.toISOString(),
+    status: 'in_progress',
+    engineerId: null,
+    delivered: false,
+    paid: false,
+    engineerReport: ''
+  };
+  
+  // Save client
+  DB.clients[phone] = {name, phone};
+  
+  // Add brand to list if new
+  if (!DB.brands.includes(brand)) DB.brands.push(brand);
+  
+  // Add model
+  if (!DB.models[brand]) DB.models[brand] = [];
+  if (!DB.models[brand].includes(model)) DB.models[brand].push(model);
+  
+  DB.receipts.push(receipt);
+  DB.nextReceiptId++;
+  saveToStorage();
+  
+  printReceipt(receipt);
+  
+  setTimeout(() => {
+    showSection('dashboard');
+  }, 500);
+}
+
+function clearReceiptForm() {
+  ['r-phone','r-name','r-brand','r-model','r-serial','r-fault-desc','r-total','r-prepaid','r-remaining'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('r-fault-type').value = '';
+  document.getElementById('r-currency').value = 'YER';
+  document.getElementById('ac-brand').style.display = 'none';
+  document.getElementById('ac-model').style.display = 'none';
+  updateReceiptDateFields();
+}
+
+// ===== PRINT =====
+function printReceipt(r) {
+  const eng = r.engineerId ? (DB.engineers.find(e => e.id === r.engineerId) || {}).name || '—' : '—';
+  const printArea = document.getElementById('print-area');
+  printArea.style.display = 'block';
+  printArea.innerHTML = `
+    <div style="font-size:11px;direction:rtl;font-family:Arial;line-height:1.6">
+      <div style="font-weight:bold;font-size:12px;margin-bottom:4px">الوحدة للبرمجيات</div>
+      <div>رقم الإيصال: <b>${r.id}</b></div>
+      <div>الاسم: ${r.name}</div>
+      <div>الهاتف: ${r.phone}</div>
+      <div>الجهاز: ${r.brand} - ${r.model}</div>
+      ${r.serial ? `<div>الرقم التسلسلي: ${r.serial}</div>` : ''}
+      <div>العطل: ${r.faultType==='software'?'برمجي':'هاردوير'} - ${r.faultDesc}</div>
+      <div>المبلغ الإجمالي: ${r.total} ${r.currencyLabel}</div>
+      <div>الدفع المسبق: ${r.prepaid} ${r.currencyLabel}</div>
+      <div>المبلغ المتبقي: ${r.remaining} ${r.currencyLabel}</div>
+      <div>تاريخ الإيصال: ${new Date(r.createdAt).toLocaleString('ar-YE')}</div>
+      <div>موعد التسليم: ${new Date(r.deliveryAt).toLocaleString('ar-YE')}</div>
+      <div style="margin-top:6px;font-size:10px;color:#666">تصميم المهندس عبدالرحمن الأحمر • 772364042</div>
+    </div>
+  `;
+  window.print();
+  setTimeout(() => { printArea.style.display = 'none'; }, 2000);
+}
+
+// ===== SEARCH =====
+function switchSearchTab(tab) {
+  searchTab = tab;
+  document.querySelectorAll('#section-search .tab').forEach((t,i) => {
+    t.classList.toggle('active', ['receipt','phone','name'][i] === tab);
+  });
+  const placeholders = {receipt:'رقم الإيصال (مثال: 15)', phone:'رقم الهاتف', name:'اسم العميل'};
+  document.getElementById('search-input').placeholder = 'ابحث بـ ' + placeholders[tab] + '...';
+  document.getElementById('search-results').innerHTML = '';
+}
+
+function doSearch() {
+  const val = document.getElementById('search-input').value.trim();
+  if (!val) return;
+  let results = [];
+  if (searchTab === 'receipt') {
+    results = DB.receipts.filter(r => String(r.id) === val);
+  } else if (searchTab === 'phone') {
+    results = DB.receipts.filter(r => r.phone.includes(val)).sort((a,b) => b.id - a.id);
+  } else {
+    results = DB.receipts.filter(r => r.name.includes(val)).sort((a,b) => b.id - a.id);
+  }
+  
+  const container = document.getElementById('search-results');
+  if (!results.length) {
+    container.innerHTML = '<p style="color:var(--text3);font-size:13px">لا توجد نتائج</p>';
+    return;
+  }
+  container.innerHTML = results.map(r => `
+    <div class="result-row" onclick="openReceiptModal(${r.id})">
+      <div>
+        <b>#${r.id}</b> — ${r.name}
+        <span style="color:var(--text2);font-size:12px"> | ${r.brand} ${r.model}</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        ${statusBadge(r.status)}
+        <span style="font-size:12px;color:var(--text3)">${new Date(r.createdAt).toLocaleDateString('ar-YE')}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function statusBadge(s) {
+  const map = {
+    repaired: '<span class="badge badge-success">✅ تم التصليح</span>',
+    cannot_repair: '<span class="badge badge-danger">❌ لا يمكن إصلاحه</span>',
+    no_parts: '<span class="badge badge-warning">⏳ لا يتوفر قطع غيار</span>',
+    rejected: '<span class="badge badge-gray">🚫 رفض الزبون</span>',
+    in_progress: '<span class="badge badge-info">🔧 قيد العمل</span>',
+    deleted: '<span class="badge badge-gray">محذوف</span>',
+  };
+  return map[s] || '<span class="badge badge-gray">—</span>';
+}
+
+// ===== RECEIPT MODAL =====
+function openReceiptModal(id) {
+  const r = DB.receipts.find(x => x.id === id);
+  if (!r) return;
+  editingReceiptId = id;
+  const eng = r.engineerId ? (DB.engineers.find(e => e.id === r.engineerId) || {}).name || '—' : '—';
+  const engOptions = DB.engineers.map(e => `<option value="${e.id}" ${r.engineerId===e.id?'selected':''}>${e.name}</option>`).join('');
+  
+  document.getElementById('modal-title').textContent = `إيصال رقم #${r.id} — ${r.name}`;
+  document.getElementById('modal-body').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px;margin-bottom:16px">
+      <div><b style="color:var(--text2)">العميل:</b> ${r.name}</div>
+      <div><b style="color:var(--text2)">الهاتف:</b> ${r.phone}</div>
+      <div><b style="color:var(--text2)">الجهاز:</b> ${r.brand} ${r.model}</div>
+      ${r.serial ? `<div><b style="color:var(--text2)">S/N:</b> ${r.serial}</div>` : ''}
+      <div><b style="color:var(--text2)">نوع العطل:</b> ${r.faultType==='software'?'برمجي 💻':'هاردوير 🔩'}</div>
+      <div class="span2"><b style="color:var(--text2)">وصف العطل:</b> ${r.faultDesc}</div>
+      <div><b style="color:var(--text2)">المبلغ:</b> ${r.total} ${r.currencyLabel}</div>
+      <div><b style="color:var(--text2)">المتبقي:</b> ${r.remaining} ${r.currencyLabel}</div>
+      <div><b style="color:var(--text2)">تاريخ الإيصال:</b> ${new Date(r.createdAt).toLocaleString('ar-YE')}</div>
+      <div><b style="color:var(--text2)">موعد التسليم:</b> ${new Date(r.deliveryAt).toLocaleString('ar-YE')}</div>
+    </div>
+    <hr class="divider">
+    <h4 style="font-size:14px;font-weight:700;margin-bottom:12px">تقرير المهندس</h4>
+    <div class="form-group">
+      <label>حالة الصيانة</label>
+      <select id="modal-status">
+        <option value="in_progress" ${r.status==='in_progress'?'selected':''}>🔧 قيد العمل</option>
+        <option value="repaired" ${r.status==='repaired'?'selected':''}>✅ تم التصليح</option>
+        <option value="cannot_repair" ${r.status==='cannot_repair'?'selected':''}>❌ لا يمكن إصلاحه</option>
+        <option value="no_parts" ${r.status==='no_parts'?'selected':''}>⏳ لا يتوفر قطع غيار</option>
+        <option value="rejected" ${r.status==='rejected'?'selected':''}>🚫 تم الرفض من الزبون</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>اسم المهندس</label>
+      <select id="modal-engineer">
+        <option value="">— اختر المهندس —</option>
+        ${engOptions}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>ملاحظات المهندس</label>
+      <textarea id="modal-eng-notes" rows="2" placeholder="ملاحظات إضافية...">${r.engineerReport||''}</textarea>
+    </div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap">
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer">
+        <input type="checkbox" id="modal-delivered" ${r.delivered?'checked':''} onchange="updateDeliveryDate(this)"> تم التسليم
+      </label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer">
+        <input type="checkbox" id="modal-paid" ${r.paid?'checked':''}> تم الدفع
+      </label>
+    </div>
+    ${r.deliveredAt ? `<p style="font-size:12px;color:var(--text3);margin-top:8px">تاريخ التسليم: ${new Date(r.deliveredAt).toLocaleString('ar-YE')}</p>` : ''}
+  `;
+  
+  document.getElementById('modal-footer').innerHTML = `
+    <button class="btn btn-primary" onclick="saveReceiptEdit()">💾 حفظ التعديلات</button>
+    <button class="btn btn-outline" onclick="printReceiptById(${id})">🖨️ طباعة</button>
+    <button class="btn btn-danger" onclick="deleteReceipt(${id})" style="margin-right:auto">🗑️ حذف</button>
+  `;
+  
+  openModal('receipt-modal');
+}
+
+function updateDeliveryDate(cb) {
+  // Will be saved on save
+}
+
+function saveReceiptEdit() {
+  const r = DB.receipts.find(x => x.id === editingReceiptId);
+  if (!r) return;
+  
+  const newStatus = document.getElementById('modal-status').value;
+  const wasRepaired = r.status !== 'repaired' && newStatus === 'repaired';
+  
+  r.status = newStatus;
+  r.engineerId = parseInt(document.getElementById('modal-engineer').value) || null;
+  r.engineerReport = document.getElementById('modal-eng-notes').value;
+  r.delivered = document.getElementById('modal-delivered').checked;
+  r.paid = document.getElementById('modal-paid').checked;
+  
+  if (r.delivered && !r.deliveredAt) r.deliveredAt = new Date().toISOString();
+  
+  saveToStorage();
+  closeModal('receipt-modal');
+  renderDashboard();
+  
+  if (wasRepaired) {
+    showNotifBar('✅ تم التصليح — جارٍ إعلام العميل ' + r.name + ' | جهاز: ' + r.brand + ' ' + r.model);
+  }
+}
+
+function deleteReceipt(id) {
+  if (!confirm('هل تريد حذف الإيصال؟ سيتم تصفير البيانات مع الاحتفاظ برقم الإيصال.')) return;
+  const r = DB.receipts.find(x => x.id === id);
+  if (!r) return;
+  // Zero out data, keep id
+  const cleared = {
+    id: r.id, phone:'', name:'محذوف', brand:'', model:'', serial:'',
+    faultType:'', faultDesc:'', total:0, currency:'YER', currencyLabel:'ريال يمني',
+    prepaid:0, remaining:0, createdAt: r.createdAt, deliveryAt: r.deliveryAt,
+    status: 'rejected', engineerId:null, delivered:false, paid:false, engineerReport:'', deleted:true
+  };
+  const idx = DB.receipts.findIndex(x => x.id === id);
+  DB.receipts[idx] = cleared;
+  saveToStorage();
+  closeModal('receipt-modal');
+  renderDashboard();
+}
+
+function printReceiptById(id) {
+  const r = DB.receipts.find(x => x.id === id);
+  if (r) printReceipt(r);
+}
+
+// ===== ENGINEER REPORTS =====
+function doEngSearch() {
+  const val = document.getElementById('eng-search-input').value.trim();
+  if (!val) return;
+  const results = DB.receipts.filter(r => String(r.id) === val && !r.deleted);
+  renderEngResults(results);
+}
+
+function loadAllPending() {
+  const results = DB.receipts.filter(r => r.status === 'in_progress' && !r.deleted).sort((a,b) => b.id - a.id);
+  renderEngResults(results);
+}
+
+function renderEngResults(results) {
+  const container = document.getElementById('eng-search-results');
+  if (!results.length) {
+    container.innerHTML = '<p style="color:var(--text3);font-size:13px">لا توجد نتائج</p>';
+    return;
+  }
+  container.innerHTML = results.map(r => {
+    const eng = r.engineerId ? (DB.engineers.find(e => e.id === r.engineerId) || {}).name || '—' : '—';
+    const overdue = new Date() > new Date(r.deliveryAt) && r.status === 'in_progress';
+    return `
+      <div class="result-row ${overdue?'style="border-color:var(--danger)"':''}" onclick="openReceiptModal(${r.id})">
+        <div>
+          <b>#${r.id}</b> — ${r.name} | ${r.brand} ${r.model}
+          <br><span style="font-size:12px;color:var(--text2)">المهندس: ${eng}</span>
+        </div>
+        <div style="text-align:left">
+          ${statusBadge(r.status)}
+          ${overdue ? '<br><span style="font-size:11px;color:var(--danger)">⚠️ تجاوز موعد التسليم</span>' : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ===== DASHBOARD =====
+function renderDashboard() {
+  const all = DB.receipts.filter(r => !r.deleted);
+  const stats = [
+    {n: all.length, l: 'إجمالي الإيصالات', e: '📋'},
+    {n: all.filter(r=>r.status==='in_progress').length, l: 'قيد العمل', e: '🔧'},
+    {n: all.filter(r=>r.status==='repaired').length, l: 'تم التصليح', e: '✅'},
+    {n: all.filter(r=>!r.delivered && r.status==='repaired').length, l: 'بانتظار التسليم', e: '📦'},
+  ];
+  document.getElementById('stats-grid').innerHTML = stats.map(s => `
+    <div class="stat-card">
+      <div style="font-size:24px">${s.e}</div>
+      <div class="stat-num">${s.n}</div>
+      <div class="stat-label">${s.l}</div>
+    </div>
+  `).join('');
+  
+  const inProgress = all.filter(r => r.status === 'in_progress');
+  const inProgressEl = document.getElementById('in-progress-list');
+  if (!inProgress.length) {
+    inProgressEl.innerHTML = '<p style="color:var(--text3);font-size:13px">لا توجد أجهزة قيد العمل حالياً</p>';
+  } else {
+    inProgressEl.innerHTML = `<div class="table-wrap"><table>
+      <thead><tr><th>#</th><th>العميل</th><th>الجهاز</th><th>المهندس</th><th>موعد التسليم</th></tr></thead>
+      <tbody>${inProgress.slice(0,10).map(r => {
+        const eng = r.engineerId ? (DB.engineers.find(e=>e.id===r.engineerId)||{}).name||'—' : '—';
+        const over = new Date() > new Date(r.deliveryAt);
+        return `<tr onclick="openReceiptModal(${r.id})" style="cursor:pointer">
+          <td>#${r.id}</td><td>${r.name}</td><td>${r.brand} ${r.model}</td>
+          <td>${eng}</td>
+          <td style="color:${over?'var(--danger)':'var(--text)'}">${new Date(r.deliveryAt).toLocaleDateString('ar-YE')} ${over?'⚠️':''}</td>
+        </tr>`;
+      }).join('')}</tbody>
+    </table></div>`;
+  }
+  
+  const overdue = all.filter(r => new Date() > new Date(r.deliveryAt) && r.status === 'in_progress');
+  const overdueEl = document.getElementById('overdue-list');
+  if (!overdue.length) {
+    overdueEl.innerHTML = '<p style="color:var(--text3);font-size:13px">لا توجد أجهزة متأخرة ✅</p>';
+  } else {
+    overdueEl.innerHTML = overdue.map(r => `
+      <div class="alert alert-warning" onclick="openReceiptModal(${r.id})" style="cursor:pointer">
+        ⚠️ إيصال #${r.id} — ${r.name} | ${r.brand} ${r.model} | تجاوز موعد التسليم بـ ${Math.floor((new Date()-new Date(r.deliveryAt))/(3600000))} ساعة
+      </div>
+    `).join('');
+  }
+}
+
+// ===== EMPLOYEES =====
+function openAddEmployee() {
+  document.getElementById('emp-edit-id').value = '';
+  document.getElementById('emp-name').value = '';
+  document.getElementById('emp-username').value = '';
+  document.getElementById('emp-pass').value = '';
+  ['perm-new-receipt','perm-edit','perm-delete','perm-reports','perm-eng','perm-users','perm-backup','perm-admin'].forEach(id => {
+    document.getElementById(id).checked = false;
+  });
+  document.getElementById('emp-modal-title').textContent = 'إضافة موظف جديد';
+  openModal('employee-modal');
+}
+
+function saveEmployee() {
+  const name = document.getElementById('emp-name').value.trim();
+  const username = document.getElementById('emp-username').value.trim();
+  const pass = document.getElementById('emp-pass').value;
+  if (!name || !username || !pass) { alert('يرجى ملء جميع الحقول'); return; }
+  
+  const permissions = {
+    newReceipt: document.getElementById('perm-new-receipt').checked,
+    edit: document.getElementById('perm-edit').checked,
+    delete: document.getElementById('perm-delete').checked,
+    reports: document.getElementById('perm-reports').checked,
+    eng: document.getElementById('perm-eng').checked,
+    users: document.getElementById('perm-users').checked,
+    backup: document.getElementById('perm-backup').checked,
+    admin: document.getElementById('perm-admin').checked,
+  };
+  
+  const editId = document.getElementById('emp-edit-id').value;
+  if (editId) {
+    const idx = DB.employees.findIndex(e => e.id === parseInt(editId));
+    if (idx >= 0) DB.employees[idx] = {...DB.employees[idx], name, username, password: pass, permissions};
+  } else {
+    const newId = Math.max(0, ...DB.employees.map(e=>e.id)) + 1;
+    DB.employees.push({id: newId, name, username, password: pass, permissions});
+  }
+  saveToStorage();
+  closeModal('employee-modal');
+  renderEmployeesTable();
+}
+
+function renderEmployeesTable() {
+  const tbody = document.getElementById('employees-table');
+  tbody.innerHTML = DB.employees.map(e => {
+    const perms = Object.entries(e.permissions).filter(([k,v])=>v).map(([k])=>{
+      const labels = {newReceipt:'إيصال',edit:'تعديل',delete:'حذف',reports:'تقارير',eng:'مهندسين',users:'مستخدمين',backup:'نسخ',admin:'مسؤول'};
+      return labels[k] || k;
+    }).join(', ');
+    return `<tr>
+      <td>${e.id}</td><td>${e.name}</td><td>${e.username}</td>
+      <td style="font-size:11px;color:var(--text2)">${perms}</td>
+      <td><button class="btn btn-outline btn-sm" onclick="editEmployee(${e.id})">✏️ تعديل</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function editEmployee(id) {
+  const e = DB.employees.find(x => x.id === id);
+  if (!e) return;
+  document.getElementById('emp-edit-id').value = id;
+  document.getElementById('emp-name').value = e.name;
+  document.getElementById('emp-username').value = e.username;
+  document.getElementById('emp-pass').value = e.password;
+  const pMap = {newReceipt:'perm-new-receipt',edit:'perm-edit',delete:'perm-delete',reports:'perm-reports',eng:'perm-eng',users:'perm-users',backup:'perm-backup',admin:'perm-admin'};
+  Object.entries(pMap).forEach(([k,domId]) => {
+    document.getElementById(domId).checked = !!(e.permissions && e.permissions[k]);
+  });
+  document.getElementById('emp-modal-title').textContent = 'تعديل موظف: ' + e.name;
+  openModal('employee-modal');
+}
+
+// ===== ENGINEERS =====
+function openAddEngineer() {
+  document.getElementById('eng-edit-id').value = '';
+  document.getElementById('eng-name').value = '';
+  document.getElementById('eng-spec').value = '';
+  openModal('engineer-modal');
+}
+
+function saveEngineer() {
+  const name = document.getElementById('eng-name').value.trim();
+  const spec = document.getElementById('eng-spec').value.trim();
+  if (!name) { alert('يرجى إدخال اسم المهندس'); return; }
+  
+  const editId = document.getElementById('eng-edit-id').value;
+  if (editId) {
+    const idx = DB.engineers.findIndex(e => e.id === parseInt(editId));
+    if (idx >= 0) DB.engineers[idx] = {...DB.engineers[idx], name, spec};
+  } else {
+    const newId = Math.max(0, ...DB.engineers.map(e=>e.id||0)) + 1;
+    DB.engineers.push({id: newId, name, spec});
+  }
+  saveToStorage();
+  closeModal('engineer-modal');
+  renderEngineersTable();
+}
+
+function renderEngineersTable() {
+  const tbody = document.getElementById('engineers-table');
+  tbody.innerHTML = DB.engineers.map(e => {
+    const assigned = DB.receipts.filter(r => r.engineerId === e.id && !r.deleted).length;
+    return `<tr>
+      <td>${e.id}</td><td>${e.name}</td>
+      <td style="font-size:12px;color:var(--text2)">${e.spec||'—'}</td>
+      <td><span class="badge badge-info">${assigned} جهاز</span></td>
+      <td>
+        <button class="btn btn-outline btn-sm" onclick="editEngineer(${e.id})">✏️ تعديل</button>
+        <button class="btn btn-danger btn-sm" onclick="delEngineer(${e.id})" style="margin-right:4px">🗑️</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function editEngineer(id) {
+  const e = DB.engineers.find(x => x.id === id);
+  if (!e) return;
+  document.getElementById('eng-edit-id').value = id;
+  document.getElementById('eng-name').value = e.name;
+  document.getElementById('eng-spec').value = e.spec || '';
+  openModal('engineer-modal');
+}
+
+function delEngineer(id) {
+  if (!confirm('حذف المهندس؟')) return;
+  DB.engineers = DB.engineers.filter(e => e.id !== id);
+  saveToStorage();
+  renderEngineersTable();
+}
+
+// ===== BACKUP =====
+function doBackup() {
+  const data = JSON.stringify(DB, null, 2);
+  const blob = new Blob([data], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'wahda_backup_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  DB.lastBackup = new Date().toISOString();
+  saveToStorage();
+  document.getElementById('last-backup').textContent = new Date().toLocaleString('ar-YE');
+}
+
+function doRestore(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (confirm('هل تريد استرجاع النسخة الاحتياطية؟ سيتم استبدال جميع البيانات الحالية.')) {
+        DB = data;
+        saveToStorage();
+        renderDashboard();
+        alert('✅ تم استرجاع النسخة الاحتياطية بنجاح!');
+      }
+    } catch(err) {
+      alert('❌ ملف غير صالح');
+    }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+function generateDailyReport() {
+  const today = new Date().toLocaleDateString('ar-YE');
+  const todayReceipts = DB.receipts.filter(r => new Date(r.createdAt).toLocaleDateString('ar-YE') === today);
+  const repaired = DB.receipts.filter(r => r.status === 'repaired' && new Date(r.createdAt).toLocaleDateString('ar-YE') === today);
+  
+  document.getElementById('daily-report').innerHTML = `
+    <div class="alert alert-info">
+      📊 <b>تقرير يوم ${today}</b><br>
+      إيصالات جديدة: ${todayReceipts.length} | تم تصليحها اليوم: ${repaired.length}
+    </div>
+  `;
+}
+
+// ===== NOTIFICATIONS =====
+function showNotifBar(msg) {
+  const bar = document.getElementById('notif-bar');
+  document.getElementById('notif-text').textContent = msg;
+  bar.style.display = 'block';
+  setTimeout(() => { bar.style.display = 'none'; }, 8000);
+}
+
+function checkNotifications() {
+  const overdue = DB.receipts.filter(r => 
+    !r.deleted && r.status === 'in_progress' &&
+    new Date() > new Date(r.deliveryAt)
+  );
+  if (overdue.length > 0) {
+    showNotifBar(`⚠️ يوجد ${overdue.length} جهاز تجاوز موعد التسليم دون تقرير من المهندس`);
+  }
+}
+
+// ===== MODALS =====
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  editingReceiptId = null;
+}
+
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) closeModal(this.id);
+  });
+});
+
+// Close autocomplete on outside click
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.autocomplete-wrap')) {
+    document.querySelectorAll('.autocomplete-list').forEach(l => l.style.display='none');
+  }
+});
+
+// Enter key on login
+document.getElementById('login-pass').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') doLogin();
+});
+
+// Init dates on load
+window.addEventListener('DOMContentLoaded', function() {
+  init();
+  updateReceiptDateFields();
+});
+</script>
+</body>
+</html>
