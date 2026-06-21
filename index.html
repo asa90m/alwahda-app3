@@ -2,7 +2,8 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>الوحده للبرمجيات - نظام صيانة الهواتف</title>
     <style>
         :root {
@@ -41,10 +42,11 @@
             flex-direction: column;
             height: 100vh;
             overflow: hidden;
+            -webkit-text-size-adjust: 100%;
         }
 
-        /* واجهة تسجيل الدخول */
-        #login-screen {
+        /* شاشات الدخول وتغيير كلمة السر */
+        #login-screen, #password-reset-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-primary);
@@ -65,12 +67,13 @@
         .login-card h2 { margin-bottom: 20px; color: var(--brand-color); }
         .login-card input {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
             border: 1px solid var(--border-color);
             border-radius: 4px;
             background: var(--bg-primary);
             color: var(--text-main);
+            font-size: 16px;
         }
         .login-card button {
             width: 100%;
@@ -81,133 +84,132 @@
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
+            font-size: 16px;
         }
 
-        /* الهيكل الرئيسي للنظام */
         #main-header {
             background-color: var(--brand-light);
             height: 60px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
+            padding: 0 15px;
             border-bottom: 1px solid var(--border-color);
         }
-        .header-right { display: flex; align-items: center; gap: 15px; }
-        .header-logo { width: 40px; height: 40px; background: var(--brand-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
-        .header-title { color: #2c5282; font-size: 1.2rem; font-weight: bold; }
-        .header-left { display: flex; align-items: center; gap: 20px; }
-        .icon-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-main); position: relative; }
-        .badge { position: absolute; top: -5px; right: -5px; background: var(--danger-color); color: white; font-size: 0.7rem; padding: 2px 5px; border-radius: 50%; }
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .header-logo { width: 35px; height: 35px; background: var(--brand-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        .header-title { color: #2c5282; font-size: 1.1rem; font-weight: bold; }
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .icon-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-main); position: relative; padding: 5px; }
+        .badge { position: absolute; top: -2px; right: -2px; background: var(--danger-color); color: white; font-size: 0.65rem; padding: 2px 5px; border-radius: 50%; }
 
         #app-body {
             display: flex;
             flex: 1;
             overflow: hidden;
+            position: relative;
         }
 
-        /* القائمة الجانبية */
         #sidebar {
-            width: 260px;
+            width: 240px;
             background-color: var(--bg-sidebar);
             border-left: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
             overflow-y: auto;
+            transition: all 0.3s ease;
         }
+        
         @media (max-width: 768px) {
-            #sidebar { width: 70px; }
+            #sidebar { width: 60px; }
             .menu-text { display: none; }
-            .section-title { font-size: 0.7rem; text-align: center; padding: 5px 2px; }
+            .section-title { font-size: 0.65rem; text-align: center; padding: 5px 2px; }
+            .menu-item { justify-content: center; padding: 12px 5px; }
         }
-        .sidebar-section { border-bottom: 1px solid var(--border-color); padding: 10px 0; }
-        .section-title { padding: 5px 15px; font-weight: bold; color: var(--gray-muted); font-size: 0.9rem; background: rgba(0,0,0,0.03); }
+
+        .sidebar-section { border-bottom: 1px solid var(--border-color); padding: 5px 0; }
+        .section-title { padding: 5px 15px; font-weight: bold; color: var(--gray-muted); font-size: 0.85rem; background: rgba(0,0,0,0.03); }
         .menu-item { display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-main); cursor: pointer; transition: 0.2s; }
         .menu-item:hover, .menu-item.active { background-color: var(--brand-light); color: var(--brand-color); font-weight: bold; }
 
-        /* منطقة المحتوى */
         #content-area {
             flex: 1;
-            padding: 20px;
+            padding: 15px;
             overflow-y: auto;
             background-color: var(--bg-primary);
+            -webkit-overflow-scrolling: touch;
         }
         .view-panel { display: none; }
         .view-panel.active { display: block; }
 
-        /* القوالب والنماذج */
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; }
-        .form-control { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-primary); color: var(--text-main); }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; margin-bottom: 4px; font-weight: 500; font-size: 0.9rem; }
+        .form-control { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-primary); color: var(--text-main); font-size: 15px; }
         .form-control[readonly] { background-color: rgba(0,0,0,0.05); cursor: not-allowed; }
         
-        .row { display: flex; gap: 15px; flex-wrap: wrap; }
-        .col { flex: 1; min-width: 200px; }
+        .row { display: flex; gap: 12px; flex-wrap: wrap; }
+        .col { flex: 1; min-width: 140px; }
 
-        .btn { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
+        .btn { padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; }
         .btn-primary { background: var(--brand-color); color: white; }
         .btn-success { background: var(--success-color); color: white; }
         .btn-danger { background: var(--danger-color); color: white; }
 
-        /* التنبؤ الذكي الذاتي */
         .autocomplete-wrapper { position: relative; }
-        .suggestions-box { position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-primary); border: 1px solid var(--border-color); z-index: 100; max-height: 200px; overflow-y: auto; border-radius: 0 0 4px 4px; display: none; }
-        .suggestion-item { padding: 10px; cursor: pointer; border-bottom: 1px solid var(--border-color); }
+        .suggestions-box { position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-primary); border: 1px solid var(--border-color); z-index: 100; max-height: 180px; overflow-y: auto; border-radius: 0 0 4px 4px; display: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .suggestion-item { padding: 10px; cursor: pointer; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
         .suggestion-item:hover { background: var(--brand-light); }
 
-        /* الجداول والقوائم */
-        .data-table { width: 100%; border-collapse: collapse; margin-top: 15px; background: var(--bg-primary); }
-        .data-table th, .data-table td { border: 1px solid var(--border-color); padding: 12px; text-align: right; }
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 15px; }
+        .data-table { width: 100%; border-collapse: collapse; background: var(--bg-primary); min-width: 500px; }
+        .data-table th, .data-table td { border: 1px solid var(--border-color); padding: 10px; text-align: right; font-size: 0.85rem; }
         .data-table th { background: var(--bg-sidebar); }
-        .data-table tr:hover { background: rgba(0,0,0,0.02); cursor: pointer; }
 
-        /* لوحة تعديل وضبط أبعاد السند والطباعة حرّاً */
         #print-designer-visual {
             border: 2px dashed var(--brand-color);
-            width: 210mm;
+            width: 100%;
+            max-width: 210mm;
             height: 65mm;
             position: relative;
             background: white;
             color: black;
-            margin-top: 20px;
+            margin-top: 15px;
             overflow: hidden;
         }
         .draggable-element {
             position: absolute;
-            padding: 2px 5px;
+            padding: 1px 4px;
             border: 1px dotted #999;
             cursor: move;
-            font-size: 12px;
+            font-size: 11px;
             white-space: nowrap;
+            touch-action: none;
         }
 
-        /* شاشة التصميم الفني في الأسفل */
         .footer-credits {
             text-align: center;
-            padding: 10px;
-            font-size: 0.85rem;
+            padding: 8px;
+            font-size: 0.8rem;
             background: var(--bg-sidebar);
             border-top: 1px solid var(--border-color);
             color: var(--gray-muted);
         }
 
-        /* نافذة الإشعارات */
         #notification-center {
             position: fixed;
-            top: 70px; left: 20px;
-            width: 320px;
+            top: 65px; left: 15px;
+            width: 290px;
             background: var(--bg-sidebar);
             border: 1px solid var(--border-color);
             border-radius: 6px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             display: none;
             z-index: 1000;
-            max-height: 400px;
+            max-height: 350px;
             overflow-y: auto;
         }
-        .noti-item { padding: 10px 15px; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
+        .noti-item { padding: 10px; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; }
 
-        /* وضعية الطباعة المخفية للورق الصغير المخصص */
         @media print {
             body * { display: none !important; }
             #print-area-target, #print-area-target * { display: block !important; }
@@ -217,10 +219,11 @@
 </head>
 <body data-theme="light">
 
+    <!-- شاشة تسجيل الدخول الافتراضية المبدئية admin/admin -->
     <div id="login-screen">
         <div class="login-card">
             <h2>الوحده للبرمجيات</h2>
-            <p style="color: var(--gray-muted); margin-bottom: 15px;">نظام إدارة صيانة الهواتف الذكي</p>
+            <p style="color: var(--gray-muted); margin-bottom: 12px;">نظام إدارة صيانة الهواتف والشبكات</p>
             <input type="text" id="login-user" placeholder="اسم المستخدم" value="admin">
             <input type="password" id="login-pass" placeholder="كلمة المرور" value="admin">
             <button onclick="handleLogin()">تسجيل الدخول</button>
@@ -228,20 +231,32 @@
         </div>
     </div>
 
+    <!-- شاشة إجبارية لتغيير كلمة السر إذا كانت الافتراضية لحماية البيانات -->
+    <div id="password-reset-screen" style="display: none;">
+        <div class="login-card">
+            <h3 style="color: var(--danger-color); margin-bottom: 10px;">🛡️ إجراء أمان مطلوب</h3>
+            <p style="color: var(--text-main); font-size: 0.9rem; margin-bottom: 15px;">أنت تسجل الدخول بكلمة المرور الافتراضية للمدير العام. يرجى تعيين كلمة مرور جديدة قوية الآن لتأمين قاعدة بيانات المحل.</p>
+            <input type="password" id="new-secure-pass" placeholder="كلمة المرور الجديدة">
+            <input type="password" id="confirm-secure-pass" placeholder="تأكيد كلمة المرور الجديدة">
+            <button onclick="forcePasswordChange()" style="background: var(--success-color);">حفظ وتأمين الحساب 🔒</button>
+        </div>
+    </div>
+
+    <!-- الرأس الرئيسي للنظام التفاعلي -->
     <header id="main-header">
         <div class="header-right">
             <div class="header-logo">W</div>
-            <div class="header-title" id="system-title-display">الوحده للبرمجيات</div>
+            <div class="header-title">الوحده للبرمجيات</div>
         </div>
         <div class="header-left">
             <button class="icon-btn" onclick="toggleNotifications()">🔔 <span class="badge" id="noti-count">0</span></button>
             <button class="icon-btn" id="theme-toggle-btn" onclick="toggleTheme()">🌙</button>
             <button class="icon-btn" onclick="logout()" title="خروج">🚪</button>
-            <button class="icon-btn" onclick="window.close()" style="color: var(--danger-color); font-weight: bold;">X</button>
         </div>
     </header>
 
     <div id="app-body">
+        <!-- القائمة الجانبية المستجيبة للجوال -->
         <aside id="sidebar">
             <div class="sidebar-section">
                 <div class="section-title">العمليات</div>
@@ -261,15 +276,17 @@
             </div>
         </aside>
 
+        <!-- منطقة العمل ومحتوى اللوحات -->
         <main id="content-area">
 
+            <!-- 1. واجهة إيصال جديد -->
             <section id="new-receipt-view" class="view-panel active">
-                <h3 style="margin-bottom: 20px; color: var(--brand-color);">إنشاء سند صيانة جديد</h3>
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">إيصال استلام جديد</h3>
                 <form id="receipt-form" onsubmit="saveNewReceipt(event)">
                     <div class="row">
-                        <div class="col class-disabled-zone">
+                        <div class="col">
                             <div class="form-group">
-                                <label>رقم الإيصال (تلقائي مَحمِي)</label>
+                                <label>رقم الإيصال (تلقائي)</label>
                                 <input type="text" id="rec-id" class="form-control" readonly>
                             </div>
                         </div>
@@ -291,21 +308,21 @@
                     <div class="row">
                         <div class="col autocomplete-wrapper">
                             <div class="form-group">
-                                <label>الشركة المصنعة</label>
+                                <label>الشركة (أو ميكروتك/راوتر)</label>
                                 <input type="text" id="rec-brand" class="form-control" required oninput="suggestBrands(this.value)">
                                 <div class="suggestions-box" id="brand-suggestions"></div>
                             </div>
                         </div>
                         <div class="col autocomplete-wrapper">
                             <div class="form-group">
-                                <label>موديل الجهاز</label>
+                                <label>الموديل المرتبط</label>
                                 <input type="text" id="rec-model" class="form-control" required oninput="suggestModels(this.value)">
                                 <div class="suggestions-box" id="model-suggestions"></div>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label>الرقم التسلسلي IMEI (اختياري)</label>
+                                <label>الرقم التسلسلي (اختياري)</label>
                                 <input type="text" id="rec-imei" class="form-control">
                             </div>
                         </div>
@@ -316,24 +333,24 @@
                             <div class="form-group">
                                 <label>نوع العطل</label>
                                 <select id="rec-fault-type" class="form-control">
-                                    <option value="هاردوير">هاردوير (Hardware)</option>
-                                    <option value="برمجي">برمجي (Software)</option>
+                                    <option value="هاردوير">هاردوير</option>
+                                    <option value="برمجي">برمجي</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label>نظافة وهيكل الجهاز</label>
+                                <label>نظافة الجهاز</label>
                                 <select id="rec-condition" class="form-control">
                                     <option value="جديد نظيف">جديد نظيف</option>
-                                    <option value="مجعوث">مجعوث / مستخدم بكثرة</option>
-                                    <option value="طافي">طافي تماماً</option>
+                                    <option value="مجعوث">مجعوث</option>
+                                    <option value="طافي">طافي</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col autocomplete-wrapper">
                             <div class="form-group">
-                                <label>وصف العطل بدقة</label>
+                                <label>العطل (تنبؤ ذكي)</label>
                                 <input type="text" id="rec-fault-desc" class="form-control" required oninput="suggestFaults(this.value)">
                                 <div class="suggestions-box" id="fault-suggestions"></div>
                             </div>
@@ -343,11 +360,11 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label>العملة المستخدمة</label>
+                                <label>العملة</label>
                                 <select id="rec-currency" class="form-control" onchange="updateRemainingCost()">
-                                    <option value="ريال يمني">ريال يمني (YER)</option>
-                                    <option value="سعودي">سعودي (SAR)</option>
-                                    <option value="دولار">دولار (USD)</option>
+                                    <option value="ريال يمني">ريال يمني</option>
+                                    <option value="سعودي">سعودي</option>
+                                    <option value="دولار">دولار</option>
                                 </select>
                             </div>
                         </div>
@@ -374,61 +391,65 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label>المهندس المستلم والمختص</label>
+                                <label>المهندس المختص بالاستلام</label>
                                 <select id="rec-engineer" class="form-control" required></select>
                             </div>
                         </div>
                     </div>
 
-                    <div style="margin-top: 20px; display: flex; gap: 10px;">
-                        <button type="submit" class="btn btn-success">💾 حفظ السند وإنشائه</button>
-                        <button type="button" class="btn btn-primary" onclick="triggerDirectPrint()">🖨️ طباعة السند المباشر</button>
+                    <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button type="submit" class="btn btn-success">💾 حفظ السند</button>
+                        <button type="button" class="btn btn-primary" onclick="triggerDirectPrint()">🖨️ طباعة السند</button>
                     </div>
                 </form>
             </section>
 
+            <!-- 2. واجهة البحث عن الأجهزة والعملاء -->
             <section id="search-devices-view" class="view-panel">
-                <h3 style="margin-bottom: 20px; color: var(--brand-color);">البحث والتحري المتقدم</h3>
-                <div class="row" style="margin-bottom: 20px;">
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">البحث والتقارير الفورية</h3>
+                <div class="row" style="margin-bottom: 15px;">
                     <div class="col">
-                        <input type="text" id="search-global-input" class="form-control" placeholder="ابحث برقم الإيصال، رقم الهاتف، أو اسم العميل الفوري...">
+                        <input type="text" id="search-global-input" class="form-control" placeholder="ابحث برقم الإيصال، الهاتف، أو اسم العميل...">
                     </div>
                     <div class="col-auto">
-                        <button class="btn btn-primary" onclick="performGlobalSearch()">🔍 تنفيذ البحث</button>
+                        <button class="btn btn-primary" onclick="performGlobalSearch()">🔍 بحث</button>
                     </div>
                 </div>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>رقم السند</th>
-                            <th>العميل</th>
-                            <th>الهاتف</th>
-                            <th>الجهاز</th>
-                            <th>حالة الصيانة</th>
-                            <th>المتبقي</th>
-                        </tr>
-                    </thead>
-                    <tbody id="search-results-output"></tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>رقم السند</th>
+                                <th>العميل</th>
+                                <th>الهاتف</th>
+                                <th>الجهاز</th>
+                                <th>الحالة</th>
+                                <th>المتبقي</th>
+                            </tr>
+                        </thead>
+                        <tbody id="search-results-output"></tbody>
+                    </table>
+                </div>
             </section>
 
+            <!-- 3. واجهة تقارير المهندسين والترحيل -->
             <section id="eng-reports-view" class="view-panel">
-                <h3 style="margin-bottom: 20px; color: var(--brand-color);">تقارير المهندسين والترحيل الفوري</h3>
-                <div class="row" style="margin-bottom: 20px;">
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">ترحيل تقارير المهندسين</h3>
+                <div class="row" style="margin-bottom: 15px;">
                     <div class="col">
-                        <input type="number" id="report-search-id" class="form-control" placeholder="أدخل رقم الإيصال المستهدف لترحيل حالته...">
+                        <input type="number" id="report-search-id" class="form-control" placeholder="أدخل رقم الإيصال...">
                     </div>
                     <div class="col-auto">
-                        <button class="btn btn-primary" onclick="loadReceiptToReport()">📂 جلب وتعديل السند</button>
+                        <button class="btn btn-primary" onclick="loadReceiptToReport()">📂 جلب البيانات</button>
                     </div>
                 </div>
 
-                <div id="report-edit-card" style="display:none; background: var(--bg-sidebar); padding: 20px; border-radius: 6px;">
-                    <h4 id="report-card-title" style="margin-bottom: 15px;">تفاصيل السند</h4>
+                <div id="report-edit-card" style="display:none; background: var(--bg-sidebar); padding: 15px; border-radius: 6px;">
+                    <h4 id="report-card-title" style="margin-bottom: 12px;">تفاصيل السند الفني</h4>
                     <div class="row">
                         <div class="col">
-                            <label><b>حالة الصيانة الحالية:</b></label>
-                            <select id="rep-status" class="form-control" onchange="checkStatusAndNotify(this.value)">
+                            <label><b>حالة صيانة الجهاز:</b></label>
+                            <select id="rep-status" class="form-control">
                                 <option value="قيد العمل">قيد العمل 🔧</option>
                                 <option value="تم التصليح">تم التصليح ✅</option>
                                 <option value="لا يمكن إصلاحه">لا يمكن إصلاحه ❌</option>
@@ -437,152 +458,141 @@
                             </select>
                         </div>
                         <div class="col">
-                            <label><b>المهندس المسؤول:</b></label>
+                            <label><b>المهندس الفني:</b></label>
                             <select id="rep-engineer" class="form-control"></select>
                         </div>
                     </div>
-                    <div class="row" style="margin-top: 15px;">
+                    <div class="row" style="margin-top: 12px;">
                         <div class="col">
-                            <label><input type="checkbox" id="rep-delivered" onchange="handleDeliveryCheckbox(this.checked)"> تم تسليم الجهاز بشكل نهائي للزبون</label>
+                            <label><input type="checkbox" id="rep-delivered" onchange="handleDeliveryCheckbox(this.checked)"> تم تسليم الجهاز نهائياً للعميل</label>
                         </div>
                         <div class="col">
-                            <label><input type="checkbox" id="rep-paid"> تم سداد الحساب بالكامل وبراءة الذمة</label>
-                        </div>
-                    </div>
-                    <div id="delivery-details-zone" class="row" style="margin-top: 15px; display: none;">
-                        <div class="col">
-                            <label>مستند إثبات الاستلام:</label>
-                            <label><input type="radio" name="delivery-doc" value="السند المطبوع" checked> السند المطبوع الأصلي</label>
-                            <label><input type="radio" name="delivery-doc" value="بطاقة شخصية"> بطاقة شخصية للتحقق</label>
+                            <label><input type="checkbox" id="rep-paid"> تم الدفع وبراءة الذمة المالية</label>
                         </div>
                     </div>
-                    <div style="margin-top: 20px;">
-                        <button class="btn btn-success" onclick="saveReportModifications()">💾 حفظ وتحديث تقرير السند</button>
+                    <div id="delivery-details-zone" class="row" style="margin-top: 12px; display: none;">
+                        <div class="col">
+                            <label>وثيقة التحقق عند التسليم:</label>
+                            <label><input type="radio" name="delivery-doc" value="السند المطبوع" checked> السند المطبوع</label>
+                            <label><input type="radio" name="delivery-doc" value="بطاقة شخصية"> بطاقة شخصية</label>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <button class="btn btn-success" onclick="saveReportModifications()">💾 حفظ وتحديث السند الفوري</button>
                     </div>
                 </div>
             </section>
 
+            <!-- 4. واجهة الموظفين والصلاحيات -->
             <section id="employees-view" class="view-panel">
-                <h3 style="margin-bottom: 20px; color: var(--brand-color);">إدارة الموظفين والصلاحيات الدقيقة</h3>
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">إدارة الموظفين والصلاحيات</h3>
                 <form id="employee-form" onsubmit="addNewEmployee(event)">
                     <div class="row">
-                        <div class="col"><input type="text" id="emp-name" class="form-control" placeholder="اسم الموظف الثلاثي" required></div>
-                        <div class="col"><input type="text" id="emp-user" class="form-control" placeholder="اسم المستخدم للدخول" required></div>
-                        <div class="col"><input type="password" id="emp-pass" class="form-control" placeholder="كلمة المرور" required></div>
+                        <div class="col"><input type="text" id="emp-name" class="form-control" placeholder="اسم الموظف" required></div>
+                        <div class="col"><input type="text" id="emp-user" class="form-control" placeholder="اسم المستخدم" required></div>
+                        <div class="col"><input type="password" id="emp-pass" class="form-control" placeholder="كلمة السر" required></div>
                     </div>
-                    <div style="margin: 15px 0;">
-                        <p style="font-weight: bold; margin-bottom: 8px;">منح الصلاحيات المخصصة للموظف:</p>
-                        <label style="margin-left: 15px;"><input type="checkbox" id="perm-new-receipt" checked> إيصال جديد</label>
-                        <label style="margin-left: 15px;"><input type="checkbox" id="perm-edit"> التعديل والترحيل</label>
-                        <label style="margin-left: 15px;"><input type="checkbox" id="perm-delete"> الحذف والتصفير</label>
-                        <label style="margin-left: 15px;"><input type="checkbox" id="perm-admin"> إدارة الموظفين والإعدادات</label>
+                    <div style="margin: 12px 0; font-size: 0.9rem;">
+                        <p style="font-weight: bold; margin-bottom: 5px;">الصلاحيات الممنوحة:</p>
+                        <label style="margin-left: 10px;"><input type="checkbox" id="perm-new-receipt" checked> إيصال جديد</label>
+                        <label style="margin-left: 10px;"><input type="checkbox" id="perm-edit" checked> ترحيل وتعديل</label>
+                        <label style="margin-left: 10px;"><input type="checkbox" id="perm-delete"> صلاحية الحذف</label>
+                        <label style="margin-left: 10px;"><input type="checkbox" id="perm-admin"> مسؤول كامل</label>
                     </div>
-                    <button type="submit" class="btn btn-primary">➕ إضافة موظف جديد للنظام</button>
+                    <button type="submit" class="btn btn-primary">➕ إضافة موظف جديد</button>
                 </form>
-                <table class="data-table" style="margin-top: 20px;">
-                    <thead><tr><th>الاسم</th><th>المستخدم</th><th>الصلاحيات الممنوحة</th></tr></thead>
-                    <tbody id="employees-list-output"></tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="data-table" style="margin-top: 15px;">
+                        <thead><tr><th>الاسم</th><th>المستخدم</th><th>الحالة</th></tr></thead>
+                        <tbody id="employees-list-output"></tbody>
+                    </table>
+                </div>
             </section>
 
+            <!-- 5. واجهة المهندسين -->
             <section id="engineers-view" class="view-panel">
-                <h3 style="margin-bottom: 20px; color: var(--brand-color);">لوحة تسجيل المهندسين الفنيين</h3>
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">إضافة وتحديث كادر المهندسين</h3>
                 <form id="engineer-form" onsubmit="addNewEngineer(event)">
                     <div class="row">
-                        <div class="col"><input type="text" id="eng-name-input" class="form-control" placeholder="اسم المهندس" required></div>
-                        <div class="col"><input type="text" id="eng-phone-input" class="form-control" placeholder="رقم هاتف المهندس (للواتساب الأوتوماتيكي)" required></div>
-                        <div class="col"><input type="text" id="eng-spec-input" class="form-control" placeholder="التخصص التقني (آيفون، أندرويد، ميكروتك...)" required></div>
+                        <div class="col"><input type="text" id="eng-name-input" class="form-control" placeholder="اسم المهندس الفني" required></div>
+                        <div class="col"><input type="text" id="eng-phone-input" class="form-control" placeholder="رقم هاتف المهندس" required></div>
+                        <div class="col"><input type="text" id="eng-spec-input" class="form-control" placeholder="التخصص الفني" required></div>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="margin-top: 15px;">➕ إضافة مهندس فني</button>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 12px;">➕ تسجيل مهندس</button>
                 </form>
-                <table class="data-table" style="margin-top: 20px;">
-                    <thead><tr><th>اسم المهندس</th><th>رقم الهاتف</th><th>التخصص التقني</th></tr></thead>
-                    <tbody id="engineers-list-output"></tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="data-table" style="margin-top: 15px;">
+                        <thead><tr><th>المهندس</th><th>الهاتف</th><th>التخصص</th></tr></thead>
+                        <tbody id="engineers-list-output"></tbody>
+                    </table>
+                </div>
             </section>
 
+            <!-- 6. واجهة صيانة النظام والكلاود -->
             <section id="sys-maintenance-view" class="view-panel">
-                <h3 style="margin-bottom: 20px; color: var(--brand-color);">صيانة النظام والتزامن السحابي المجاني</h3>
-                <div style="background: var(--bg-sidebar); padding: 20px; border-radius: 6px; margin-bottom: 20px;">
-                    <h4>التزامن السحابي والنسخ الاحتياطي الفوري (JSON الكلاود)</h4>
-                    <p style="font-size: 0.9rem; color: var(--gray-muted); margin-bottom: 15px;">يقوم النظام بأخذ نسخة احتياطية من كافة الحسابات، السندات، والإيصالات بشكل محلي وتلقائي كل 24 ساعة لضمان عدم ضياعها.</p>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button class="btn btn-success" onclick="exportSystemData()">📥 تحميل نسخة احتياطية الآن (محلي وكلاود)</button>
-                        <button class="btn btn-primary" onclick="document.getElementById('import-file-input').click()">📤 استرجاع ومزامنة نسخة سابقة</button>
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">النسخ الاحتياطي والمزامنة السحابية</h3>
+                <div style="background: var(--bg-sidebar); padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+                    <p style="font-size: 0.85rem; color: var(--gray-muted); margin-bottom: 12px;">يقوم النظام بأخذ نسخة احتياطية بشكل تلقائي لضمان سلامة البيانات.</p>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button class="btn btn-success" onclick="exportSystemData()">📥 تحميل النسخة الاحتياطية (JSON)</button>
+                        <button class="btn btn-primary" onclick="document.getElementById('import-file-input').click()">📤 استرجاع وتحديث البيانات</button>
                         <input type="file" id="import-file-input" style="display: none;" onchange="importSystemData(event)">
                     </div>
                 </div>
-                <div style="background: var(--bg-sidebar); padding: 20px; border-radius: 6px;">
-                    <h4>إعدادات التزامن التلقائي السحابي الخارجي</h4>
-                    <div class="row">
-                        <div class="col">
-                            <label>عنوان بريد التخزين السحابي (جوجل)</label>
-                            <input type="email" id="cfg-backup-email" class="form-control" placeholder="your-email@gmail.com">
-                        </div>
-                        <div class="col">
-                            <label>معرّف توكن بوت التليجرام الخاص بمحلك (Telegram Bot Token)</label>
-                            <input type="text" id="cfg-telegram-token" class="form-control" placeholder="Bot Token المزامنة الفورية">
-                        </div>
-                    </div>
-                    <button class="btn btn-primary" style="margin-top: 15px;" onclick="saveCloudSettings()">💾 حفظ إعدادات الكلاود التلقائية</button>
-                </div>
             </section>
 
+            <!-- 7. واجهة إعدادات الطباعة المرنة (6.5سم × 21سم) -->
             <section id="print-settings-view" class="view-panel">
-                <h3 style="margin-bottom: 20px; color: var(--brand-color);">لوحة تخصيص وتصميم أبعاد السند المطبوع مسبقاً</h3>
-                <p style="font-size: 0.9rem; color: var(--gray-muted);">أبعاد السند الخاص بك هي 6.5سم طول × 21سم عرض. يمكنك سحب وإفلات العناصر وتغيير حجمها والخط واللون لتنزل الحقول على الورق المطبوع مسبقاً بدقة تامة بعد ترويسة الشعار.</p>
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">لوحة التحكم في إحداثيات ومقاس السند المطبوع مسبقاً</h3>
+                <p style="font-size: 0.85rem; color: var(--gray-muted);">أبعاد السند: 6.5 سم طول × 21 سم عرض.</p>
                 
-                <div class="row" style="margin-top: 15px;">
+                <div class="row" style="margin-top: 10px;">
                     <div class="col">
-                        <label>حجم الخط الإفتراضي للحقول (بكسل)</label>
+                        <label>حجم الخط (بكسل)</label>
                         <input type="number" id="print-font-size" class="form-control" value="13" oninput="updateDesignerStyles()">
                     </div>
                     <div class="col">
-                        <label>لون خط حقول السند المطبوع</label>
+                        <label>لون حقول الطباعة</label>
                         <input type="color" id="print-font-color" class="form-control" value="#000000" oninput="updateDesignerStyles()">
                     </div>
                 </div>
 
                 <div id="print-designer-visual">
-                    <div style="position: absolute; top: 0; width: 100%; height: 22mm; background: #f0f0f0; text-align: center; line-height: 22mm; font-size: 11px; color: #aaa; border-bottom: 1px dashed #ccc;">
-                        منطقة الشعار والترويسة الجاهزة المطبوعة مسبقاً (2.2 سم) - محظور الطباعة فوقها تلقائياً
+                    <div style="position: absolute; top: 0; width: 100%; height: 22mm; background: #e2e8f0; text-align: center; line-height: 22mm; font-size: 11px; color: #718096;">
+                        حيز الشعار المطبوع مسبقاً (2.2 سم)
                     </div>
-                    <div class="draggable-element" id="drag-p-id" style="top: 25mm; left: 10mm;">رقم الإيصال: #1</div>
-                    <div class="draggable-element" id="drag-p-name" style="top: 25mm; left: 60mm;">الاسم: محمد عبدالرحمن</div>
-                    <div class="draggable-element" id="drag-p-device" style="top: 32mm; left: 10mm;">الجهاز: سامسونج S23 Ultra</div>
-                    <div class="draggable-element" id="drag-p-fault" style="top: 32mm; left: 110mm;">العطل: تغيير شاشة مكسورة</div>
-                    <div class="draggable-element" id="drag-p-money" style="top: 42mm; left: 10mm;">الإجمالي: 50,000 ريال</div>
-                    <div class="draggable-element" id="drag-p-prepaid" style="top: 42mm; left: 70mm;">المسبق: 10,000 ريال</div>
-                    <div class="draggable-element" id="drag-p-rem" style="top: 42mm; left: 130mm;">المتبقي: 40,000 ريال</div>
-                    <div class="draggable-element" id="drag-p-dates" style="top: 52mm; left: 10mm;">التاريخ المتوقع للتسليم: بعد 24 ساعة من الفحص</div>
+                    <div class="draggable-element" id="drag-p-id" style="top: 25mm; left: 5mm;">رقم السند: #1</div>
+                    <div class="draggable-element" id="drag-p-name" style="top: 25mm; left: 55mm;">العميل: محمد عبد الرحمن</div>
+                    <div class="draggable-element" id="drag-p-device" style="top: 33mm; left: 5mm;">الجهاز: سامسونج S20 ZLT</div>
+                    <div class="draggable-element" id="drag-p-fault" style="top: 33mm; left: 100mm;">العطل: فك فلاشة المودم</div>
+                    <div class="draggable-element" id="drag-p-money" style="top: 42mm; left: 5mm;">الإجمالي: 15,000</div>
+                    <div class="draggable-element" id="drag-p-prepaid" style="top: 42mm; left: 65mm;">المسبق: 5,000</div>
+                    <div class="draggable-element" id="drag-p-rem" style="top: 42mm; left: 125mm;">المتبقي: 10,000</div>
+                    <div class="draggable-element" id="drag-p-dates" style="top: 52mm; left: 5mm;">موعد التسليم المتوقع: بعد 24 ساعة</div>
                 </div>
-                <button class="btn btn-success" style="margin-top: 15px;" onclick="savePrintLayoutCoordinates()">💾 حفظ إحداثيات ومواقع الطباعة المخصصة محلياً</button>
+                <button class="btn btn-success" style="margin-top: 15px;" onclick="savePrintLayoutCoordinates()">💾 حفظ إحداثيات ومواقع الطباعة</button>
             </section>
 
         </main>
     </div>
 
     <div id="notification-center">
-        <div style="padding: 10px; font-weight: bold; background: var(--brand-color); color: white;">إشعارات الهواتف المتأخرة والتقارير</div>
-        <div id="noti-list-container">
-            <div class="noti-item" style="color: var(--gray-muted); text-align: center;">لا توجد أجهزة متأخرة عن التسليم حالياً.</div>
-        </div>
+        <div style="padding: 10px; font-weight: bold; background: var(--brand-color); color: white; font-size: 0.9rem;">إشعارات الأجهزة المتأخرة</div>
+        <div id="noti-list-container"></div>
     </div>
 
     <div id="print-area-target"></div>
 
     <footer class="footer-credits">
-        نظام الوحده للبرمجيات لإدارة الصيانة | تصميم وبرمجة المهندس عبدالرحمن الاحمر 772364042 &copy; 2026
+        نظام صيانة الوحده للبرمجيات | تصميم المهندس عبدالرحمن الاحمر 772364042 &copy; 2026
     </footer>
 
     <script>
-        // إعداد الهيكل التلقائي لقاعدة البيانات الذكية المخزنة محلياً وسحابياً عبر ملفات JSON
         let db = {
             receipts: [],
             clients: [],
             engineers: [
-                { id: 1, name: "عبدالرحمن الأحمر", phone: "772364042", spec: "صيانة شاملة وميكروتك" },
-                { id: 2, name: "محمد القاضي", phone: "770000000", spec: "برمجيات وهاردوير متقدم" }
+                { id: 1, name: "عبدالرحمن الأحمر", phone: "772364042", spec: "صيانة أجهزة وشبكات" }
             ],
             employees: [
                 { id: 1, name: "المدير العام", user: "admin", pass: "admin", perms: { new: true, edit: true, del: true, admin: true } }
@@ -590,23 +600,21 @@
             printLayout: {
                 fontSize: 13, color: "#000000",
                 positions: {
-                    id: { top: 95, left: 40 }, name: { top: 95, left: 240 },
-                    device: { top: 125, left: 40 }, fault: { top: 125, left: 420 },
-                    money: { top: 160, left: 40 }, prepaid: { top: 160, left: 260 }, remaining: { top: 160, left: 480 },
-                    dates: { top: 200, left: 40 }
+                    id: { top: 95, left: 20 }, name: { top: 95, left: 210 },
+                    device: { top: 125, left: 20 }, fault: { top: 125, left: 380 },
+                    money: { top: 160, left: 20 }, prepaid: { top: 160, left: 240 }, remaining: { top: 160, left: 450 },
+                    dates: { top: 200, left: 20 }
                 }
             },
-            cloudConfig: { email: "", telegramToken: "" },
             suggestionsData: {
-                brands: ["Apple", "Samsung", "Huawei", "Xiaomi", "Infinix", "MikroTik Router", "Modem Huawei", "Access Point"],
-                models: ["iPhone 13 Pro", "iPhone 14 Pro Max", "Galaxy S23 Ultra", "Galaxy A54", "Simax AX1800", "OLAX MC80", "ZTE S20 ZLT"],
-                faults: ["تغيير شاشة مكسورة", "تغيير منفذ شحن Type-C", "إصلاح فلاشة NAND المقفلة", "برمجة السوفتوير وفك الحساب", "تغيير بطارية أصلية"]
+                brands: ["Apple", "Samsung", "Huawei", "Xiaomi", "Infinix", "MikroTik Router", "Modem Huawei"],
+                models: ["iPhone 14 Pro Max", "Galaxy S23 Ultra", "Simax AX1800", "ZTE S20 ZLT"],
+                faults: ["تغيير شاشة مكسورة", "إصلاح فلاشة NAND المقفلة", "برمجة السوفتوير وفك الحساب"]
             }
         };
 
         let currentUser = null;
 
-        // تحميل فوري عند إقلاع الصفحة وتوافق المتصفحات
         window.onload = function() {
             if (localStorage.getItem("wahda_sys_db")) {
                 db = JSON.parse(localStorage.getItem("wahda_sys_db"));
@@ -615,7 +623,6 @@
             }
             initSystemCore();
             setupDraggableElements();
-            runAutomatedTimeChecks();
         };
 
         function initSystemCore() {
@@ -627,7 +634,6 @@
             calculateSystemNotifications();
         }
 
-        // تسجيل الدخول والتحقق من الصلاحيات الشاملة
         function handleLogin() {
             const userIn = document.getElementById("login-user").value;
             const passIn = document.getElementById("login-pass").value;
@@ -635,10 +641,40 @@
             
             if (matched) {
                 currentUser = matched;
-                document.getElementById("login-screen").style.display = "none";
-                applyUserPermissions(matched);
+                // إذا دخل بكلمة سر "admin" المبدئية، يتم إجباره على تغييرها قبل فتح لوحة التحكم
+                if (matched.user === "admin" && matched.pass === "admin") {
+                    document.getElementById("login-screen").style.display = "none";
+                    document.getElementById("password-reset-screen").style.display = "flex";
+                } else {
+                    document.getElementById("login-screen").style.display = "none";
+                    applyUserPermissions(matched);
+                }
             } else {
-                alert("بيانات الدخول خاطئة، يرجى المحاولة مرة أخرى.");
+                alert("بيانات الدخول خاطئة.");
+            }
+        }
+
+        function forcePasswordChange() {
+            const newPass = document.getElementById("new-secure-pass").value;
+            const confirmPass = document.getElementById("confirm-secure-pass").value;
+
+            if (!newPass || newPass.trim() === "" || newPass === "admin") {
+                alert("يرجى إدخال كلمة مرور جديدة وقوية ومختلفة عن كلمة admin!");
+                return;
+            }
+            if (newPass !== confirmPass) {
+                alert("كلمتا المرور غير متطابقتين.");
+                return;
+            }
+
+            // تحديث كلمة السر للمدير العام في قاعدة البيانات وتأمينها
+            const adminUser = db.employees.find(e => e.user === "admin");
+            if (adminUser) {
+                adminUser.pass = newPass;
+                saveToLocalStorage();
+                alert("🔒 ممتاز يا مهندس! تم تحديث كلمة مرور المدير العام وتأمين النظام بنجاح.");
+                document.getElementById("password-reset-screen").style.display = "none";
+                applyUserPermissions(currentUser);
             }
         }
 
@@ -659,9 +695,9 @@
         function logout() {
             currentUser = null;
             document.getElementById("login-screen").style.display = "flex";
+            document.getElementById("password-reset-screen").style.display = "none";
         }
 
-        // التبديل السلس والسريع للواجهات
         function switchView(viewId, element) {
             document.querySelectorAll(".view-panel").forEach(p => p.classList.remove("active"));
             document.querySelectorAll(".menu-item").forEach(m => m.classList.remove("active"));
@@ -669,7 +705,6 @@
             element.classList.add("active");
         }
 
-        // تغيير المظهر والإضاءة الفوري للنظام (فاتح / غامق)
         function toggleTheme() {
             const body = document.body;
             const currentTheme = body.getAttribute("data-theme");
@@ -678,23 +713,18 @@
             document.getElementById("theme-toggle-btn").innerText = newTheme === "light" ? "🌙" : "☀️";
         }
 
-        // جلب قوائم البيانات المدمجة والمهندسين
         function populateEngineersDropdowns() {
-            const selectRec = document.getElementById("rec-engineer");
-            const selectRep = document.getElementById("rep-engineer");
-            let html = db.engineers.map(e => `<option value="${e.id}">${e.name}</option>`).join("");
-            selectRec.innerHTML = html;
-            selectRep.innerHTML = html;
+            const html = db.engineers.map(e => `<option value="${e.id}">${e.name}</option>`).join("");
+            document.getElementById("rec-engineer").innerHTML = html;
+            document.getElementById("rep-engineer").innerHTML = html;
         }
 
-        // الحسابات الأوتوماتيكية التلقائية للمبالغ والعملات المتبقية
         function updateRemainingCost() {
             const total = parseFloat(document.getElementById("rec-total").value) || 0;
             const prepaid = parseFloat(document.getElementById("rec-prepaid").value) || 0;
             document.getElementById("rec-remaining").value = Math.max(0, total - prepaid);
         }
 
-        // التنبؤات والذكاء الفوري أثناء الكتابة
         function searchClientByPhone(val) {
             const box = document.getElementById("phone-suggestions");
             if (!val) { box.style.display = "none"; return; }
@@ -735,11 +765,8 @@
             box.style.display = "block";
         }
 
-        // حفظ إيصال الصيانة الجديد في قاعدة البيانات
         function saveNewReceipt(e) {
             e.preventDefault();
-            if (currentUser && !currentUser.perms.new) { alert("عذراً، لا تمتلك صلاحية إنشاء إيصالات جديدة."); return; }
-
             const newRec = {
                 id: db.receipts.length + 1,
                 phone: document.getElementById("rec-phone").value,
@@ -759,39 +786,22 @@
                 delivered: false,
                 paid: false,
                 createdAt: new Date().getTime(),
-                expectedDelivery: new Date().getTime() + (24 * 60 * 60 * 1000) // بعد 24 ساعة افتراضياً
+                expectedDelivery: new Date().getTime() + (24 * 60 * 60 * 1000)
             };
-
-            // حفظ ذكي للبيانات المدخلة للتنبؤ المستقبلي التلقائي
-            if(!db.suggestionsData.brands.includes(newRec.brand)) db.suggestionsData.brands.push(newRec.brand);
-            if(!db.suggestionsData.models.includes(newRec.model)) db.suggestionsData.models.push(newRec.model);
-            if(!db.suggestionsData.faults.includes(newRec.faultDesc)) db.suggestionsData.faults.push(newRec.faultDesc);
-
             db.receipts.push(newRec);
             saveToLocalStorage();
-            alert(`تم حفظ السند رقم ${newRec.id} بنجاح تام وتم ترحيل البيانات.`);
-            
-            // إرسال رسالة واتساب وهمية إلكترونية كأمر أوتوماتيكي متوقع في الخلفية
-            simulateWhatsAppSend(newRec.phone, `مرحباً ${newRec.clientName}، تم استلام جهازك ${newRec.brand} ${newRec.model} في مركز الوحده للبرمجيات برقم إيصال ${newRec.id}.`);
-            
+            alert(`تم حفظ السند رقم ${newRec.id}`);
             initSystemCore();
             document.getElementById("receipt-form").reset();
         }
 
-        // البحث الفوري والشامل لربط البيانات وتعديلها
         function performGlobalSearch() {
             const val = document.getElementById("search-global-input").value.toLowerCase();
             const output = document.getElementById("search-results-output");
             let filtered = db.receipts.filter(r => r.id.toString() === val || r.phone.includes(val) || r.clientName.toLowerCase().includes(val));
-            
             output.innerHTML = filtered.map(r => `
-                <tr dblclick="openReceiptFromTable(${r.id})" onclick="openReceiptFromTable(${r.id})">
-                    <td>${r.id}</td>
-                    <td>${r.clientName}</td>
-                    <td>${r.phone}</td>
-                    <td>${r.brand} ${r.model}</td>
-                    <td style="font-weight:bold; color: ${r.status==='تم التصليح'?'green':'orange'}">${r.status}</td>
-                    <td>${r.remaining} ${r.currency}</td>
+                <tr onclick="openReceiptFromTable(${r.id})">
+                    <td>${r.id}</td><td>${r.clientName}</td><td>${r.phone}</td><td>${r.brand} ${r.model}</td><td>${r.status}</td><td>${r.remaining} ${r.currency}</td>
                 </tr>
             `).join("");
         }
@@ -802,51 +812,34 @@
             loadReceiptToReport();
         }
 
-        // جلب السند وترحيل بيانات تقرير المهندسين
         let currentEditingReceiptId = null;
         function loadReceiptToReport() {
             const id = parseInt(document.getElementById("report-search-id").value);
             const receipt = db.receipts.find(r => r.id === id);
-            if(!receipt) { alert("رقم السند غير موجود بالقاعدة الحالية."); return; }
-
+            if(!receipt) { alert("السند غير موجود."); return; }
             currentEditingReceiptId = id;
-            document.getElementById("report-card-title").innerText = `تعديل سند الصيانة رقم: #${receipt.id} للعميل: ${receipt.clientName}`;
+            document.getElementById("report-card-title").innerText = `تعديل إيصال صيانة: #${receipt.id}`;
             document.getElementById("rep-status").value = receipt.status;
             document.getElementById("rep-engineer").value = receipt.engineerId;
             document.getElementById("rep-delivered").checked = receipt.delivered;
             document.getElementById("rep-paid").checked = receipt.paid;
-            
-            document.getElementById("delivery-details-zone").style.display = receipt.delivered ? "flex" : "none";
             document.getElementById("report-edit-card").style.display = "block";
         }
 
-        function handleDeliveryCheckbox(checked) {
-            document.getElementById("delivery-details-zone").style.display = checked ? "flex" : "none";
-        }
-
         function saveReportModifications() {
-            if (currentUser && !currentUser.perms.edit) { alert("عذراً، لا تمتلك صلاحية ترحيل وتعديل التقارير."); return; }
             if(!currentEditingReceiptId) return;
-
             const receipt = db.receipts.find(r => r.id === currentEditingReceiptId);
             if(receipt) {
                 receipt.status = document.getElementById("rep-status").value;
                 receipt.engineerId = document.getElementById("rep-engineer").value;
                 receipt.delivered = document.getElementById("rep-delivered").checked;
                 receipt.paid = document.getElementById("rep-paid").checked;
-                
                 saveToLocalStorage();
-                alert("تم تحديث تقرير المهندس وحفظ حالة السند الفنية.");
-                
-                // رسالة واتساب أوتوماتيكية للزبون عند تغير حالة جهاز الصيانة
-                if (receipt.status === "تم التصليح") {
-                    simulateWhatsAppSend(receipt.phone, `السلام عليكم معكم الوحده للبرمجيات، جهازك الذي برقم الإيصال ${receipt.id} جاهز وتم تصليحه بنجاح، نرجو استلامه في أقرب وقت.`);
-                }
+                alert("تم تحديث السند.");
                 initSystemCore();
             }
         }
 
-        // إدارة الموظفين والمهندسين داخلياً
         function addNewEmployee(e) {
             e.preventDefault();
             const emp = {
@@ -869,7 +862,7 @@
 
         function renderEmployeesTable() {
             document.getElementById("employees-list-output").innerHTML = db.employees.map(e => `
-                <tr><td>${e.name}</td><td>${e.user}</td><td>${e.perms.admin?'كامل الصلاحيات':'صلاحيات محددة'}</td></tr>
+                <tr><td>${e.name}</td><td>${e.user}</td><td>${e.perms.admin?'كامل':'محدد'}</td></tr>
             `).join("");
         }
 
@@ -894,22 +887,12 @@
             `).join("");
         }
 
-        // أتمتة المراقبة الزمنية والإشعارات المتأخرة
         function calculateSystemNotifications() {
-            const notiContainer = document.getElementById("noti-list-container");
+            const container = document.getElementById("noti-list-container");
             const now = new Date().getTime();
-            let delayedReceipts = db.receipts.filter(r => !r.delivered && r.status === "قيد العمل" && now > r.expectedDelivery);
-            
-            document.getElementById("noti-count").innerText = delayedReceipts.length;
-            if(delayedReceipts.length > 0) {
-                notiContainer.innerHTML = delayedReceipts.map(r => `
-                    <div class="noti-item" style="border-right: 4px solid var(--danger-color); background: rgba(220,53,69,0.05)">
-                        جهاز السند <b>#${r.id}</b> للعميل ${r.clientName} متأخر في قسم الصيانة ولم ينجز تقريره!
-                    </div>
-                `).join("");
-            } else {
-                notiContainer.innerHTML = `<div class="noti-item" style="color: var(--gray-muted); text-align: center;">لا توجد أجهزة متأخرة عن التسليم حالياً.</div>`;
-            }
+            let delayed = db.receipts.filter(r => !r.delivered && r.status === "قيد العمل" && now > r.expectedDelivery);
+            document.getElementById("noti-count").innerText = delayed.length;
+            container.innerHTML = delayed.length > 0 ? delayed.map(r => `<div class="noti-item">سند #${r.id} متأخر!</div>`).join("") : "لا توجد متأخرات.";
         }
 
         function toggleNotifications() {
@@ -917,29 +900,16 @@
             panel.style.display = panel.style.display === "block" ? "none" : "block";
         }
 
-        // محاكاة الإرسال التلقائي للواتساب للعملاء والمهندسين الفنيين
-        function simulateWhatsAppSend(phone, msg) {
-            console.log(`%c[WhatsApp Auto-Send] لـ ${phone}: ${msg}`, "color: #28a745; font-weight: bold;");
-        }
-
-        function runAutomatedTimeChecks() {
-            // فحص دوري كل دقيقة للتحقق من أتمتة الرسائل
-            setInterval(() => { calculateSystemNotifications(); }, 60000);
-        }
-
-        // حفظ واستيراد النسخ الاحتياطية سحابياً ومحلياً (تزامن الكلاود المجاني)
         function saveToLocalStorage() {
             localStorage.setItem("wahda_sys_db", JSON.stringify(db));
         }
 
         function exportSystemData() {
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", `الوحده_للبرمجيات_قاعدة_البيانات_${new Date().toISOString().slice(0,10)}.json`);
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
+            const dl = document.createElement('a');
+            dl.setAttribute("href", dataStr);
+            dl.setAttribute("download", "Wahda_Database.json");
+            dl.click();
         }
 
         function importSystemData(event) {
@@ -948,26 +918,15 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
-                    const importedDb = JSON.parse(e.target.result);
-                    if(importedDb.receipts && importedDb.clients) {
-                        db = importedDb;
-                        saveToLocalStorage();
-                        initSystemCore();
-                        alert("تم استيراد ومزامنة قاعدة البيانات الكلاود بنجاح تام.");
-                    } else { alert("الملف المختار غير متوافق مع بنية هذا النظام."); }
-                } catch(err) { alert("حدث خطأ أثناء قراءة ملف التزامن السحابي."); }
+                    db = JSON.parse(e.target.result);
+                    saveToLocalStorage();
+                    initSystemCore();
+                    alert("تم استيراد قاعدة البيانات.");
+                } catch(err) { alert("ملف غير صالح."); }
             };
             reader.readAsText(file);
         }
 
-        function saveCloudSettings() {
-            db.cloudConfig.email = document.getElementById("cfg-backup-email").value;
-            db.cloudConfig.telegramToken = document.getElementById("cfg-telegram-token").value;
-            saveToLocalStorage();
-            alert("تم حفظ وتأمين إعدادات المزامنة التلقائية للكلاود.");
-        }
-
-        // إعداد هندسة السحب والإفلات التفاعلي على الموبايل والكمبيوتر لحقول الطباعة
         function setupDraggableElements() {
             document.querySelectorAll('.draggable-element').forEach(el => {
                 let isDragging = false;
@@ -1032,7 +991,7 @@
                 }
             });
             saveToLocalStorage();
-            alert("تم حفظ أماكن ومقاسات طباعة البيانات بدقة ملليمترية هندسية.");
+            alert("تم حفظ أبعاد ومواقع الطباعة المحدثة.");
         }
 
         function updateDesignerVisualFromDB() {
@@ -1041,19 +1000,14 @@
             updateDesignerStyles();
         }
 
-        // محرك الطباعة الفورية الفعلي الموجه لورق السندات قياس 6.5سم مخصص بعد منطقة الشعار
         function triggerDirectPrint() {
             const printArea = document.getElementById("print-area-target");
             const fs = db.printLayout.fontSize + "px";
             const col = db.printLayout.color;
-
-            // جلب بيانات الإيصال الأخير لعرضه في نموذج الطباعة
-            const lastRec = db.receipts[db.receipts.length - 1] || {
-                id: 1, clientName: "محمد عبدالرحمن", brand: "سامسونج", model: "S23 Ultra", faultDesc: "شاشة", total: 0, prepaid: 0, remaining: 0
-            };
+            const lastRec = db.receipts[db.receipts.length - 1] || { id: 1, clientName: "عميل تجريبي", brand: "سامسونج", model: "S20", faultDesc: "فحص", total: 0, prepaid: 0, remaining: 0 };
 
             printArea.innerHTML = `
-                <div style="position: relative; width: 210mm; height: 65mm; font-family: Arial; color: ${col}; font-size: ${fs};">
+                <div style="position: relative; width: 210mm; height: 65mm; color: ${col}; font-size: ${fs};">
                     <div style="position: absolute; top: ${db.printLayout.positions.id.top}px; left: ${db.printLayout.positions.id.left}px;">رقم الإيصال: #${lastRec.id}</div>
                     <div style="position: absolute; top: ${db.printLayout.positions.name.top}px; left: ${db.printLayout.positions.name.left}px;">الاسم: ${lastRec.clientName}</div>
                     <div style="position: absolute; top: ${db.printLayout.positions.device.top}px; left: ${db.printLayout.positions.device.left}px;">الجهاز: ${lastRec.brand} ${lastRec.model}</div>
@@ -1061,7 +1015,6 @@
                     <div style="position: absolute; top: ${db.printLayout.positions.money.top}px; left: ${db.printLayout.positions.money.left}px;">الإجمالي: ${lastRec.total}</div>
                     <div style="position: absolute; top: ${db.printLayout.positions.prepaid.top}px; left: ${db.printLayout.positions.prepaid.left}px;">المسبق: ${lastRec.prepaid}</div>
                     <div style="position: absolute; top: ${db.printLayout.positions.remaining.top}px; left: ${db.printLayout.positions.remaining.left}px;">المتبقي: ${lastRec.remaining}</div>
-                    <div style="position: absolute; top: ${db.printLayout.positions.dates.top}px; left: ${db.printLayout.positions.dates.left}px;">التسليم المتوقع: خلال 24 ساعة من الفحص الفني</div>
                 </div>
             `;
             window.print();
