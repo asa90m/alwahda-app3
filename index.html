@@ -45,7 +45,6 @@
             -webkit-text-size-adjust: 100%;
         }
 
-        /* شاشات الدخول وتغيير كلمة السر */
         #login-screen, #password-reset-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -219,7 +218,6 @@
 </head>
 <body data-theme="light">
 
-    <!-- شاشة تسجيل الدخول الافتراضية المبدئية admin/admin -->
     <div id="login-screen">
         <div class="login-card">
             <h2>الوحده للبرمجيات</h2>
@@ -231,18 +229,16 @@
         </div>
     </div>
 
-    <!-- شاشة إجبارية لتغيير كلمة السر إذا كانت الافتراضية لحماية البيانات -->
     <div id="password-reset-screen" style="display: none;">
         <div class="login-card">
             <h3 style="color: var(--danger-color); margin-bottom: 10px;">🛡️ إجراء أمان مطلوب</h3>
-            <p style="color: var(--text-main); font-size: 0.9rem; margin-bottom: 15px;">أنت تسجل الدخول بكلمة المرور الافتراضية للمدير العام. يرجى تعيين كلمة مرور جديدة قوية الآن لتأمين قاعدة بيانات المحل.</p>
+            <p style="color: var(--text-main); font-size: 0.9rem; margin-bottom: 15px;">أنت تسجل الدخول بالحساب الافتراضي للمدير العام. يرجى تعيين كلمة مرور جديدة قوية الآن لتأمين النظام.</p>
             <input type="password" id="new-secure-pass" placeholder="كلمة المرور الجديدة">
             <input type="password" id="confirm-secure-pass" placeholder="تأكيد كلمة المرور الجديدة">
             <button onclick="forcePasswordChange()" style="background: var(--success-color);">حفظ وتأمين الحساب 🔒</button>
         </div>
     </div>
 
-    <!-- الرأس الرئيسي للنظام التفاعلي -->
     <header id="main-header">
         <div class="header-right">
             <div class="header-logo">W</div>
@@ -256,7 +252,6 @@
     </header>
 
     <div id="app-body">
-        <!-- القائمة الجانبية المستجيبة للجوال -->
         <aside id="sidebar">
             <div class="sidebar-section">
                 <div class="section-title">العمليات</div>
@@ -276,10 +271,8 @@
             </div>
         </aside>
 
-        <!-- منطقة العمل ومحتوى اللوحات -->
         <main id="content-area">
 
-            <!-- 1. واجهة إيصال جديد -->
             <section id="new-receipt-view" class="view-panel active">
                 <h3 style="margin-bottom: 15px; color: var(--brand-color);">إيصال استلام جديد</h3>
                 <form id="receipt-form" onsubmit="saveNewReceipt(event)">
@@ -308,7 +301,7 @@
                     <div class="row">
                         <div class="col autocomplete-wrapper">
                             <div class="form-group">
-                                <label>الشركة (أو ميكروتك/راوتر)</label>
+                                <label>الشركة المصنعة</label>
                                 <input type="text" id="rec-brand" class="form-control" required oninput="suggestBrands(this.value)">
                                 <div class="suggestions-box" id="brand-suggestions"></div>
                             </div>
@@ -392,7 +385,9 @@
                         <div class="col">
                             <div class="form-group">
                                 <label>المهندس المختص بالاستلام</label>
-                                <select id="rec-engineer" class="form-control" required></select>
+                                <select id="rec-engineer" class="form-control" required>
+                                    <option value="">-- اختر مهندس الصيانة --</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -404,7 +399,6 @@
                 </form>
             </section>
 
-            <!-- 2. واجهة البحث عن الأجهزة والعملاء -->
             <section id="search-devices-view" class="view-panel">
                 <h3 style="margin-bottom: 15px; color: var(--brand-color);">البحث والتقارير الفورية</h3>
                 <div class="row" style="margin-bottom: 15px;">
@@ -432,7 +426,6 @@
                 </div>
             </section>
 
-            <!-- 3. واجهة تقارير المهندسين والترحيل -->
             <section id="eng-reports-view" class="view-panel">
                 <h3 style="margin-bottom: 15px; color: var(--brand-color);">ترحيل تقارير المهندسين</h3>
                 <div class="row" style="margin-bottom: 15px;">
@@ -464,17 +457,10 @@
                     </div>
                     <div class="row" style="margin-top: 12px;">
                         <div class="col">
-                            <label><input type="checkbox" id="rep-delivered" onchange="handleDeliveryCheckbox(this.checked)"> تم تسليم الجهاز نهائياً للعميل</label>
+                            <label><input type="checkbox" id="rep-delivered"> تم تسليم الجهاز نهائياً للعميل</label>
                         </div>
                         <div class="col">
                             <label><input type="checkbox" id="rep-paid"> تم الدفع وبراءة الذمة المالية</label>
-                        </div>
-                    </div>
-                    <div id="delivery-details-zone" class="row" style="margin-top: 12px; display: none;">
-                        <div class="col">
-                            <label>وثيقة التحقق عند التسليم:</label>
-                            <label><input type="radio" name="delivery-doc" value="السند المطبوع" checked> السند المطبوع</label>
-                            <label><input type="radio" name="delivery-doc" value="بطاقة شخصية"> بطاقة شخصية</label>
                         </div>
                     </div>
                     <div style="margin-top: 15px;">
@@ -483,7 +469,6 @@
                 </div>
             </section>
 
-            <!-- 4. واجهة الموظفين والصلاحيات -->
             <section id="employees-view" class="view-panel">
                 <h3 style="margin-bottom: 15px; color: var(--brand-color);">إدارة الموظفين والصلاحيات</h3>
                 <form id="employee-form" onsubmit="addNewEmployee(event)">
@@ -509,7 +494,6 @@
                 </div>
             </section>
 
-            <!-- 5. واجهة المهندسين -->
             <section id="engineers-view" class="view-panel">
                 <h3 style="margin-bottom: 15px; color: var(--brand-color);">إضافة وتحديث كادر المهندسين</h3>
                 <form id="engineer-form" onsubmit="addNewEngineer(event)">
@@ -528,11 +512,10 @@
                 </div>
             </section>
 
-            <!-- 6. واجهة صيانة النظام والكلاود -->
             <section id="sys-maintenance-view" class="view-panel">
                 <h3 style="margin-bottom: 15px; color: var(--brand-color);">النسخ الاحتياطي والمزامنة السحابية</h3>
                 <div style="background: var(--bg-sidebar); padding: 15px; border-radius: 6px; margin-bottom: 15px;">
-                    <p style="font-size: 0.85rem; color: var(--gray-muted); margin-bottom: 12px;">يقوم النظام بأخذ نسخة احتياطية بشكل تلقائي لضمان سلامة البيانات.</p>
+                    <p style="font-size: 0.85rem; color: var(--gray-muted); margin-bottom: 12px;">إدارة وحفظ قاعدة بيانات المحل بصيغة JSON مرنة.</p>
                     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                         <button class="btn btn-success" onclick="exportSystemData()">📥 تحميل النسخة الاحتياطية (JSON)</button>
                         <button class="btn btn-primary" onclick="document.getElementById('import-file-input').click()">📤 استرجاع وتحديث البيانات</button>
@@ -541,7 +524,6 @@
                 </div>
             </section>
 
-            <!-- 7. واجهة إعدادات الطباعة المرنة (6.5سم × 21سم) -->
             <section id="print-settings-view" class="view-panel">
                 <h3 style="margin-bottom: 15px; color: var(--brand-color);">لوحة التحكم في إحداثيات ومقاس السند المطبوع مسبقاً</h3>
                 <p style="font-size: 0.85rem; color: var(--gray-muted);">أبعاد السند: 6.5 سم طول × 21 سم عرض.</p>
@@ -562,463 +544,10 @@
                         حيز الشعار المطبوع مسبقاً (2.2 سم)
                     </div>
                     <div class="draggable-element" id="drag-p-id" style="top: 25mm; left: 5mm;">رقم السند: #1</div>
-                    <div class="draggable-element" id="drag-p-name" style="top: 25mm; left: 55mm;">العميل: محمد عبد الرحمن</div>
-                    <div class="draggable-element" id="drag-p-device" style="top: 33mm; left: 5mm;">الجهاز: سامسونج S20 ZLT</div>
-                    <div class="draggable-element" id="drag-p-fault" style="top: 33mm; left: 100mm;">العطل: فك فلاشة المودم</div>
-                    <div class="draggable-element" id="drag-p-money" style="top: 42mm; left: 5mm;">الإجمالي: 15,000</div>
-                    <div class="draggable-element" id="drag-p-prepaid" style="top: 42mm; left: 65mm;">المسبق: 5,000</div>
-                    <div class="draggable-element" id="drag-p-rem" style="top: 42mm; left: 125mm;">المتبقي: 10,000</div>
-                    <div class="draggable-element" id="drag-p-dates" style="top: 52mm; left: 5mm;">موعد التسليم المتوقع: بعد 24 ساعة</div>
-                </div>
-                <button class="btn btn-success" style="margin-top: 15px;" onclick="savePrintLayoutCoordinates()">💾 حفظ إحداثيات ومواقع الطباعة</button>
-            </section>
-
-        </main>
-    </div>
-
-    <div id="notification-center">
-        <div style="padding: 10px; font-weight: bold; background: var(--brand-color); color: white; font-size: 0.9rem;">إشعارات الأجهزة المتأخرة</div>
-        <div id="noti-list-container"></div>
-    </div>
-
-    <div id="print-area-target"></div>
-
-    <footer class="footer-credits">
-        نظام صيانة الوحده للبرمجيات | تصميم المهندس عبدالرحمن الاحمر 772364042 &copy; 2026
-    </footer>
-
-    <script>
-        let db = {
-            receipts: [],
-            clients: [],
-            engineers: [
-                { id: 1, name: "عبدالرحمن الأحمر", phone: "772364042", spec: "صيانة أجهزة وشبكات" }
-            ],
-            employees: [
-                { id: 1, name: "المدير العام", user: "admin", pass: "admin", perms: { new: true, edit: true, del: true, admin: true } }
-            ],
-            printLayout: {
-                fontSize: 13, color: "#000000",
-                positions: {
-                    id: { top: 95, left: 20 }, name: { top: 95, left: 210 },
-                    device: { top: 125, left: 20 }, fault: { top: 125, left: 380 },
-                    money: { top: 160, left: 20 }, prepaid: { top: 160, left: 240 }, remaining: { top: 160, left: 450 },
-                    dates: { top: 200, left: 20 }
-                }
-            },
-            suggestionsData: {
-                brands: ["Apple", "Samsung", "Huawei", "Xiaomi", "Infinix", "MikroTik Router", "Modem Huawei"],
-                models: ["iPhone 14 Pro Max", "Galaxy S23 Ultra", "Simax AX1800", "ZTE S20 ZLT"],
-                faults: ["تغيير شاشة مكسورة", "إصلاح فلاشة NAND المقفلة", "برمجة السوفتوير وفك الحساب"]
-            }
-        };
-
-        let currentUser = null;
-
-        window.onload = function() {
-            if (localStorage.getItem("wahda_sys_db")) {
-                db = JSON.parse(localStorage.getItem("wahda_sys_db"));
-            } else {
-                localStorage.setItem("wahda_sys_db", JSON.stringify(db));
-            }
-            initSystemCore();
-            setupDraggableElements();
-        };
-
-        function initSystemCore() {
-            document.getElementById("rec-id").value = db.receipts.length + 1;
-            populateEngineersDropdowns();
-            renderEngineersTable();
-            renderEmployeesTable();
-            updateDesignerVisualFromDB();
-            calculateSystemNotifications();
-        }
-
-        function handleLogin() {
-            const userIn = document.getElementById("login-user").value;
-            const passIn = document.getElementById("login-pass").value;
-            const matched = db.employees.find(e => e.user === userIn && e.pass === passIn);
-            
-            if (matched) {
-                currentUser = matched;
-                // إذا دخل بكلمة سر "admin" المبدئية، يتم إجباره على تغييرها قبل فتح لوحة التحكم
-                if (matched.user === "admin" && matched.pass === "admin") {
-                    document.getElementById("login-screen").style.display = "none";
-                    document.getElementById("password-reset-screen").style.display = "flex";
-                } else {
-                    document.getElementById("login-screen").style.display = "none";
-                    applyUserPermissions(matched);
-                }
-            } else {
-                alert("بيانات الدخول خاطئة.");
-            }
-        }
-
-        function forcePasswordChange() {
-            const newPass = document.getElementById("new-secure-pass").value;
-            const confirmPass = document.getElementById("confirm-secure-pass").value;
-
-            if (!newPass || newPass.trim() === "" || newPass === "admin") {
-                alert("يرجى إدخال كلمة مرور جديدة وقوية ومختلفة عن كلمة admin!");
-                return;
-            }
-            if (newPass !== confirmPass) {
-                alert("كلمتا المرور غير متطابقتين.");
-                return;
-            }
-
-            // تحديث كلمة السر للمدير العام في قاعدة البيانات وتأمينها
-            const adminUser = db.employees.find(e => e.user === "admin");
-            if (adminUser) {
-                adminUser.pass = newPass;
-                saveToLocalStorage();
-                alert("🔒 ممتاز يا مهندس! تم تحديث كلمة مرور المدير العام وتأمين النظام بنجاح.");
-                document.getElementById("password-reset-screen").style.display = "none";
-                applyUserPermissions(currentUser);
-            }
-        }
-
-        function applyUserPermissions(user) {
-            if (user.perms.admin) {
-                document.getElementById("menu-employees").style.display = "flex";
-                document.getElementById("menu-engineers").style.display = "flex";
-                document.getElementById("menu-maintenance").style.display = "flex";
-                document.getElementById("menu-printing").style.display = "flex";
-            } else {
-                document.getElementById("menu-employees").style.display = "none";
-                document.getElementById("menu-engineers").style.display = "none";
-                document.getElementById("menu-maintenance").style.display = "none";
-                document.getElementById("menu-printing").style.display = "none";
-            }
-        }
-
-        function logout() {
-            currentUser = null;
-            document.getElementById("login-screen").style.display = "flex";
-            document.getElementById("password-reset-screen").style.display = "none";
-        }
-
-        function switchView(viewId, element) {
-            document.querySelectorAll(".view-panel").forEach(p => p.classList.remove("active"));
-            document.querySelectorAll(".menu-item").forEach(m => m.classList.remove("active"));
-            document.getElementById(viewId).classList.add("active");
-            element.classList.add("active");
-        }
-
-        function toggleTheme() {
-            const body = document.body;
-            const currentTheme = body.getAttribute("data-theme");
-            const newTheme = currentTheme === "light" ? "dark" : "light";
-            body.setAttribute("data-theme", newTheme);
-            document.getElementById("theme-toggle-btn").innerText = newTheme === "light" ? "🌙" : "☀️";
-        }
-
-        function populateEngineersDropdowns() {
-            const html = db.engineers.map(e => `<option value="${e.id}">${e.name}</option>`).join("");
-            document.getElementById("rec-engineer").innerHTML = html;
-            document.getElementById("rep-engineer").innerHTML = html;
-        }
-
-        function updateRemainingCost() {
-            const total = parseFloat(document.getElementById("rec-total").value) || 0;
-            const prepaid = parseFloat(document.getElementById("rec-prepaid").value) || 0;
-            document.getElementById("rec-remaining").value = Math.max(0, total - prepaid);
-        }
-
-        function searchClientByPhone(val) {
-            const box = document.getElementById("phone-suggestions");
-            if (!val) { box.style.display = "none"; return; }
-            let matches = db.receipts.filter(r => r.phone.includes(val));
-            if (matches.length > 0) {
-                box.innerHTML = matches.map(m => `<div class="suggestion-item" onclick="selectClientSuggestion('${m.phone}', '${m.clientName}')">${m.phone} (${m.clientName})</div>`).join("");
-                box.style.display = "block";
-            } else { box.style.display = "none"; }
-        }
-
-        function selectClientSuggestion(phone, name) {
-            document.getElementById("rec-phone").value = phone;
-            document.getElementById("rec-client-name").value = name;
-            document.getElementById("phone-suggestions").style.display = "none";
-        }
-
-        function suggestBrands(val) {
-            const box = document.getElementById("brand-suggestions");
-            if (!val) { box.style.display = "none"; return; }
-            let filtered = db.suggestionsData.brands.filter(b => b.toLowerCase().includes(val.toLowerCase()));
-            box.innerHTML = filtered.map(f => `<div class="suggestion-item" onclick="document.getElementById('rec-brand').value='${f}'; document.getElementById('brand-suggestions').style.display='none';">${f}</div>`).join("");
-            box.style.display = "block";
-        }
-
-        function suggestModels(val) {
-            const box = document.getElementById("model-suggestions");
-            if (!val) { box.style.display = "none"; return; }
-            let filtered = db.suggestionsData.models.filter(m => m.toLowerCase().includes(val.toLowerCase()));
-            box.innerHTML = filtered.map(f => `<div class="suggestion-item" onclick="document.getElementById('rec-model').value='${f}'; document.getElementById('model-suggestions').style.display='none';">${f}</div>`).join("");
-            box.style.display = "block";
-        }
-
-        function suggestFaults(val) {
-            const box = document.getElementById("fault-suggestions");
-            if (!val) { box.style.display = "none"; return; }
-            let filtered = db.suggestionsData.faults.filter(f => f.toLowerCase().includes(val.toLowerCase()));
-            box.innerHTML = filtered.map(f => `<div class="suggestion-item" onclick="document.getElementById('rec-fault-desc').value='${f}'; document.getElementById('fault-suggestions').style.display='none';">${f}</div>`).join("");
-            box.style.display = "block";
-        }
-
-        function saveNewReceipt(e) {
-            e.preventDefault();
-            const newRec = {
-                id: db.receipts.length + 1,
-                phone: document.getElementById("rec-phone").value,
-                clientName: document.getElementById("rec-client-name").value,
-                brand: document.getElementById("rec-brand").value,
-                model: document.getElementById("rec-model").value,
-                imei: document.getElementById("rec-imei").value,
-                faultType: document.getElementById("rec-fault-type").value,
-                condition: document.getElementById("rec-condition").value,
-                faultDesc: document.getElementById("rec-fault-desc").value,
-                currency: document.getElementById("rec-currency").value,
-                total: document.getElementById("rec-total").value,
-                prepaid: document.getElementById("rec-prepaid").value,
-                remaining: document.getElementById("rec-remaining").value,
-                engineerId: document.getElementById("rec-engineer").value,
-                status: "قيد العمل",
-                delivered: false,
-                paid: false,
-                createdAt: new Date().getTime(),
-                expectedDelivery: new Date().getTime() + (24 * 60 * 60 * 1000)
-            };
-            db.receipts.push(newRec);
-            saveToLocalStorage();
-            alert(`تم حفظ السند رقم ${newRec.id}`);
-            initSystemCore();
-            document.getElementById("receipt-form").reset();
-        }
-
-        function performGlobalSearch() {
-            const val = document.getElementById("search-global-input").value.toLowerCase();
-            const output = document.getElementById("search-results-output");
-            let filtered = db.receipts.filter(r => r.id.toString() === val || r.phone.includes(val) || r.clientName.toLowerCase().includes(val));
-            output.innerHTML = filtered.map(r => `
-                <tr onclick="openReceiptFromTable(${r.id})">
-                    <td>${r.id}</td><td>${r.clientName}</td><td>${r.phone}</td><td>${r.brand} ${r.model}</td><td>${r.status}</td><td>${r.remaining} ${r.currency}</td>
-                </tr>
-            `).join("");
-        }
-
-        function openReceiptFromTable(id) {
-            switchView('eng-reports-view', document.getElementById('menu-engineers'));
-            document.getElementById("report-search-id").value = id;
-            loadReceiptToReport();
-        }
-
-        let currentEditingReceiptId = null;
-        function loadReceiptToReport() {
-            const id = parseInt(document.getElementById("report-search-id").value);
-            const receipt = db.receipts.find(r => r.id === id);
-            if(!receipt) { alert("السند غير موجود."); return; }
-            currentEditingReceiptId = id;
-            document.getElementById("report-card-title").innerText = `تعديل إيصال صيانة: #${receipt.id}`;
-            document.getElementById("rep-status").value = receipt.status;
-            document.getElementById("rep-engineer").value = receipt.engineerId;
-            document.getElementById("rep-delivered").checked = receipt.delivered;
-            document.getElementById("rep-paid").checked = receipt.paid;
-            document.getElementById("report-edit-card").style.display = "block";
-        }
-
-        function saveReportModifications() {
-            if(!currentEditingReceiptId) return;
-            const receipt = db.receipts.find(r => r.id === currentEditingReceiptId);
-            if(receipt) {
-                receipt.status = document.getElementById("rep-status").value;
-                receipt.engineerId = document.getElementById("rep-engineer").value;
-                receipt.delivered = document.getElementById("rep-delivered").checked;
-                receipt.paid = document.getElementById("rep-paid").checked;
-                saveToLocalStorage();
-                alert("تم تحديث السند.");
-                initSystemCore();
-            }
-        }
-
-        function addNewEmployee(e) {
-            e.preventDefault();
-            const emp = {
-                id: db.employees.length + 1,
-                name: document.getElementById("emp-name").value,
-                user: document.getElementById("emp-user").value,
-                pass: document.getElementById("emp-pass").value,
-                perms: {
-                    new: document.getElementById("perm-new-receipt").checked,
-                    edit: document.getElementById("perm-edit").checked,
-                    del: document.getElementById("perm-delete").checked,
-                    admin: document.getElementById("perm-admin").checked
-                }
-            };
-            db.employees.push(emp);
-            saveToLocalStorage();
-            renderEmployeesTable();
-            document.getElementById("employee-form").reset();
-        }
-
-        function renderEmployeesTable() {
-            document.getElementById("employees-list-output").innerHTML = db.employees.map(e => `
-                <tr><td>${e.name}</td><td>${e.user}</td><td>${e.perms.admin?'كامل':'محدد'}</td></tr>
-            `).join("");
-        }
-
-        function addNewEngineer(e) {
-            e.preventDefault();
-            const eng = {
-                id: db.engineers.length + 1,
-                name: document.getElementById("eng-name-input").value,
-                phone: document.getElementById("eng-phone-input").value,
-                spec: document.getElementById("eng-spec-input").value
-            };
-            db.engineers.push(eng);
-            saveToLocalStorage();
-            renderEngineersTable();
-            populateEngineersDropdowns();
-            document.getElementById("engineer-form").reset();
-        }
-
-        function renderEngineersTable() {
-            document.getElementById("engineers-list-output").innerHTML = db.engineers.map(e => `
-                <tr><td>${e.name}</td><td>${e.phone}</td><td>${e.spec}</td></tr>
-            `).join("");
-        }
-
-        function calculateSystemNotifications() {
-            const container = document.getElementById("noti-list-container");
-            const now = new Date().getTime();
-            let delayed = db.receipts.filter(r => !r.delivered && r.status === "قيد العمل" && now > r.expectedDelivery);
-            document.getElementById("noti-count").innerText = delayed.length;
-            container.innerHTML = delayed.length > 0 ? delayed.map(r => `<div class="noti-item">سند #${r.id} متأخر!</div>`).join("") : "لا توجد متأخرات.";
-        }
-
-        function toggleNotifications() {
-            const panel = document.getElementById("notification-center");
-            panel.style.display = panel.style.display === "block" ? "none" : "block";
-        }
-
-        function saveToLocalStorage() {
-            localStorage.setItem("wahda_sys_db", JSON.stringify(db));
-        }
-
-        function exportSystemData() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db));
-            const dl = document.createElement('a');
-            dl.setAttribute("href", dataStr);
-            dl.setAttribute("download", "Wahda_Database.json");
-            dl.click();
-        }
-
-        function importSystemData(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    db = JSON.parse(e.target.result);
-                    saveToLocalStorage();
-                    initSystemCore();
-                    alert("تم استيراد قاعدة البيانات.");
-                } catch(err) { alert("ملف غير صالح."); }
-            };
-            reader.readAsText(file);
-        }
-
-        function setupDraggableElements() {
-            document.querySelectorAll('.draggable-element').forEach(el => {
-                let isDragging = false;
-                let currentX, currentY, initialX, initialY;
-                let xOffset = 0, yOffset = 0;
-
-                el.addEventListener('mousedown', dragStart);
-                el.addEventListener('touchstart', dragStart, {passive: false});
-                document.addEventListener('mousemove', drag);
-                document.addEventListener('touchmove', drag, {passive: false});
-                document.addEventListener('mouseup', dragEnd);
-                document.addEventListener('touchend', dragEnd);
-
-                function dragStart(e) {
-                    let clientX = e.type === "touchstart" ? e.touches[0].clientX : e.clientX;
-                    let clientY = e.type === "touchstart" ? e.touches[0].clientY : e.clientY;
-                    initialX = clientX - xOffset;
-                    initialY = clientY - yOffset;
-                    if (e.target === el) isDragging = true;
-                }
-
-                function drag(e) {
-                    if (isDragging) {
-                        e.preventDefault();
-                        let clientX = e.type === "touchmove" ? e.touches[0].clientX : e.clientX;
-                        let clientY = e.type === "touchmove" ? e.touches[0].clientY : e.clientY;
-                        currentX = clientX - initialX;
-                        currentY = clientY - initialY;
-                        xOffset = currentX;
-                        yOffset = currentY;
-                        el.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
-                    }
-                }
-
-                function dragEnd() {
-                    initialX = currentX;
-                    initialY = currentY;
-                    isDragging = false;
-                }
-            });
-        }
-
-        function updateDesignerStyles() {
-            const fs = document.getElementById("print-font-size").value + "px";
-            const col = document.getElementById("print-font-color").value;
-            document.querySelectorAll('.draggable-element').forEach(el => {
-                el.style.fontSize = fs;
-                el.style.color = col;
-            });
-            db.printLayout.fontSize = parseInt(document.getElementById("print-font-size").value);
-            db.printLayout.color = col;
-        }
-
-        function savePrintLayoutCoordinates() {
-            const visualBounds = document.getElementById("print-designer-visual").getBoundingClientRect();
-            document.querySelectorAll('.draggable-element').forEach(el => {
-                const rect = el.getBoundingClientRect();
-                const key = el.id.replace('drag-p-', '');
-                if (db.printLayout.positions[key]) {
-                    db.printLayout.positions[key].top = rect.top - visualBounds.top;
-                    db.printLayout.positions[key].left = rect.left - visualBounds.left;
-                }
-            });
-            saveToLocalStorage();
-            alert("تم حفظ أبعاد ومواقع الطباعة المحدثة.");
-        }
-
-        function updateDesignerVisualFromDB() {
-            document.getElementById("print-font-size").value = db.printLayout.fontSize || 13;
-            document.getElementById("print-font-color").value = db.printLayout.color || "#000000";
-            updateDesignerStyles();
-        }
-
-        function triggerDirectPrint() {
-            const printArea = document.getElementById("print-area-target");
-            const fs = db.printLayout.fontSize + "px";
-            const col = db.printLayout.color;
-            const lastRec = db.receipts[db.receipts.length - 1] || { id: 1, clientName: "عميل تجريبي", brand: "سامسونج", model: "S20", faultDesc: "فحص", total: 0, prepaid: 0, remaining: 0 };
-
-            printArea.innerHTML = `
-                <div style="position: relative; width: 210mm; height: 65mm; color: ${col}; font-size: ${fs};">
-                    <div style="position: absolute; top: ${db.printLayout.positions.id.top}px; left: ${db.printLayout.positions.id.left}px;">رقم الإيصال: #${lastRec.id}</div>
-                    <div style="position: absolute; top: ${db.printLayout.positions.name.top}px; left: ${db.printLayout.positions.name.left}px;">الاسم: ${lastRec.clientName}</div>
-                    <div style="position: absolute; top: ${db.printLayout.positions.device.top}px; left: ${db.printLayout.positions.device.left}px;">الجهاز: ${lastRec.brand} ${lastRec.model}</div>
-                    <div style="position: absolute; top: ${db.printLayout.positions.fault.top}px; left: ${db.printLayout.positions.fault.left}px;">العطل: ${lastRec.faultDesc}</div>
-                    <div style="position: absolute; top: ${db.printLayout.positions.money.top}px; left: ${db.printLayout.positions.money.left}px;">الإجمالي: ${lastRec.total}</div>
-                    <div style="position: absolute; top: ${db.printLayout.positions.prepaid.top}px; left: ${db.printLayout.positions.prepaid.left}px;">المسبق: ${lastRec.prepaid}</div>
-                    <div style="position: absolute; top: ${db.printLayout.positions.remaining.top}px; left: ${db.printLayout.positions.remaining.left}px;">المتبقي: ${lastRec.remaining}</div>
-                </div>
-            `;
-            window.print();
-        }
-    </script>
-</body>
-</html>
+                    <div class="draggable-element" id="drag-p-name" style="top: 25mm; left: 55mm;">العميل: محمد أحمد</div>
+                    <div class="draggable-element" id="drag-p-device" style="top: 33mm; left: 5mm;">الجهاز: طراز الهاتف</div>
+                    <div class="draggable-element" id="drag-p-fault" style="top: 33mm; left: 100mm;">العطل: وصف المشكلة</div>
+                    <div class="draggable-element" id="drag-p-money" style="top: 42mm; left: 5mm;">الإجمالي: 0</div>
+                    <div class="draggable-element" id="drag-p-prepaid" style="top: 42mm; left: 65mm;">المسبق: 0</div>
+                    <div class="draggable-element" id="drag-p-rem" style="top: 42mm; left: 125mm;">المتبقي: 0</div>
+                    <div class="draggable-element" id="drag-p-dates" style="
