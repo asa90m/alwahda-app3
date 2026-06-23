@@ -1,31 +1,87 @@
-<aside id="sidebar">
-    <div class="sidebar-section">
-        <div class="section-title">إدارة الصيانة</div>
-        <div class="menu-item" onclick="switchView('new-receipt-view', this)">📝 إيصال جديد</div>
-        <div class="menu-item" onclick="switchView('active-devices-view', this)">📱 الأجهزة الحالية</div>
-        <div class="menu-item" onclick="switchView('delivery-view', this)">📤 تسليم الأجهزة</div>
-        <div class="menu-item" onclick="switchView('search-devices-view', this)">🔍 بحث متقدم</div>
-    </div>
-    
-    <div class="sidebar-section">
-        <div class="section-title">المالية والمخزون</div>
-        <div class="menu-item" onclick="switchView('cashbook-view', this)">💰 الصندوق</div>
-        <div class="menu-item" onclick="switchView('expenses-view', this)">💸 المصروفات</div>
-        <div class="menu-item" onclick="switchView('inventory-view', this)">📦 قطع الغيار</div>
-        <div class="menu-item" onclick="switchView('inventory-logs-view', this)">🔄 سجل الحركات</div>
-    </div>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>نظام إدارة صيانة الهواتف</title>
+  <style>
+    body {
+      font-family: Tahoma, Arial, sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #003366;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+    }
+    .container {
+      width: 90%;
+      max-width: 600px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #003366;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background: #003366;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0055aa;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>الوحدة للبرمجيات - Enterprise v5.0</h1>
+  </header>
 
-    <div class="sidebar-section">
-        <div class="section-title">الإدارة والتقارير</div>
-        <div class="menu-item" onclick="switchView('engineers-perf-view', this)">📊 أداء المهندسين</div>
-        <div class="menu-item" onclick="switchView('customers-view', this)">👥 العملاء</div>
-        <div class="menu-item" onclick="switchView('delayed-view', this)">⚠️ الأجهزة المتأخرة</div>
-        <div class="menu-item" onclick="switchView('finance-report-view', this)">📈 التقرير المالي</div>
-        <div class="menu-item" onclick="switchView('settings-view', this)">⚙️ الإعدادات العامة</div>
-    </div>
-</aside>
+  <div class="container">
+    <h2>تسجيل الدخول</h2>
+    <label>اسم المستخدم</label>
+    <input type="text" placeholder="admin">
+    <label>كلمة المرور</label>
+    <input type="password" placeholder="••••••">
+    <button>دخول</button>
+  </div>
 
-<main id="content-area">
-    <section id="new-receipt-view" class="view-panel active"> </section>
-    <section id="active-devices-view" class="view-panel"> </section>
-    </main>
+  <div class="container">
+    <h2>إيصال جديد</h2>
+    <label>اسم العميل</label>
+    <input type="text" placeholder="اكتب اسم العميل">
+    <label>رقم الهاتف</label>
+    <input type="text" placeholder="77xxxxxxx">
+    <label>الجهاز</label>
+    <input type="text" placeholder="iPhone 14, Galaxy S23">
+    <label>نوع العطل</label>
+    <select>
+      <option>برمجي</option>
+      <option>هاردوير</option>
+    </select>
+    <label>وصف العطل</label>
+    <textarea placeholder="اكتب وصف المشكلة"></textarea>
+    <label>المبلغ</label>
+    <input type="number" placeholder="0">
+    <button>حفظ</button>
+  </div>
+</body>
+</html>
