@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>丕賱賵丨丿賴 賱賱亘乇賲噩賷丕鬲 - 賳馗丕賲 氐賷丕賳丞 丕賱賴賵丕鬲賮</title>
+    <style>
+        :root {
+            --bg-primary: #f4f6f9;
+            --bg-sidebar: #e9ecef;
+            --text-main: #333333;
+            --brand-color: #4a90e2;
+            --brand-light: #e6f0fa;
+            --gray-muted: #6c757d;
+            --border-color: #ced4da;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-sidebar: #2d2d2d;
+            --text-main: #f5f5f5;
+            --brand-color: #377bbe;
+            --brand-light: #2b3a4a;
+            --gray-muted: #a0a0a0;
+            --border-color: #444444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* 卮丕卮丕鬲 丕賱丿禺賵賱 賵鬲睾賷賷乇 賰賱賲丞 丕賱爻乇 */
+        #login-screen, #password-reset-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .login-card {
+            background: var(--bg-sidebar);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .login-card h2 { margin-bottom: 20px; color: var(--brand-color); }
+        .login-card input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-primary);
+            color: var(--text-main);
+            font-size: 16px;
+        }
+        .login-card button {
+            width: 100%;
+            padding: 12px;
+            background: var(--brand-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        #main-header {
+            background-color: var(--brand-light);
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .header-logo { width: 35px; height: 35px; background: var(--brand-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        .header-title { color: #2c5282; font-size: 1.1rem; font-weight: bold; }
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .icon-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-main); position: relative; padding: 5px; }
+        .badge { position: absolute; top: -2px; right: -2px; background: var(--danger-color); color: white; font-size: 0.65rem; padding: 2px 5px; border-radius: 50%; }
+
+        #app-body {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #sidebar {
+            width: 240px;
+            background-color: var(--bg-sidebar);
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            #sidebar { width: 60px; }
+            .menu-text { display: none; }
+            .section-title { font-size: 0.65rem; text-align: center; padding: 5px 2px; }
+            .menu-item { justify-content: center; padding: 12px 5px; }
+        }
+
+        .sidebar-section { border-bottom: 1px solid var(--border-color); padding: 5px 0; }
+        .section-title { padding: 5px 15px; font-weight: bold; color: var(--gray-muted); font-size: 0.85rem; background: rgba(0,0,0,0.03); }
+        .menu-item { display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-main); cursor: pointer; transition: 0.2s; }
+        .menu-item:hover, .menu-item.active { background-color: var(--brand-light); color: var(--brand-color); font-weight: bold; }
+
+        #content-area {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background-color: var(--bg-primary);
+            -webkit-overflow-scrolling: touch;
+        }
+        .view-panel { display: none; }
+        .view-panel.active { display: block; }
+
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; margin-bottom: 4px; font-weight: 500; font-size: 0.9rem; }
+        .form-control { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-primary); color: var(--text-main); font-size: 15px; }
+        .form-control[readonly] { background-color: rgba(0,0,0,0.05); cursor: not-allowed; }
+        
+        .row { display: flex; gap: 12px; flex-wrap: wrap; }
+        .col { flex: 1; min-width: 140px; }
+
+        .btn { padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+        .btn-primary { background: var(--brand-color); color: white; }
+        .btn-success { background: var(--success-color); color: white; }
+        .btn-danger { background: var(--danger-color); color: white; }
+
+        .autocomplete-wrapper { position: relative; }
+        .suggestions-box { position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-primary); border: 1px solid var(--border-color); z-index: 100; max-height: 180px; overflow-y: auto; border-radius: 0 0 4px 4px; display: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .suggestion-item { padding: 10px; cursor: pointer; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
+        .suggestion-item:hover { background: var(--brand-light); }
+
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 15px; }
+        .data-table { width: 100%; border-collapse: collapse; background: var(--bg-primary); min-width: 500px; }
+        .data-table th, .data-table td { border: 1px solid var(--border-color); padding: 10px; text-align: right; font-size: 0.85rem; }
+        .data-table th { background: var(--bg-sidebar); }
+
+        #print-designer-visual {
+            border: 2px dashed var(--brand-color);
+            width: 100%;
+            max-width: 210mm;
+            height: 65mm;
+            position: relative;
+            background: white;
+            color: black;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+        .draggable-element {
+            position: absolute;
+            padding: 1px 4px;
+            border: 1px dotted #999;
+            cursor: move;
+            font-size: 11px;
+            white-space: nowrap;
+            touch-action: none;
+        }
+
+        .footer-credits {
+            text-align: center;
+            padding: 8px;
+            font-size: 0.8rem;
+            background: var(--bg-sidebar);
+            border-top: 1px solid var(--border-color);
+            color: var(--gray-muted);
+        }
+
+        #notification-center {
+            position: fixed;
+            top: 65px; left: 15px;
+            width: 290px;
+            background: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+            z-index: 1000;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+        .noti-item { padding: 10px; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; }
+
+        @media print {
+            body * { display: none !important; }
+            #print-area-target, #print-area-target * { display: block !important; }
+            #print-area-target { position: absolute; left: 0; top: 0; width: 210mm; height: 65mm; background: white !important; color: black !important; }
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <!-- 卮丕卮丞 鬲爻噩賷賱 丕賱丿禺賵賱 丕賱丕賮鬲乇丕囟賷丞 丕賱賲亘丿卅賷丞 admin/admin -->
+    <div id="login-screen">
+        <div class="login-card">
+            <h2>丕賱賵丨丿賴 賱賱亘乇賲噩賷丕鬲</h2>
+            <p style="color: var(--gray-muted); margin-bottom: 12px;">賳馗丕賲 廿丿丕乇丞 氐賷丕賳丞 丕賱賴賵丕鬲賮 賵丕賱卮亘賰丕鬲</p>
+            <input type="text" id="login-user" placeholder="丕爻賲 丕賱賲爻鬲禺丿賲" value="admin">
+            <input type="password" id="login-pass" placeholder="賰賱賲丞 丕賱賲乇賵乇" value="admin">
+            <button onclick="handleLogin()">鬲爻噩賷賱 丕賱丿禺賵賱</button>
+            <div style="margin-top: 15px; font-size: 0.8rem; color: var(--gray-muted);">鬲氐賲賷賲 丕賱賲賴賳丿爻 毓亘丿丕賱乇丨賲賳 丕賱丕丨賲乇 772364042</div>
+        </div>
+    </div>
+
+    <!-- 卮丕卮丞 廿噩亘丕乇賷丞 賱鬲睾賷賷乇 賰賱賲丞 丕賱爻乇 廿匕丕 賰丕賳鬲 丕賱丕賮鬲乇丕囟賷丞 賱丨賲丕賷丞 丕賱亘賷丕賳丕鬲 -->
+    <div id="password-reset-screen" style="display: none;">
+        <div class="login-card">
+            <h3 style="color: var(--danger-color); margin-bottom: 10px;">馃洝锔� 廿噩乇丕亍 兀賲丕賳 賲胤賱賵亘</h3>
+            <p style="color: var(--text-main); font-size: 0.9rem; margin-bottom: 15px;">兀賳鬲 鬲爻噩賱 丕賱丿禺賵賱 亘賰賱賲丞 丕賱賲乇賵乇 丕賱丕賮鬲乇丕囟賷丞 賱賱賲丿賷乇 丕賱毓丕賲. 賷乇噩賶 鬲毓賷賷賳 賰賱賲丞 賲乇賵乇 噩丿賷丿丞 賯賵賷丞 丕賱丌賳 賱鬲兀賲賷賳 賯丕毓丿丞 亘賷丕賳丕鬲 丕賱賲丨賱.</p>
+            <input type="password" id="new-secure-pass" placeholder="賰賱賲丞 丕賱賲乇賵乇 丕賱噩丿賷丿丞">
+            <input type="password" id="confirm-secure-pass" placeholder="鬲兀賰賷丿 賰賱賲丞 丕賱賲乇賵乇 丕賱噩丿賷丿丞">
+            <button onclick="forcePasswordChange()" style="background: var(--success-color);">丨賮馗 賵鬲兀賲賷賳 丕賱丨爻丕亘 馃敀</button>
+        </div>
+    </div>
+
+    <!-- 丕賱乇兀爻 丕賱乇卅賷爻賷 賱賱賳馗丕賲 丕賱鬲賮丕毓賱賷 -->
+    <header id="main-header">
+        <div class="header-right">
+            <div class="header-logo">W</div>
+            <div class="header-title">丕賱賵丨丿賴 賱賱亘乇賲噩賷丕鬲</div>
+        </div>
+        <div class="header-left">
+            <button class="icon-btn" onclick="toggleNotifications()">馃敂 <span class="badge" id="noti-count">0</span></button>
+            <button class="icon-btn" id="theme-toggle-btn" onclick="toggleTheme()">馃寵</button>
+            <button class="icon-btn" onclick="logout()" title="禺乇賵噩">馃毆</button>
+        </div>
+    </header>
+
+    <div id="app-body">
+        <!-- 丕賱賯丕卅賲丞 丕賱噩丕賳亘賷丞 丕賱賲爻鬲噩賷亘丞 賱賱噩賵丕賱 -->
+        <aside id="sidebar">
+            <div class="sidebar-section">
+                <div class="section-title">丕賱毓賲賱賷丕鬲</div>
+                <div class="menu-item active" onclick="switchView('new-receipt-view', this)">馃摑 <span class="menu-text">廿賷氐丕賱 噩丿賷丿</span></div>
+                <div class="menu-item" onclick="switchView('search-devices-view', this)">馃攳 <span class="menu-text">亘丨孬 毓賳 兀噩賴夭丞</span></div>
+                <div class="menu-item" onclick="switchView('eng-reports-view', this)">馃搳 <span class="menu-text">鬲賯丕乇賷乇 丕賱賲賴賳丿爻賷賳</span></div>
+            </div>
+            <div class="sidebar-section">
+                <div class="section-title">丕賱廿丿丕乇丞</div>
+                <div class="menu-item" id="menu-employees" onclick="switchView('employees-view', this)">馃懃 <span class="menu-text">丕賱賲賵馗賮賵賳</span></div>
+                <div class="menu-item" id="menu-engineers" onclick="switchView('engineers-view', this)">馃敡 <span class="menu-text">丕賱賲賴賳丿爻賵賳</span></div>
+            </div>
+            <div class="sidebar-section">
+                <div class="section-title">丕賱廿毓丿丕丿丕鬲</div>
+                <div class="menu-item" id="menu-maintenance" onclick="switchView('sys-maintenance-view', this)">馃捑 <span class="menu-text">氐賷丕賳丞 丕賱賳馗丕賲</span></div>
+                <div class="menu-item" id="menu-printing" onclick="switchView('print-settings-view', this)">馃枿锔� <span class="menu-text">廿毓丿丕丿丕鬲 丕賱胤亘丕毓丞</span></div>
+            </div>
+        </aside>
+
+        <!-- 賲賳胤賯丞 丕賱毓賲賱 賵賲丨鬲賵賶 丕賱賱賵丨丕鬲 -->
+        <main id="content-area">
+
+            <!-- 1. 賵丕噩賴丞 廿賷氐丕賱 噩丿賷丿 -->
+            <section id="new-receipt-view" class="view-panel active">
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">廿賷氐丕賱 丕爻鬲賱丕賲 噩丿賷丿</h3>
+                <form id="receipt-form" onsubmit="saveNewReceipt(event)">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>乇賯賲 丕賱廿賷氐丕賱 (鬲賱賯丕卅賷)</label>
+                                <input type="text" id="rec-id" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group autocomplete-wrapper">
+                                <label>乇賯賲 賴丕鬲賮 丕賱毓賲賷賱</label>
+                                <input type="text" id="rec-phone" class="form-control" required oninput="searchClientByPhone(this.value)">
+                                <div class="suggestions-box" id="phone-suggestions"></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>丕爻賲 丕賱毓賲賷賱</label>
+                                <input type="text" id="rec-client-name" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col autocomplete-wrapper">
+                            <div class="form-group">
+                                <label>丕賱卮乇賰丞 (兀賵 賲賷賰乇賵鬲賰/乇丕賵鬲乇)</label>
+                                <input type="text" id="rec-brand" class="form-control" required oninput="suggestBrands(this.value)">
+                                <div class="suggestions-box" id="brand-suggestions"></div>
+                            </div>
+                        </div>
+                        <div class="col autocomplete-wrapper">
+                            <div class="form-group">
+                                <label>丕賱賲賵丿賷賱 丕賱賲乇鬲亘胤</label>
+                                <input type="text" id="rec-model" class="form-control" required oninput="suggestModels(this.value)">
+                                <div class="suggestions-box" id="model-suggestions"></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>丕賱乇賯賲 丕賱鬲爻賱爻賱賷 (丕禺鬲賷丕乇賷)</label>
+                                <input type="text" id="rec-imei" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>賳賵毓 丕賱毓胤賱</label>
+                                <select id="rec-fault-type" class="form-control">
+                                    <option value="賴丕乇丿賵賷乇">賴丕乇丿賵賷乇</option>
+                                    <option value="亘乇賲噩賷">亘乇賲噩賷</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>賳馗丕賮丞 丕賱噩賴丕夭</label>
+                                <select id="rec-condition" class="form-control">
+                                    <option value="噩丿賷丿 賳馗賷賮">噩丿賷丿 賳馗賷賮</option>
+                                    <option value="賲噩毓賵孬">賲噩毓賵孬</option>
+                                    <option value="胤丕賮賷">胤丕賮賷</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col autocomplete-wrapper">
+                            <div class="form-group">
+                                <label>丕賱毓胤賱 (鬲賳亘丐 匕賰賷)</label>
+                                <input type="text" id="rec-fault-desc" class="form-control" required oninput="suggestFaults(this.value)">
+                                <div class="suggestions-box" id="fault-suggestions"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>丕賱毓賲賱丞</label>
+                                <select id="rec-currency" class="form-control" onchange="updateRemainingCost()">
+                                    <option value="乇賷丕賱 賷賲賳賷">乇賷丕賱 賷賲賳賷</option>
+                                    <option value="爻毓賵丿賷">爻毓賵丿賷</option>
+                                    <option value="丿賵賱丕乇">丿賵賱丕乇</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>丕賱賲亘賱睾 丕賱廿噩賲丕賱賷</label>
+                                <input type="number" id="rec-total" class="form-control" value="0" oninput="updateRemainingCost()">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>丕賱丿賮毓 丕賱賲爻亘賯</label>
+                                <input type="number" id="rec-prepaid" class="form-control" value="0" oninput="updateRemainingCost()">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>丕賱賲亘賱睾 丕賱賲鬲亘賯賷</label>
+                                <input type="number" id="rec-remaining" class="form-control" value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>丕賱賲賴賳丿爻 丕賱賲禺鬲氐 亘丕賱丕爻鬲賱丕賲</label>
+                                <select id="rec-engineer" class="form-control" required></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button type="submit" class="btn btn-success">馃捑 丨賮馗 丕賱爻賳丿</button>
+                        <button type="button" class="btn btn-primary" onclick="triggerDirectPrint()">馃枿锔� 胤亘丕毓丞 丕賱爻賳丿</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- 2. 賵丕噩賴丞 丕賱亘丨孬 毓賳 丕賱兀噩賴夭丞 賵丕賱毓賲賱丕亍 -->
+            <section id="search-devices-view" class="view-panel">
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">丕賱亘丨孬 賵丕賱鬲賯丕乇賷乇 丕賱賮賵乇賷丞</h3>
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col">
+                        <input type="text" id="search-global-input" class="form-control" placeholder="丕亘丨孬 亘乇賯賲 丕賱廿賷氐丕賱貙 丕賱賴丕鬲賮貙 兀賵 丕爻賲 丕賱毓賲賷賱...">
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-primary" onclick="performGlobalSearch()">馃攳 亘丨孬</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>乇賯賲 丕賱爻賳丿</th>
+                                <th>丕賱毓賲賷賱</th>
+                                <th>丕賱賴丕鬲賮</th>
+                                <th>丕賱噩賴丕夭</th>
+                                <th>丕賱丨丕賱丞</th>
+                                <th>丕賱賲鬲亘賯賷</th>
+                            </tr>
+                        </thead>
+                        <tbody id="search-results-output"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 3. 賵丕噩賴丞 鬲賯丕乇賷乇 丕賱賲賴賳丿爻賷賳 賵丕賱鬲乇丨賷賱 -->
+            <section id="eng-reports-view" class="view-panel">
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">鬲乇丨賷賱 鬲賯丕乇賷乇 丕賱賲賴賳丿爻賷賳</h3>
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col">
+                        <input type="number" id="report-search-id" class="form-control" placeholder="兀丿禺賱 乇賯賲 丕賱廿賷氐丕賱...">
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-primary" onclick="loadReceiptToReport()">馃搨 噩賱亘 丕賱亘賷丕賳丕鬲</button>
+                    </div>
+                </div>
+
+                <div id="report-edit-card" style="display:none; background: var(--bg-sidebar); padding: 15px; border-radius: 6px;">
+                    <h4 id="report-card-title" style="margin-bottom: 12px;">鬲賮丕氐賷賱 丕賱爻賳丿 丕賱賮賳賷</h4>
+                    <div class="row">
+                        <div class="col">
+                            <label><b>丨丕賱丞 氐賷丕賳丞 丕賱噩賴丕夭:</b></label>
+                            <select id="rep-status" class="form-control">
+                                <option value="賯賷丿 丕賱毓賲賱">賯賷丿 丕賱毓賲賱 馃敡</option>
+                                <option value="鬲賲 丕賱鬲氐賱賷丨">鬲賲 丕賱鬲氐賱賷丨 鉁�</option>
+                                <option value="賱丕 賷賲賰賳 廿氐賱丕丨賴">賱丕 賷賲賰賳 廿氐賱丕丨賴 鉂�</option>
+                                <option value="賱丕 賷鬲賵賮乇 賱賴 賯胤毓 睾賷丕乇 丨丕賱賷丕賸">賱丕 賷鬲賵賮乇 賱賴 賯胤毓 睾賷丕乇 丨丕賱賷丕賸 鈴�</option>
+                                <option value="鬲賲 丕賱乇賮囟 賲賳 丕賱夭亘賵賳">鬲賲 丕賱乇賮囟 賲賳 丕賱夭亘賵賳 馃毇</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label><b>丕賱賲賴賳丿爻 丕賱賮賳賷:</b></label>
+                            <select id="rep-engineer" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 12px;">
+                        <div class="col">
+                            <label><input type="checkbox" id="rep-delivered" onchange="handleDeliveryCheckbox(this.checked)"> 鬲賲 鬲爻賱賷賲 丕賱噩賴丕夭 賳賴丕卅賷丕賸 賱賱毓賲賷賱</label>
+                        </div>
+                        <div class="col">
+                            <label><input type="checkbox" id="rep-paid"> 鬲賲 丕賱丿賮毓 賵亘乇丕亍丞 丕賱匕賲丞 丕賱賲丕賱賷丞</label>
+                        </div>
+                    </div>
+                    <div id="delivery-details-zone" class="row" style="margin-top: 12px; display: none;">
+                        <div class="col">
+                            <label>賵孬賷賯丞 丕賱鬲丨賯賯 毓賳丿 丕賱鬲爻賱賷賲:</label>
+                            <label><input type="radio" name="delivery-doc" value="丕賱爻賳丿 丕賱賲胤亘賵毓" checked> 丕賱爻賳丿 丕賱賲胤亘賵毓</label>
+                            <label><input type="radio" name="delivery-doc" value="亘胤丕賯丞 卮禺氐賷丞"> 亘胤丕賯丞 卮禺氐賷丞</label>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <button class="btn btn-success" onclick="saveReportModifications()">馃捑 丨賮馗 賵鬲丨丿賷孬 丕賱爻賳丿 丕賱賮賵乇賷</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. 賵丕噩賴丞 丕賱賲賵馗賮賷賳 賵丕賱氐賱丕丨賷丕鬲 -->
+            <section id="employees-view" class="view-panel">
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">廿丿丕乇丞 丕賱賲賵馗賮賷賳 賵丕賱氐賱丕丨賷丕鬲</h3>
+                <form id="employee-form" onsubmit="addNewEmployee(event)">
+                    <div class="row">
+                        <div class="col"><input type="text" id="emp-name" class="form-control" placeholder="丕爻賲 丕賱賲賵馗賮" required></div>
+                        <div class="col"><input type="text" id="emp-user" class="form-control" placeholder="丕爻賲 丕賱賲爻鬲禺丿賲" required></div>
+                        <div class="col"><input type="password" id="emp-pass" class="form-control" placeholder="賰賱賲丞 丕賱爻乇" required></div>
+                    </div>
+                    <div style="margin: 12px 0; font-size: 0.9rem;">
+                        <p style="font-weight: bold; margin-bottom: 5px;">丕賱氐賱丕丨賷丕鬲 丕賱賲賲賳賵丨丞:</p>
+                        <label style="margin-left: 10px;"><input type="checkbox" id="perm-new-receipt" checked> 廿賷氐丕賱 噩丿賷丿</label>
+                        <label style="margin-left: 10px;"><input type="checkbox" id="perm-edit" checked> 鬲乇丨賷賱 賵鬲毓丿賷賱</label>
+                        <label style="margin-left: 10px;"><input type="checkbox" id="perm-delete"> 氐賱丕丨賷丞 丕賱丨匕賮</label>
+                        <label style="margin-left: 10px;"><input type="checkbox" id="perm-admin"> 賲爻丐賵賱 賰丕賲賱</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">鉃� 廿囟丕賮丞 賲賵馗賮 噩丿賷丿</button>
+                </form>
+                <div class="table-responsive">
+                    <table class="data-table" style="margin-top: 15px;">
+                        <thead><tr><th>丕賱丕爻賲</th><th>丕賱賲爻鬲禺丿賲</th><th>丕賱丨丕賱丞</th></tr></thead>
+                        <tbody id="employees-list-output"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 5. 賵丕噩賴丞 丕賱賲賴賳丿爻賷賳 -->
+            <section id="engineers-view" class="view-panel">
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">廿囟丕賮丞 賵鬲丨丿賷孬 賰丕丿乇 丕賱賲賴賳丿爻賷賳</h3>
+                <form id="engineer-form" onsubmit="addNewEngineer(event)">
+                    <div class="row">
+                        <div class="col"><input type="text" id="eng-name-input" class="form-control" placeholder="丕爻賲 丕賱賲賴賳丿爻 丕賱賮賳賷" required></div>
+                        <div class="col"><input type="text" id="eng-phone-input" class="form-control" placeholder="乇賯賲 賴丕鬲賮 丕賱賲賴賳丿爻" required></div>
+                        <div class="col"><input type="text" id="eng-spec-input" class="form-control" placeholder="丕賱鬲禺氐氐 丕賱賮賳賷" required></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 12px;">鉃� 鬲爻噩賷賱 賲賴賳丿爻</button>
+                </form>
+                <div class="table-responsive">
+                    <table class="data-table" style="margin-top: 15px;">
+                        <thead><tr><th>丕賱賲賴賳丿爻</th><th>丕賱賴丕鬲賮</th><th>丕賱鬲禺氐氐</th></tr></thead>
+                        <tbody id="engineers-list-output"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 6. 賵丕噩賴丞 氐賷丕賳丞 丕賱賳馗丕賲 賵丕賱賰賱丕賵丿 -->
+            <section id="sys-maintenance-view" class="view-panel">
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">丕賱賳爻禺 丕賱丕丨鬲賷丕胤賷 賵丕賱賲夭丕賲賳丞 丕賱爻丨丕亘賷丞</h3>
+                <div style="background: var(--bg-sidebar); padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+                    <p style="font-size: 0.85rem; color: var(--gray-muted); margin-bottom: 12px;">賷賯賵賲 丕賱賳馗丕賲 亘兀禺匕 賳爻禺丞 丕丨鬲賷丕胤賷丞 亘卮賰賱 鬲賱賯丕卅賷 賱囟賲丕賳 爻賱丕賲丞 丕賱亘賷丕賳丕鬲.</p>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button class="btn btn-success" onclick="exportSystemData()">馃摜 鬲丨賲賷賱 丕賱賳爻禺丞 丕賱丕丨鬲賷丕胤賷丞 (JSON)</button>
+                        <button class="btn btn-primary" onclick="document.getElementById('import-file-input').click()">馃摛 丕爻鬲乇噩丕毓 賵鬲丨丿賷孬 丕賱亘賷丕賳丕鬲</button>
+                        <input type="file" id="import-file-input" style="display: none;" onchange="importSystemData(event)">
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. 賵丕噩賴丞 廿毓丿丕丿丕鬲 丕賱胤亘丕毓丞 丕賱賲乇賳丞 (6.5爻賲 脳 21爻賲) -->
+            <section id="print-settings-view" class="view-panel">
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">賱賵丨丞 丕賱鬲丨賰賲 賮賷 廿丨丿丕孬賷丕鬲 賵賲賯丕爻 丕賱爻賳丿 丕賱賲胤亘賵毓 賲爻亘賯丕賸</h3>
+                <p style="font-size: 0.85rem; color: var(--gray-muted);">兀亘毓丕丿 丕賱爻賳丿: 6.5 爻賲 胤賵賱 脳 21 爻賲 毓乇囟.</p>
+                
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col">
+                        <label>丨噩賲 丕賱禺胤 (亘賰爻賱)</label>
+                        <input type="number" id="print-font-size" class="form-control" value="13" oninput="updateDesignerStyles()">
+                    </div>
+                    <div class="col">
+                        <label>賱賵賳 丨賯賵賱 丕賱胤亘丕毓丞</label>
+                        <input type="color" id="print-font-color" class="form-control" value="#000000" oninput="updateDesignerStyles()">
+                    </div>
+                </div>
+
+                <div id="print-designer-visual">
+                    <div style="position: absolute; top: 0; width: 100%; height: 22mm; background: #e2e8f0; text-align: center; line-height: 22mm; font-size: 11px; color: #718096;">
+                        丨賷夭 丕賱卮毓丕乇 丕賱賲胤亘賵毓 賲爻亘賯丕賸 (2.2 爻賲)
+                    </div>
+                    <div class="draggable-element" id="drag-p-id" style="top: 25mm; left: 5mm;">乇賯賲 丕賱爻賳丿: #1</div>
+                    <div class="draggable-element" id="drag-p-name" style="top: 25mm; left: 55mm;">丕賱毓賲賷賱: 賲丨賲丿 毓亘丿 丕賱乇丨賲賳</div>
+                    <div class="draggable-element" id="drag-p-device" style="top: 33mm; left: 5mm;">丕賱噩賴丕夭: 爻丕賲爻賵賳噩 S20 ZLT</div>
+                    <div class="draggable-element" id="drag-p-fault" style="top: 33mm; left: 100mm;">丕賱毓胤賱: 賮賰 賮賱丕卮丞 丕賱賲賵丿賲</div>
+                    <div class="draggable-element" id="drag-p-money" style="top: 42mm; left: 5mm;">丕賱廿噩賲丕賱賷: 15,000</div>
+                    <div class="draggable-element" id="drag-p-prepaid" style="top: 42mm; left: 65mm;">丕賱賲爻亘賯: 5,000</div>
+                    <div class="draggable-element" id="drag-p-rem" style="top: 42mm; left: 125mm;">丕賱賲鬲亘賯賷: 10,000</div>
+                    <div class="draggable-element" id="drag-p-dates" style="top: 52mm; left: 5mm;">賲賵毓丿 丕賱鬲爻賱賷賲 丕賱賲鬲賵賯毓: 亘毓丿 24 爻丕毓丞</div>
+                </div>
+                <button class="btn btn-success" style="margin-top: 15px;" onclick="savePrintLayoutCoordinates()">馃捑 丨賮馗 廿丨丿丕孬賷丕鬲 賵賲賵丕賯毓 丕賱胤亘丕毓丞</button>
+            </section>
+
+        </main>
+    </div>
+
+    <div id="notification-center">
+        <div style="padding: 10px; font-weight: bold; background: var(--brand-color); color: white; font-size: 0.9rem;">廿卮毓丕乇丕鬲 丕賱兀噩賴夭丞 丕賱賲鬲兀禺乇丞</div>
+        <div id="noti-list-container"></div>
+    </div>
+
+    <div id="print-area-target"></div>
+
+    <footer class="footer-credits">
+        賳馗丕賲 氐賷丕賳丞 丕賱賵丨丿賴 賱賱亘乇賲噩賷丕鬲 | 鬲氐賲賷賲 丕賱賲賴賳丿爻 毓亘丿丕賱乇丨賲賳 丕賱丕丨賲乇 772364042 &copy; 2026
+    </footer>
+
+    <script>
+        let db = {
+            receipts: [],
+            clients: [],
+            engineers: [
+                { id: 1, name: "毓亘丿丕賱乇丨賲賳 丕賱兀丨賲乇", phone: "772364042", spec: "氐賷丕賳丞 兀噩賴夭丞 賵卮亘賰丕鬲" }
+            ],
+            employees: [
+                { id: 1, name: "丕賱賲丿賷乇 丕賱毓丕賲", user: "admin", pass: "admin", perms: { new: true, edit: true, del: true, admin: true } }
+            ],
+            printLayout: {
+                fontSize: 13, color: "#000000",
+                positions: {
+                    id: { top: 95, left: 20 }, name: { top: 95, left: 210 },
+                    device: { top: 125, left: 20 }, fault: { top: 125, left: 380 },
+                    money: { top: 160, left: 20 }, prepaid: { top: 160, left: 240 }, remaining: { top: 160, left: 450 },
+                    dates: { top: 200, left: 20 }
+                }
+            },
+            suggestionsData: {
+                brands: ["Apple", "Samsung", "Huawei", "Xiaomi", "Infinix", "MikroTik Router", "Modem Huawei"],
+                models: ["iPhone 14 Pro Max", "Galaxy S23 Ultra", "Simax AX1800", "ZTE S20 ZLT"],
+                faults: ["鬲睾賷賷乇 卮丕卮丞 賲賰爻賵乇丞", "廿氐賱丕丨 賮賱丕卮丞 NAND 丕賱賲賯賮賱丞", "亘乇賲噩丞 丕賱爻賵賮鬲賵賷乇 賵賮賰 丕賱丨爻丕亘"]
+            }
+        };
+
+        let currentUser = null;
+
+        window.onload = function() {
+            if (localStorage.getItem("wahda_sys_db")) {
+                db = JSON.parse(localStorage.getItem("wahda_sys_db"));
+            } else {
+                localStorage.setItem("wahda_sys_db", JSON.stringify(db));
+            }
+            initSystemCore();
+            setupDraggableElements();
+        };
+
+        function initSystemCore() {
+            document.getElementById("rec-id").value = db.receipts.length + 1;
+            populateEngineersDropdowns();
+            renderEngineersTable();
+            renderEmployeesTable();
+            updateDesignerVisualFromDB();
+            calculateSystemNotifications();
+        }
+
+        function handleLogin() {
+            const userIn = document.getElementById("login-user").value;
+            const passIn = document.getElementById("login-pass").value;
+            const matched = db.employees.find(e => e.user === userIn && e.pass === passIn);
+            
+            if (matched) {
+                currentUser = matched;
+                // 廿匕丕 丿禺賱 亘賰賱賲丞 爻乇 "admin" 丕賱賲亘丿卅賷丞貙 賷鬲賲 廿噩亘丕乇賴 毓賱賶 鬲睾賷賷乇賴丕 賯亘賱 賮鬲丨 賱賵丨丞 丕賱鬲丨賰賲
+                if (matched.user === "admin" && matched.pass === "admin") {
+                    document.getElementById("login-screen").style.display = "none";
+                    document.getElementById("password-reset-screen").style.display = "flex";
+                } else {
+                    document.getElementById("login-screen").style.display = "none";
+                    applyUserPermissions(matched);
+                }
+            } else {
+                alert("亘賷丕賳丕鬲 丕賱丿禺賵賱 禺丕胤卅丞.");
+            }
+        }
+
+        function forcePasswordChange() {
+            const newPass = document.getElementById("new-secure-pass").value;
+            const confirmPass = document.getElementById("confirm-secure-pass").value;
+
+            if (!newPass || newPass.trim() === "" || newPass === "admin") {
+                alert("賷乇噩賶 廿丿禺丕賱 賰賱賲丞 賲乇賵乇 噩丿賷丿丞 賵賯賵賷丞 賵賲禺鬲賱賮丞 毓賳 賰賱賲丞 admin!");
+                return;
+            }
+            if (newPass !== confirmPass) {
+                alert("賰賱賲鬲丕 丕賱賲乇賵乇 睾賷乇 賲鬲胤丕亘賯鬲賷賳.");
+                return;
+            }
+
+            // 鬲丨丿賷孬 賰賱賲丞 丕賱爻乇 賱賱賲丿賷乇 丕賱毓丕賲 賮賷 賯丕毓丿丞 丕賱亘賷丕賳丕鬲 賵鬲兀賲賷賳賴丕
+            const adminUser = db.employees.find(e => e.user === "admin");
+            if (adminUser) {
+                adminUser.pass = newPass;
+                saveToLocalStorage();
+                alert("馃敀 賲賲鬲丕夭 賷丕 賲賴賳丿爻! 鬲賲 鬲丨丿賷孬 賰賱賲丞 賲乇賵乇 丕賱賲丿賷乇 丕賱毓丕賲 賵鬲兀賲賷賳 丕賱賳馗丕賲 亘賳噩丕丨.");
+                document.getElementById("password-reset-screen").style.display = "none";
+                applyUserPermissions(currentUser);
+            }
+        }
+
+        function applyUserPermissions(user) {
+            if (user.perms.admin) {
+                document.getElementById("menu-employees").style.display = "flex";
+                document.getElementById("menu-engineers").style.display = "flex";
+                document.getElementById("menu-maintenance").style.display = "flex";
+                document.getElementById("menu-printing").style.display = "flex";
+            } else {
+                document.getElementById("menu-employees").style.display = "none";
+                document.getElementById("menu-engineers").style.display = "none";
+                document.getElementById("menu-maintenance").style.display = "none";
+                document.getElementById("menu-printing").style.display = "none";
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById("login-screen").style.display = "flex";
+            document.getElementById("password-reset-screen").style.display = "none";
+        }
+
+        function switchView(viewId, element) {
+            document.querySelectorAll(".view-panel").forEach(p => p.classList.remove("active"));
+            document.querySelectorAll(".menu-item").forEach(m => m.classList.remove("active"));
+            document.getElementById(viewId).classList.add("active");
+            element.classList.add("active");
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute("data-theme");
+            const newTheme = currentTheme === "light" ? "dark" : "light";
+            body.setAttribute("data-theme", newTheme);
+            document.getElementById("theme-toggle-btn").innerText = newTheme === "light" ? "馃寵" : "鈽�锔�";
+        }
+
+        function populateEngineersDropdowns() {
+            const html = db.engineers.map(e => `<option value="${e.id}">${e.name}</option>`).join("");
+            document.getElementById("rec-engineer").innerHTML = html;
+            document.getElementById("rep-engineer").innerHTML = html;
+        }
+
+        function updateRemainingCost() {
+            const total = parseFloat(document.getElementById("rec-total").value) || 0;
+            const prepaid = parseFloat(document.getElementById("rec-prepaid").value) || 0;
+            document.getElementById("rec-remaining").value = Math.max(0, total - prepaid);
+        }
+
+        function searchClientByPhone(val) {
+            const box = document.getElementById("phone-suggestions");
+            if (!val) { box.style.display = "none"; return; }
+            let matches = db.receipts.filter(r => r.phone.includes(val));
+            if (matches.length > 0) {
+                box.innerHTML = matches.map(m => `<div class="suggestion-item" onclick="selectClientSuggestion('${m.phone}', '${m.clientName}')">${m.phone} (${m.clientName})</div>`).join("");
+                box.style.display = "block";
+            } else { box.style.display = "none"; }
+        }
+
+        function selectClientSuggestion(phone, name) {
+            document.getElementById("rec-phone").value = phone;
+            document.getElementById("rec-client-name").value = name;
+            document.getElementById("phone-suggestions").style.display = "none";
+        }
+
+        function suggestBrands(val) {
+            const box = document.getElementById("brand-suggestions");
+            if (!val) { box.style.display = "none"; return; }
+            let filtered = db.suggestionsData.brands.filter(b => b.toLowerCase().includes(val.toLowerCase()));
+            box.innerHTML = filtered.map(f => `<div class="suggestion-item" onclick="document.getElementById('rec-brand').value='${f}'; document.getElementById('brand-suggestions').style.display='none';">${f}</div>`).join("");
+            box.style.display = "block";
+        }
+
+        function suggestModels(val) {
+            const box = document.getElementById("model-suggestions");
+            if (!val) { box.style.display = "none"; return; }
+            let filtered = db.suggestionsData.models.filter(m => m.toLowerCase().includes(val.toLowerCase()));
+            box.innerHTML = filtered.map(f => `<div class="suggestion-item" onclick="document.getElementById('rec-model').value='${f}'; document.getElementById('model-suggestions').style.display='none';">${f}</div>`).join("");
+            box.style.display = "block";
+        }
+
+        function suggestFaults(val) {
+            const box = document.getElementById("fault-suggestions");
+            if (!val) { box.style.display = "none"; return; }
+            let filtered = db.suggestionsData.faults.filter(f => f.toLowerCase().includes(val.toLowerCase()));
+            box.innerHTML = filtered.map(f => `<div class="suggestion-item" onclick="document.getElementById('rec-fault-desc').value='${f}'; document.getElementById('fault-suggestions').style.display='none';">${f}</div>`).join("");
+            box.style.display = "block";
+        }
+
+        function saveNewReceipt(e) {
+            e.preventDefault();
+            const newRec = {
+                id: db.receipts.length + 1,
+                phone: document.getElementById("rec-phone").value,
+                clientName: document.getElementById("rec-client-name").value,
+                brand: document.getElementById("rec-brand").value,
+                model: document.getElementById("rec-model").value,
+                imei: document.getElementById("rec-imei").value,
+                faultType: document.getElementById("rec-fault-type").value,
+                condition: document.getElementById("rec-condition").value,
+                faultDesc: document.getElementById("rec-fault-desc").value,
+                currency: document.getElementById("rec-currency").value,
+                total: document.getElementById("rec-total").value,
+                prepaid: document.getElementById("rec-prepaid").value,
+                remaining: document.getElementById("rec-remaining").value,
+                engineerId: document.getElementById("rec-engineer").value,
+                status: "賯賷丿 丕賱毓賲賱",
+                delivered: false,
+                paid: false,
+                createdAt: new Date().getTime(),
+                expectedDelivery: new Date().getTime() + (24 * 60 * 60 * 1000)
+            };
+            db.receipts.push(newRec);
+            saveToLocalStorage();
+            alert(`鬲賲 丨賮馗 丕賱爻賳丿 乇賯賲 ${newRec.id}`);
+            initSystemCore();
+            document.getElementById("receipt-form").reset();
+        }
+
+        function performGlobalSearch() {
+            const val = document.getElementById("search-global-input").value.toLowerCase();
+            const output = document.getElementById("search-results-output");
+            let filtered = db.receipts.filter(r => r.id.toString() === val || r.phone.includes(val) || r.clientName.toLowerCase().includes(val));
+            output.innerHTML = filtered.map(r => `
+                <tr onclick="openReceiptFromTable(${r.id})">
+                    <td>${r.id}</td><td>${r.clientName}</td><td>${r.phone}</td><td>${r.brand} ${r.model}</td><td>${r.status}</td><td>${r.remaining} ${r.currency}</td>
+                </tr>
+            `).join("");
+        }
+
+        function openReceiptFromTable(id) {
+            switchView('eng-reports-view', document.getElementById('menu-engineers'));
+            document.getElementById("report-search-id").value = id;
+            loadReceiptToReport();
+        }
+
+        let currentEditingReceiptId = null;
+        function loadReceiptToReport() {
+            const id = parseInt(document.getElementById("report-search-id").value);
+            const receipt = db.receipts.find(r => r.id === id);
+            if(!receipt) { alert("丕賱爻賳丿 睾賷乇 賲賵噩賵丿."); return; }
+            currentEditingReceiptId = id;
+            document.getElementById("report-card-title").innerText = `鬲毓丿賷賱 廿賷氐丕賱 氐賷丕賳丞: #${receipt.id}`;
+            document.getElementById("rep-status").value = receipt.status;
+            document.getElementById("rep-engineer").value = receipt.engineerId;
+            document.getElementById("rep-delivered").checked = receipt.delivered;
+            document.getElementById("rep-paid").checked = receipt.paid;
+            document.getElementById("report-edit-card").style.display = "block";
+        }
+
+        function saveReportModifications() {
+            if(!currentEditingReceiptId) return;
+            const receipt = db.receipts.find(r => r.id === currentEditingReceiptId);
+            if(receipt) {
+                receipt.status = document.getElementById("rep-status").value;
+                receipt.engineerId = document.getElementById("rep-engineer").value;
+                receipt.delivered = document.getElementById("rep-delivered").checked;
+                receipt.paid = document.getElementById("rep-paid").checked;
+                saveToLocalStorage();
+                alert("鬲賲 鬲丨丿賷孬 丕賱爻賳丿.");
+                initSystemCore();
+            }
+        }
+
+        function addNewEmployee(e) {
+            e.preventDefault();
+            const emp = {
+                id: db.employees.length + 1,
+                name: document.getElementById("emp-name").value,
+                user: document.getElementById("emp-user").value,
+                pass: document.getElementById("emp-pass").value,
+                perms: {
+                    new: document.getElementById("perm-new-receipt").checked,
+                    edit: document.getElementById("perm-edit").checked,
+                    del: document.getElementById("perm-delete").checked,
+                    admin: document.getElementById("perm-admin").checked
+                }
+            };
+            db.employees.push(emp);
+            saveToLocalStorage();
+            renderEmployeesTable();
+            document.getElementById("employee-form").reset();
+        }
+
+        function renderEmployeesTable() {
+            document.getElementById("employees-list-output").innerHTML = db.employees.map(e => `
+                <tr><td>${e.name}</td><td>${e.user}</td><td>${e.perms.admin?'賰丕賲賱':'賲丨丿丿'}</td></tr>
+            `).join("");
+        }
+
+        function addNewEngineer(e) {
+            e.preventDefault();
+            const eng = {
+                id: db.engineers.length + 1,
+                name: document.getElementById("eng-name-input").value,
+                phone: document.getElementById("eng-phone-input").value,
+                spec: document.getElementById("eng-spec-input").value
+            };
+            db.engineers.push(eng);
+            saveToLocalStorage();
+            renderEngineersTable();
+            populateEngineersDropdowns();
+            document.getElementById("engineer-form").reset();
+        }
+
+        function renderEngineersTable() {
+            document.getElementById("engineers-list-output").innerHTML = db.engineers.map(e => `
+                <tr><td>${e.name}</td><td>${e.phone}</td><td>${e.spec}</td></tr>
+            `).join("");
+        }
+
+        function calculateSystemNotifications() {
+            const container = document.getElementById("noti-list-container");
+            const now = new Date().getTime();
+            let delayed = db.receipts.filter(r => !r.delivered && r.status === "賯賷丿 丕賱毓賲賱" && now > r.expectedDelivery);
+            document.getElementById("noti-count").innerText = delayed.length;
+            container.innerHTML = delayed.length > 0 ? delayed.map(r => `<div class="noti-item">爻賳丿 #${r.id} 賲鬲兀禺乇!</div>`).join("") : "賱丕 鬲賵噩丿 賲鬲兀禺乇丕鬲.";
+        }
+
+        function toggleNotifications() {
+            const panel = document.getElementById("notification-center");
+            panel.style.display = panel.style.display === "block" ? "none" : "block";
+        }
+
+        function saveToLocalStorage() {
+            localStorage.setItem("wahda_sys_db", JSON.stringify(db));
+        }
+
+        function exportSystemData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db));
+            const dl = document.createElement('a');
+            dl.setAttribute("href", dataStr);
+            dl.setAttribute("download", "Wahda_Database.json");
+            dl.click();
+        }
+
+        function importSystemData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    db = JSON.parse(e.target.result);
+                    saveToLocalStorage();
+                    initSystemCore();
+                    alert("鬲賲 丕爻鬲賷乇丕丿 賯丕毓丿丞 丕賱亘賷丕賳丕鬲.");
+                } catch(err) { alert("賲賱賮 睾賷乇 氐丕賱丨."); }
+            };
+            reader.readAsText(file);
+        }
+
+        function setupDraggableElements() {
+            document.querySelectorAll('.draggable-element').forEach(el => {
+                let isDragging = false;
+                let currentX, currentY, initialX, initialY;
+                let xOffset = 0, yOffset = 0;
+
+                el.addEventListener('mousedown', dragStart);
+                el.addEventListener('touchstart', dragStart, {passive: false});
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('touchmove', drag, {passive: false});
+                document.addEventListener('mouseup', dragEnd);
+                document.addEventListener('touchend', dragEnd);
+
+                function dragStart(e) {
+                    let clientX = e.type === "touchstart" ? e.touches[0].clientX : e.clientX;
+                    let clientY = e.type === "touchstart" ? e.touches[0].clientY : e.clientY;
+                    initialX = clientX - xOffset;
+                    initialY = clientY - yOffset;
+                    if (e.target === el) isDragging = true;
+                }
+
+                function drag(e) {
+                    if (isDragging) {
+                        e.preventDefault();
+                        let clientX = e.type === "touchmove" ? e.touches[0].clientX : e.clientX;
+                        let clientY = e.type === "touchmove" ? e.touches[0].clientY : e.clientY;
+                        currentX = clientX - initialX;
+                        currentY = clientY - initialY;
+                        xOffset = currentX;
+                        yOffset = currentY;
+                        el.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+                    }
+                }
+
+                function dragEnd() {
+                    initialX = currentX;
+                    initialY = currentY;
+                    isDragging = false;
+                }
+            });
+        }
+
+        function updateDesignerStyles() {
+            const fs = document.getElementById("print-font-size").value + "px";
+            const col = document.getElementById("print-font-color").value;
+            document.querySelectorAll('.draggable-element').forEach(el => {
+                el.style.fontSize = fs;
+                el.style.color = col;
+            });
+            db.printLayout.fontSize = parseInt(document.getElementById("print-font-size").value);
+            db.printLayout.color = col;
+        }
+
+        function savePrintLayoutCoordinates() {
+            const visualBounds = document.getElementById("print-designer-visual").getBoundingClientRect();
+            document.querySelectorAll('.draggable-element').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const key = el.id.replace('drag-p-', '');
+                if (db.printLayout.positions[key]) {
+                    db.printLayout.positions[key].top = rect.top - visualBounds.top;
+                    db.printLayout.positions[key].left = rect.left - visualBounds.left;
+                }
+            });
+            saveToLocalStorage();
+            alert("鬲賲 丨賮馗 兀亘毓丕丿 賵賲賵丕賯毓 丕賱胤亘丕毓丞 丕賱賲丨丿孬丞.");
+        }
+
+        function updateDesignerVisualFromDB() {
+            document.getElementById("print-font-size").value = db.printLayout.fontSize || 13;
+            document.getElementById("print-font-color").value = db.printLayout.color || "#000000";
+            updateDesignerStyles();
+        }
+
+        function triggerDirectPrint() {
+            const printArea = document.getElementById("print-area-target");
+            const fs = db.printLayout.fontSize + "px";
+            const col = db.printLayout.color;
+            const lastRec = db.receipts[db.receipts.length - 1] || { id: 1, clientName: "毓賲賷賱 鬲噩乇賷亘賷", brand: "爻丕賲爻賵賳噩", model: "S20", faultDesc: "賮丨氐", total: 0, prepaid: 0, remaining: 0 };
+
+            printArea.innerHTML = `
+                <div style="position: relative; width: 210mm; height: 65mm; color: ${col}; font-size: ${fs};">
+                    <div style="position: absolute; top: ${db.printLayout.positions.id.top}px; left: ${db.printLayout.positions.id.left}px;">乇賯賲 丕賱廿賷氐丕賱: #${lastRec.id}</div>
+                    <div style="position: absolute; top: ${db.printLayout.positions.name.top}px; left: ${db.printLayout.positions.name.left}px;">丕賱丕爻賲: ${lastRec.clientName}</div>
+                    <div style="position: absolute; top: ${db.printLayout.positions.device.top}px; left: ${db.printLayout.positions.device.left}px;">丕賱噩賴丕夭: ${lastRec.brand} ${lastRec.model}</div>
+                    <div style="position: absolute; top: ${db.printLayout.positions.fault.top}px; left: ${db.printLayout.positions.fault.left}px;">丕賱毓胤賱: ${lastRec.faultDesc}</div>
+                    <div style="position: absolute; top: ${db.printLayout.positions.money.top}px; left: ${db.printLayout.positions.money.left}px;">丕賱廿噩賲丕賱賷: ${lastRec.total}</div>
+                    <div style="position: absolute; top: ${db.printLayout.positions.prepaid.top}px; left: ${db.printLayout.positions.prepaid.left}px;">丕賱賲爻亘賯: ${lastRec.prepaid}</div>
+                    <div style="position: absolute; top: ${db.printLayout.positions.remaining.top}px; left: ${db.printLayout.positions.remaining.left}px;">丕賱賲鬲亘賯賷: ${lastRec.remaining}</div>
+                </div>
+            `;
+            window.print();
+        }
+    </script>
+</body>
+</html>
