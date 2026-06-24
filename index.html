@@ -1,922 +1,1024 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>丕賱賵丨丿賴 賱賱亘乇賲噩賷丕鬲 - 賳馗丕賲 氐賷丕賳丞 丕賱賴賵丕鬲賮</title>
+    <style>
+        :root {
+            --bg-primary: #f4f6f9;
+            --bg-sidebar: #e9ecef;
+            --text-main: #333333;
+            --brand-color: #4a90e2;
+            --brand-light: #e6f0fa;
+            --gray-muted: #6c757d;
+            --border-color: #ced4da;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+        }
 
-<style>
-:root{--accent:#1D9E75;--accent-dark:#0F6E56;--accent-light:#E1F5EE;--bg:#f8f9fa;--bg2:#ffffff;--bg3:#f0f2f5;--text1:#1a1a2e;--text2:#6b7280;--text3:#9ca3af;--border:#e5e7eb;--border2:#d1d5db;--shadow:0 2px 8px rgba(0,0,0,0.08);--radius:10px;--radius2:14px}
-[data-theme="dark"]{--bg:#0f1117;--bg2:#1a1d27;--bg3:#252836;--text1:#e8eaf0;--text2:#9ca3af;--text3:#6b7280;--border:#2d3148;--border2:#3d4163;--shadow:0 2px 8px rgba(0,0,0,0.3)}
-*{box-sizing:border-box;margin:0;padding:0;transition:background-color 0.2s,color 0.2s,border-color 0.2s}
-body{font-family:var(--font-sans,'Segoe UI'),sans-serif;background:var(--bg);color:var(--text1);direction:rtl;min-height:100vh}
-/* Login */
-.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0F6E56 0%,#1D9E75 50%,#5DCAA5 100%)}
-.login-card{background:var(--bg2);border-radius:20px;padding:2.5rem;width:360px;box-shadow:0 20px 60px rgba(0,0,0,0.2)}
-.login-logo-wrap{text-align:center;margin-bottom:1.5rem}
-.login-logo{width:80px;height:80px;background:linear-gradient(135deg,#1D9E75,#0F6E56);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:36px;color:#fff;box-shadow:0 8px 24px rgba(29,158,117,0.4)}
-.login-title{font-size:20px;font-weight:500;color:var(--text1)}
-.login-sub{font-size:12px;color:var(--text2);margin-top:4px}
-.login-credits{font-size:10px;color:var(--text3);margin-top:6px;line-height:1.6}
-.inp{width:100%;border:1px solid var(--border2);border-radius:10px;padding:10px 14px;font-size:13px;background:var(--bg3);color:var(--text1);font-family:inherit;direction:rtl;margin-bottom:10px}
-.inp:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(29,158,117,0.15)}
-.btn-login{width:100%;background:linear-gradient(135deg,#1D9E75,#0F6E56);color:#fff;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;letter-spacing:0.3px}
-.btn-login:hover{opacity:0.9}
-.err-box{background:#fef2f2;color:#dc2626;border-radius:8px;padding:8px 12px;font-size:12px;margin-bottom:10px;display:none;border:1px solid #fecaca}
-/* App Layout */
-.app-wrap{display:flex;flex-direction:column;min-height:100vh}
-/* Topbar */
-.topbar{background:var(--bg2);border-bottom:1px solid var(--border);height:58px;display:flex;align-items:center;padding:0 1.25rem;gap:12px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
-.top-brand{display:flex;align-items:center;gap:10px;flex:1}
-.top-logo{width:38px;height:38px;background:linear-gradient(135deg,#1D9E75,#0F6E56);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;flex-shrink:0}
-.top-name{font-size:14px;font-weight:500;color:var(--text1)}
-.top-sub{font-size:10px;color:var(--text2)}
-.top-credits{font-size:9px;color:var(--text3);margin-top:1px}
-.top-actions{display:flex;align-items:center;gap:8px}
-.icon-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:16px}
-.icon-btn:hover{background:var(--accent-light);color:var(--accent);border-color:var(--accent)}
-.notif-badge{position:relative}
-.notif-dot{position:absolute;top:-2px;left:-2px;width:16px;height:16px;background:#ef4444;border-radius:50%;font-size:9px;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;border:2px solid var(--bg2)}
-.user-chip{display:flex;align-items:center;gap:8px;padding:4px 10px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);cursor:pointer;font-size:12px;color:var(--text1)}
-.av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#1D9E75,#0F6E56);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:500}
-/* Layout */
-.layout{display:flex;flex:1;overflow:hidden}
-/* Sidebar */
-.sidebar{width:210px;background:var(--bg2);border-left:1px solid var(--border);padding:1rem 0;display:flex;flex-direction:column;overflow-y:auto}
-.nav-section{padding:5px 1rem 3px;font-size:10px;color:var(--text3);font-weight:600;letter-spacing:0.08em;margin-top:10px}
-.nav-item{display:flex;align-items:center;gap:10px;padding:9px 1rem;font-size:13px;color:var(--text2);cursor:pointer;border-right:3px solid transparent;transition:all 0.15s;position:relative}
-.nav-item:hover{background:var(--bg3);color:var(--text1)}
-.nav-item.active{background:var(--accent-light);color:var(--accent);border-right-color:var(--accent);font-weight:500}
-.nav-item i{font-size:17px;flex-shrink:0}
-.nav-badge{margin-right:auto;background:#ef4444;color:#fff;border-radius:10px;font-size:9px;font-weight:700;padding:1px 6px}
-/* Main */
-.main{flex:1;overflow-y:auto;padding:1.25rem;background:var(--bg)}
-/* Pages */
-.page{display:none}
-.page.active{display:block}
-.ph{margin-bottom:1.25rem}
-.ph h1{font-size:17px;font-weight:500;color:var(--text1)}
-.ph p{font-size:12px;color:var(--text2);margin-top:3px}
-/* Cards */
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:1.25rem}
-.stat-c{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:1rem;position:relative;overflow:hidden}
-.stat-c::before{content:'';position:absolute;top:0;right:0;width:4px;height:100%;border-radius:0 var(--radius2) var(--radius2) 0}
-.stat-c.green::before{background:#1D9E75}
-.stat-c.blue::before{background:#378ADD}
-.stat-c.amber::before{background:#BA7517}
-.stat-c.red::before{background:#E24B4A}
-.stat-num{font-size:26px;font-weight:500;color:var(--text1)}
-.stat-lbl{font-size:11px;color:var(--text2);margin-top:4px}
-.stat-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:28px;opacity:0.12;color:var(--text1)}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:1.25rem;margin-bottom:1rem}
-.card-hd{font-size:13px;font-weight:500;color:var(--text1);margin-bottom:1rem;display:flex;align-items:center;gap:8px}
-/* Status badges with icons */
-.sb{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap}
-.sb-new{background:#f0f2f5;color:#6b7280}.sb-new i{color:#9ca3af}
-.sb-work{background:#fef9c3;color:#854d0e}.sb-work i{color:#ca8a04}
-.sb-done{background:#dcfce7;color:#166534}.sb-done i{color:#16a34a}
-.sb-cant{background:#fee2e2;color:#991b1b}.sb-cant i{color:#dc2626}
-.sb-reject{background:#fce7f3;color:#9d174d}.sb-reject i{color:#db2777}
-.sb-nopart{background:#fff7ed;color:#9a3412}.sb-nopart i{color:#ea580c}
-.sb-del{background:#f1f5f9;color:#475569}.sb-del i{color:#64748b}
-[data-theme="dark"] .sb-new{background:#2d3148;color:#9ca3af}
-[data-theme="dark"] .sb-work{background:#3d3000;color:#fbbf24}
-[data-theme="dark"] .sb-done{background:#052e16;color:#4ade80}
-[data-theme="dark"] .sb-cant{background:#3b0000;color:#f87171}
-[data-theme="dark"] .sb-reject{background:#3b0028;color:#f9a8d4}
-[data-theme="dark"] .sb-nopart{background:#3b1500;color:#fb923c}
-/* Alert Banner */
-.alert-banner{background:linear-gradient(135deg,#fef9c3,#fef3c7);border:1px solid #fcd34d;border-radius:var(--radius);padding:10px 14px;margin-bottom:1rem;display:flex;align-items:center;gap:10px;cursor:pointer}
-.alert-banner i{color:#d97706;font-size:20px}
-.alert-banner-text{flex:1;font-size:12px;color:#92400e;font-weight:500}
-.alert-banner-count{background:#d97706;color:#fff;border-radius:20px;padding:2px 8px;font-size:11px;font-weight:700}
-[data-theme="dark"] .alert-banner{background:#3d2a00;border-color:#b45309}
-[data-theme="dark"] .alert-banner-text{color:#fcd34d}
-/* Tables */
-.tw{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th{text-align:right;padding:8px 10px;font-size:10px;font-weight:600;color:var(--text3);border-bottom:1px solid var(--border);white-space:nowrap;letter-spacing:0.05em}
-td{padding:9px 10px;border-bottom:1px solid var(--border);color:var(--text1);vertical-align:middle}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:var(--bg3)}
-/* Forms */
-.fg{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
-.fg label{font-size:11px;color:var(--text2);font-weight:500}
-.fi{border:1px solid var(--border2);border-radius:8px;padding:8px 10px;font-size:13px;background:var(--bg2);color:var(--text1);font-family:inherit;direction:rtl;width:100%}
-.fi:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(29,158,117,0.1)}
-.fi[readonly]{background:var(--bg3);color:var(--text2)}
-.fr{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.fr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-/* Buttons */
-.btn{border-radius:8px;padding:7px 14px;font-size:12px;cursor:pointer;font-family:inherit;border:1px solid var(--border2);background:var(--bg2);color:var(--text1);display:inline-flex;align-items:center;gap:6px;transition:all 0.15s;font-weight:500}
-.btn:hover{background:var(--bg3)}
-.btn-g{background:linear-gradient(135deg,#1D9E75,#0F6E56);color:#fff;border:none}
-.btn-g:hover{opacity:0.9}
-.btn-r{background:#ef4444;color:#fff;border:none}
-.btn-r:hover{background:#dc2626}
-.btn-b{background:#378ADD;color:#fff;border:none}
-.btn-b:hover{background:#185FA5}
-.btn-row{display:flex;gap:8px;justify-content:flex-end;margin-top:1rem;flex-wrap:wrap}
-/* Receipt ID display */
-.rid-box{background:linear-gradient(135deg,var(--accent-light),#9FE1CB);border:2px solid var(--accent);border-radius:10px;padding:10px;text-align:center;font-size:22px;font-weight:500;color:#0F6E56;letter-spacing:3px}
-[data-theme="dark"] .rid-box{background:#052e16;color:#4ade80;border-color:#16a34a}
-/* Autocomplete */
-.acw{position:relative}
-.acl{position:absolute;top:100%;right:0;left:0;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;z-index:50;max-height:150px;overflow-y:auto;display:none;box-shadow:0 8px 24px rgba(0,0,0,0.12)}
-.acl.open{display:block}
-.aci{padding:7px 10px;font-size:12px;cursor:pointer;color:var(--text1)}
-.aci:hover{background:var(--bg3)}
-/* Modal */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
-.modal-bg.open{display:flex}
-.modal{background:var(--bg2);border-radius:16px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;padding:1.5rem;border:1px solid var(--border)}
-.modal-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
-.modal-hd h2{font-size:15px;font-weight:500;color:var(--text1)}
-.modal-x{background:none;border:none;cursor:pointer;font-size:18px;color:var(--text2);width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center}
-.modal-x:hover{background:var(--bg3)}
-/* Print receipt preview */
-.print-preview{border:2px dashed var(--border2);border-radius:8px;padding:1rem;background:var(--bg3);font-size:11px;margin:10px 0}
-.print-row{display:flex;justify-content:space-between;border-bottom:1px dotted var(--border);padding:3px 0;font-size:11px}
-.print-row:last-child{border-bottom:none}
-/* Notifications panel */
-.notif-panel{position:absolute;top:58px;left:1rem;width:320px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,0.15);z-index:150;display:none;padding:0;overflow:hidden}
-.notif-panel.open{display:block}
-.notif-ph{padding:12px 14px;border-bottom:1px solid var(--border);font-size:13px;font-weight:500;color:var(--text1)}
-.notif-item{padding:10px 14px;border-bottom:1px solid var(--border);cursor:pointer}
-.notif-item:hover{background:var(--bg3)}
-.notif-item:last-child{border-bottom:none}
-.notif-title{font-size:12px;font-weight:500;color:var(--text1)}
-.notif-sub{font-size:11px;color:var(--text2);margin-top:2px}
-/* Theme switcher */
-.theme-switcher{display:flex;align-items:center;background:var(--bg3);border-radius:8px;padding:3px;border:1px solid var(--border);gap:2px}
-.theme-btn{padding:4px 10px;border-radius:6px;border:none;background:none;cursor:pointer;font-size:11px;color:var(--text2);font-family:inherit;display:flex;align-items:center;gap:4px}
-.theme-btn.active{background:var(--bg2);color:var(--text1);box-shadow:0 1px 3px rgba(0,0,0,0.1)}
-/* AI Chat */
-.ai-fab{position:fixed;bottom:20px;left:20px;width:52px;height:52px;background:linear-gradient(135deg,#7F77DD,#534AB7);border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;box-shadow:0 4px 20px rgba(127,119,221,0.5);z-index:300;transition:transform 0.2s}
-.ai-fab:hover{transform:scale(1.1)}
-.ai-panel{position:fixed;bottom:80px;left:20px;width:340px;height:440px;background:var(--bg2);border:1px solid var(--border);border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,0.2);z-index:300;display:none;flex-direction:column;overflow:hidden}
-.ai-panel.open{display:flex}
-.ai-hd{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#534AB7,#7F77DD)}
-.ai-hd-icon{width:32px;height:32px;background:rgba(255,255,255,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px}
-.ai-hd-text{color:#fff}
-.ai-hd-text .t{font-size:13px;font-weight:500}
-.ai-hd-text .s{font-size:10px;opacity:0.8}
-.ai-close{margin-right:auto;background:none;border:none;color:#fff;cursor:pointer;font-size:16px;opacity:0.8}
-.ai-close:hover{opacity:1}
-.ai-msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px}
-.ai-msg{max-width:85%;padding:8px 12px;border-radius:12px;font-size:12px;line-height:1.5}
-.ai-msg.user{background:linear-gradient(135deg,#1D9E75,#0F6E56);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
-.ai-msg.bot{background:var(--bg3);color:var(--text1);align-self:flex-start;border-bottom-left-radius:4px}
-.ai-msg.typing{color:var(--text2);font-style:italic}
-.ai-inp-row{padding:10px;border-top:1px solid var(--border);display:flex;gap:8px}
-.ai-inp{flex:1;border:1px solid var(--border2);border-radius:8px;padding:7px 10px;font-size:12px;background:var(--bg3);color:var(--text1);font-family:inherit;direction:rtl}
-.ai-inp:focus{outline:none;border-color:#7F77DD}
-.ai-send{width:34px;height:34px;background:linear-gradient(135deg,#7F77DD,#534AB7);border:none;border-radius:8px;cursor:pointer;color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center}
-/* Pending page */
-.pending-item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;border:1px solid var(--border);background:var(--bg2);margin-bottom:8px;cursor:pointer;transition:all 0.15s}
-.pending-item:hover{border-color:var(--accent);background:var(--accent-light)}
-.pending-num{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#fef3c7,#fde68a);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500;color:#92400e;flex-shrink:0}
-.pending-info{flex:1}
-.pending-name{font-size:13px;font-weight:500;color:var(--text1)}
-.pending-detail{font-size:11px;color:var(--text2);margin-top:2px}
-.pending-date{font-size:10px;color:var(--text3)}
-/* Extra fields */
-.extra-fields{background:var(--bg3);border-radius:10px;padding:12px;margin:8px 0;border:1px solid var(--border)}
-.extra-title{font-size:11px;font-weight:600;color:var(--text2);margin-bottom:10px;display:flex;align-items:center;gap:6px}
-/* Checkbox */
-.chk-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-.chk-row input[type=checkbox]{width:15px;height:15px;accent-color:var(--accent)}
-.chk-row label{font-size:12px;color:var(--text1);cursor:pointer}
-.perm-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
-.divider{border:none;border-top:1px solid var(--border);margin:12px 0}
-.empty-st{text-align:center;padding:2.5rem;color:var(--text3)}
-.empty-st i{font-size:36px;display:block;margin-bottom:8px}
-.search-bar{display:flex;gap:8px;margin-bottom:1rem}
-.search-bar .fi{flex:1}
-.color-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-left:4px}
-</style>
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-sidebar: #2d2d2d;
+            --text-main: #f5f5f5;
+            --brand-color: #377bbe;
+            --brand-light: #2b3a4a;
+            --gray-muted: #a0a0a0;
+            --border-color: #444444;
+        }
 
-<!-- LOGIN PAGE -->
-<div id="loginPage">
-  <div class="login-wrap">
-    <div class="login-card">
-      <div class="login-logo-wrap">
-        <div class="login-logo"><i class="ti ti-device-mobile" aria-hidden="true"></i></div>
-        <div class="login-title">الوحدة للبرمجيات</div>
-        <div class="login-sub">نظام إدارة صيانة الهواتف المتكامل</div>
-        <div class="login-credits">إعداد وبرمجة: م. محمد عبدالله اليريمي / م. عبدالرحمن الشرعبي</div>
-      </div>
-      <div id="loginErr" class="err-box">اسم المستخدم أو كلمة المرور غير صحيحة</div>
-      <div class="fg"><label>اسم المستخدم</label><input class="inp" id="lu" value="admin" placeholder="اسم المستخدم"/></div>
-      <div class="fg"><label>كلمة المرور</label><input class="inp" id="lp" type="password" value="admin" placeholder="كلمة المرور"/></div>
-      <button class="btn-login" onclick="doLogin()"><i class="ti ti-login" aria-hidden="true"></i> دخول إلى النظام</button>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* 卮丕卮丕鬲 丕賱丿禺賵賱 賵鬲睾賷賷乇 賰賱賲丞 丕賱爻乇 */
+        #login-screen, #password-reset-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .login-card {
+            background: var(--bg-sidebar);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .login-card h2 { margin-bottom: 20px; color: var(--brand-color); }
+        .login-card input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-primary);
+            color: var(--text-main);
+            font-size: 16px;
+        }
+        .login-card button {
+            width: 100%;
+            padding: 12px;
+            background: var(--brand-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        #main-header {
+            background-color: var(--brand-light);
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .header-logo { width: 35px; height: 35px; background: var(--brand-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        .header-title { color: #2c5282; font-size: 1.1rem; font-weight: bold; }
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .icon-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-main); position: relative; padding: 5px; }
+        .badge { position: absolute; top: -2px; right: -2px; background: var(--danger-color); color: white; font-size: 0.65rem; padding: 2px 5px; border-radius: 50%; }
+
+        #app-body {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #sidebar {
+            width: 240px;
+            background-color: var(--bg-sidebar);
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            #sidebar { width: 60px; }
+            .menu-text { display: none; }
+            .section-title { font-size: 0.65rem; text-align: center; padding: 5px 2px; }
+            .menu-item { justify-content: center; padding: 12px 5px; }
+        }
+
+        .sidebar-section { border-bottom: 1px solid var(--border-color); padding: 5px 0; }
+        .section-title { padding: 5px 15px; font-weight: bold; color: var(--gray-muted); font-size: 0.85rem; background: rgba(0,0,0,0.03); }
+        .menu-item { display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-main); cursor: pointer; transition: 0.2s; }
+        .menu-item:hover, .menu-item.active { background-color: var(--brand-light); color: var(--brand-color); font-weight: bold; }
+
+        #content-area {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background-color: var(--bg-primary);
+            -webkit-overflow-scrolling: touch;
+        }
+        .view-panel { display: none; }
+        .view-panel.active { display: block; }
+
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; margin-bottom: 4px; font-weight: 500; font-size: 0.9rem; }
+        .form-control { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-primary); color: var(--text-main); font-size: 15px; }
+        .form-control[readonly] { background-color: rgba(0,0,0,0.05); cursor: not-allowed; }
+        
+        .row { display: flex; gap: 12px; flex-wrap: wrap; }
+        .col { flex: 1; min-width: 140px; }
+
+        .btn { padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+        .btn-primary { background: var(--brand-color); color: white; }
+        .btn-success { background: var(--success-color); color: white; }
+        .btn-danger { background: var(--danger-color); color: white; }
+
+        .autocomplete-wrapper { position: relative; }
+        .suggestions-box { position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-primary); border: 1px solid var(--border-color); z-index: 100; max-height: 180px; overflow-y: auto; border-radius: 0 0 4px 4px; display: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .suggestion-item { padding: 10px; cursor: pointer; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
+        .suggestion-item:hover { background: var(--brand-light); }
+
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 15px; }
+        .data-table { width: 100%; border-collapse: collapse; background: var(--bg-primary); min-width: 500px; }
+        .data-table th, .data-table td { border: 1px solid var(--border-color); padding: 10px; text-align: right; font-size: 0.85rem; }
+        .data-table th { background: var(--bg-sidebar); }
+
+        #print-designer-visual {
+            border: 2px dashed var(--brand-color);
+            width: 100%;
+            max-width: 210mm;
+            height: 65mm;
+            position: relative;
+            background: white;
+            color: black;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+        .draggable-element {
+            position: absolute;
+            padding: 1px 4px;
+            border: 1px dotted #999;
+            cursor: move;
+            font-size: 11px;
+            white-space: nowrap;
+            touch-action: none;
+        }
+
+        .footer-credits {
+            text-align: center;
+            padding: 8px;
+            font-size: 0.8rem;
+            background: var(--bg-sidebar);
+            border-top: 1px solid var(--border-color);
+            color: var(--gray-muted);
+        }
+
+        #notification-center {
+            position: fixed;
+            top: 65px; left: 15px;
+            width: 290px;
+            background: var(--bg-sidebar);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+            z-index: 1000;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+        .noti-item { padding: 10px; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; }
+
+        @media print {
+            body * { display: none !important; }
+            #print-area-target, #print-area-target * { display: block !important; }
+            #print-area-target { position: absolute; left: 0; top: 0; width: 210mm; height: 65mm; background: white !important; color: black !important; }
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <!-- 卮丕卮丞 鬲爻噩賷賱 丕賱丿禺賵賱 丕賱丕賮鬲乇丕囟賷丞 丕賱賲亘丿卅賷丞 admin/admin -->
+    <div id="login-screen">
+        <div class="login-card">
+            <h2>丕賱賵丨丿賴 賱賱亘乇賲噩賷丕鬲</h2>
+            <p style="color: var(--gray-muted); margin-bottom: 12px;">賳馗丕賲 廿丿丕乇丞 氐賷丕賳丞 丕賱賴賵丕鬲賮 賵丕賱卮亘賰丕鬲</p>
+            <input type="text" id="login-user" placeholder="丕爻賲 丕賱賲爻鬲禺丿賲" value="admin">
+            <input type="password" id="login-pass" placeholder="賰賱賲丞 丕賱賲乇賵乇" value="admin">
+            <button onclick="handleLogin()">鬲爻噩賷賱 丕賱丿禺賵賱</button>
+            <div style="margin-top: 15px; font-size: 0.8rem; color: var(--gray-muted);">鬲氐賲賷賲 丕賱賲賴賳丿爻 毓亘丿丕賱乇丨賲賳 丕賱丕丨賲乇 772364042</div>
+        </div>
     </div>
-  </div>
-</div>
 
-<!-- MAIN APP -->
-<div id="mainApp" style="display:none">
-  <div class="app-wrap">
-    <div class="topbar">
-      <div class="top-brand">
-        <div class="top-logo"><i class="ti ti-device-mobile" aria-hidden="true"></i></div>
-        <div>
-          <div class="top-name">الوحدة للبرمجيات — نظام الصيانة</div>
-          <div class="top-credits">إعداد: م. محمد اليريمي / م. عبدالرحمن الشرعبي</div>
+    <!-- 卮丕卮丞 廿噩亘丕乇賷丞 賱鬲睾賷賷乇 賰賱賲丞 丕賱爻乇 廿匕丕 賰丕賳鬲 丕賱丕賮鬲乇丕囟賷丞 賱丨賲丕賷丞 丕賱亘賷丕賳丕鬲 -->
+    <div id="password-reset-screen" style="display: none;">
+        <div class="login-card">
+            <h3 style="color: var(--danger-color); margin-bottom: 10px;">馃洝锔� 廿噩乇丕亍 兀賲丕賳 賲胤賱賵亘</h3>
+            <p style="color: var(--text-main); font-size: 0.9rem; margin-bottom: 15px;">兀賳鬲 鬲爻噩賱 丕賱丿禺賵賱 亘賰賱賲丞 丕賱賲乇賵乇 丕賱丕賮鬲乇丕囟賷丞 賱賱賲丿賷乇 丕賱毓丕賲. 賷乇噩賶 鬲毓賷賷賳 賰賱賲丞 賲乇賵乇 噩丿賷丿丞 賯賵賷丞 丕賱丌賳 賱鬲兀賲賷賳 賯丕毓丿丞 亘賷丕賳丕鬲 丕賱賲丨賱.</p>
+            <input type="password" id="new-secure-pass" placeholder="賰賱賲丞 丕賱賲乇賵乇 丕賱噩丿賷丿丞">
+            <input type="password" id="confirm-secure-pass" placeholder="鬲兀賰賷丿 賰賱賲丞 丕賱賲乇賵乇 丕賱噩丿賷丿丞">
+            <button onclick="forcePasswordChange()" style="background: var(--success-color);">丨賮馗 賵鬲兀賲賷賳 丕賱丨爻丕亘 馃敀</button>
         </div>
-      </div>
-      <div class="top-actions">
-        <div class="theme-switcher">
-          <button class="theme-btn active" id="tbLight" onclick="setTheme('light')"><i class="ti ti-sun" aria-hidden="true"></i> فاتح</button>
-          <button class="theme-btn" id="tbDark" onclick="setTheme('dark')"><i class="ti ti-moon" aria-hidden="true"></i> داكن</button>
-        </div>
-        <div class="notif-badge">
-          <button class="icon-btn" onclick="toggleNotif()" id="notifBtn" title="التنبيهات"><i class="ti ti-bell" aria-hidden="true"></i></button>
-          <div class="notif-dot" id="notifCount" style="display:none">0</div>
-        </div>
-        <div class="user-chip"><div class="av" id="userAv">A</div><span id="userN">admin</span></div>
-        <button class="icon-btn" onclick="doLogout()" title="خروج"><i class="ti ti-logout" aria-hidden="true"></i></button>
-        <div class="notif-panel" id="notifPanel">
-          <div class="notif-ph"><i class="ti ti-bell" aria-hidden="true"></i> التنبيهات</div>
-          <div id="notifList"></div>
-        </div>
-      </div>
     </div>
-    <div class="layout">
-      <div class="sidebar">
-        <div class="nav-section">الرئيسية</div>
-        <div class="nav-item active" id="n-dashboard" onclick="go('dashboard')"><i class="ti ti-dashboard" aria-hidden="true"></i> لوحة التحكم</div>
-        <div class="nav-section">العمليات</div>
-        <div class="nav-item" id="n-customers" onclick="go('customers')"><i class="ti ti-users" aria-hidden="true"></i> العملاء</div>
-        <div class="nav-item" id="n-pending" onclick="go('pending')"><i class="ti ti-clock" aria-hidden="true"></i> قيد العمل <span class="nav-badge" id="pendingBadge">0</span></div>
-        <div class="nav-item" id="n-search" onclick="go('search')"><i class="ti ti-search" aria-hidden="true"></i> بحث وتقارير</div>
-        <div class="nav-section">الإدارة</div>
-        <div class="nav-item" id="n-employees" onclick="go('employees')"><i class="ti ti-id-badge" aria-hidden="true"></i> الموظفون</div>
-        <div class="nav-item" id="n-engineers" onclick="go('engineers')"><i class="ti ti-tool" aria-hidden="true"></i> المهندسون</div>
-        <div class="nav-section">النظام</div>
-        <div class="nav-item" id="n-reports" onclick="go('reports')"><i class="ti ti-chart-bar" aria-hidden="true"></i> التقارير</div>
-        <div class="nav-item" id="n-maintenance" onclick="go('maintenance')"><i class="ti ti-database" aria-hidden="true"></i> صيانة النظام</div>
-      </div>
-      <div class="main">
 
-        <!-- DASHBOARD -->
-        <div id="page-dashboard" class="page active">
-          <div class="ph"><h1>لوحة التحكم</h1><p>نظرة شاملة على نشاط محل الصيانة</p></div>
-          <div id="alertBanner"></div>
-          <div class="stats-grid" id="dashStats"></div>
-          <div class="card">
-            <div class="card-hd"><i class="ti ti-receipt" aria-hidden="true"></i> آخر الإيصالات</div>
-            <div class="tw"><table><thead><tr><th>#</th><th>العميل</th><th>الجهاز</th><th>العطل</th><th>المبلغ</th><th>الحالة</th><th></th></tr></thead><tbody id="dashBody"></tbody></table></div>
-          </div>
+    <!-- 丕賱乇兀爻 丕賱乇卅賷爻賷 賱賱賳馗丕賲 丕賱鬲賮丕毓賱賷 -->
+    <header id="main-header">
+        <div class="header-right">
+            <div class="header-logo">W</div>
+            <div class="header-title">丕賱賵丨丿賴 賱賱亘乇賲噩賷丕鬲</div>
         </div>
-
-        <!-- CUSTOMERS -->
-        <div id="page-customers" class="page">
-          <div class="ph"><h1>العملاء</h1><p>إدارة إيصالات الاستلام</p></div>
-          <div style="display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap">
-            <button class="btn btn-g" onclick="openNewReceipt()"><i class="ti ti-plus" aria-hidden="true"></i> إيصال جديد</button>
-          </div>
-          <div class="card">
-            <div class="card-hd"><i class="ti ti-list" aria-hidden="true"></i> جميع الإيصالات</div>
-            <div class="search-bar"><input class="fi" id="custSearch" placeholder="بحث برقم، اسم، أو هاتف..." oninput="renderCust()"/></div>
-            <div class="tw"><table><thead><tr><th>#</th><th>الهاتف</th><th>الاسم</th><th>الجهاز</th><th>المبلغ</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody id="custBody"></tbody></table></div>
-          </div>
+        <div class="header-left">
+            <button class="icon-btn" onclick="toggleNotifications()">馃敂 <span class="badge" id="noti-count">0</span></button>
+            <button class="icon-btn" id="theme-toggle-btn" onclick="toggleTheme()">馃寵</button>
+            <button class="icon-btn" onclick="logout()" title="禺乇賵噩">馃毆</button>
         </div>
+    </header>
 
-        <!-- PENDING -->
-        <div id="page-pending" class="page">
-          <div class="ph"><h1>الأجهزة قيد العمل</h1><p>جميع الأجهزة التي لم تكتمل بعد</p></div>
-          <div id="pendingList"></div>
-        </div>
-
-        <!-- SEARCH -->
-        <div id="page-search" class="page">
-          <div class="ph"><h1>بحث وتقارير المهندسين</h1><p>ابحث بأي معلومة</p></div>
-          <div class="card">
-            <div class="fr" style="margin-bottom:10px">
-              <div class="fg"><label>رقم الإيصال</label><input class="fi" id="srId" type="number" placeholder="20" oninput="doSearch()"/></div>
-              <div class="fg"><label>رقم الهاتف</label><input class="fi" id="srPhone" placeholder="771234567" oninput="doSearch()"/></div>
+    <div id="app-body">
+        <!-- 丕賱賯丕卅賲丞 丕賱噩丕賳亘賷丞 丕賱賲爻鬲噩賷亘丞 賱賱噩賵丕賱 -->
+        <aside id="sidebar">
+            <div class="sidebar-section">
+                <div class="section-title">丕賱毓賲賱賷丕鬲</div>
+                <div class="menu-item active" onclick="switchView('new-receipt-view', this)">馃摑 <span class="menu-text">廿賷氐丕賱 噩丿賷丿</span></div>
+                <div class="menu-item" onclick="switchView('search-devices-view', this)">馃攳 <span class="menu-text">亘丨孬 毓賳 兀噩賴夭丞</span></div>
+                <div class="menu-item" onclick="switchView('eng-reports-view', this)">馃搳 <span class="menu-text">鬲賯丕乇賷乇 丕賱賲賴賳丿爻賷賳</span></div>
             </div>
-            <div class="fg"><label>اسم العميل</label><input class="fi" id="srName" placeholder="اسم العميل" oninput="doSearch()"/></div>
-            <div id="srResults"></div>
-          </div>
-        </div>
-
-        <!-- EMPLOYEES -->
-        <div id="page-employees" class="page">
-          <div class="ph"><h1>الموظفون</h1><p>إدارة الحسابات والصلاحيات</p></div>
-          <div style="margin-bottom:1rem"><button class="btn btn-g" onclick="openEmp()"><i class="ti ti-user-plus" aria-hidden="true"></i> إضافة موظف</button></div>
-          <div class="card"><div class="tw"><table><thead><tr><th>الاسم</th><th>المستخدم</th><th>الصلاحيات</th><th>إجراء</th></tr></thead><tbody id="empBody"></tbody></table></div></div>
-        </div>
-
-        <!-- ENGINEERS -->
-        <div id="page-engineers" class="page">
-          <div class="ph"><h1>المهندسون</h1><p>إدارة الفنيين والمهندسين</p></div>
-          <div style="margin-bottom:1rem"><button class="btn btn-g" onclick="openEng()"><i class="ti ti-user-plus" aria-hidden="true"></i> إضافة مهندس</button></div>
-          <div class="card"><div class="tw"><table><thead><tr><th>الاسم</th><th>التخصص</th><th>الإيصالات</th><th>إجراء</th></tr></thead><tbody id="engBody"></tbody></table></div></div>
-        </div>
-
-        <!-- REPORTS -->
-        <div id="page-reports" class="page">
-          <div class="ph"><h1>التقارير والإحصائيات</h1><p>تحليل شامل للنشاط</p></div>
-          <div class="stats-grid" id="repStats"></div>
-          <div class="card"><div class="card-hd"><i class="ti ti-chart-pie" aria-hidden="true"></i> توزيع حالات الصيانة</div><div id="repChart"></div></div>
-          <div class="card"><div class="card-hd"><i class="ti ti-users" aria-hidden="true"></i> أداء المهندسين</div><div id="repEng"></div></div>
-          <div class="card"><div class="card-hd"><i class="ti ti-currency-dollar" aria-hidden="true"></i> ملخص المبالغ</div><div id="repAmt"></div></div>
-        </div>
-
-        <!-- MAINTENANCE -->
-        <div id="page-maintenance" class="page">
-          <div class="ph"><h1>صيانة النظام</h1><p>النسخ الاحتياطي والإعدادات</p></div>
-          <div class="fr">
-            <div class="card" style="margin-bottom:0"><div class="card-hd"><i class="ti ti-download" aria-hidden="true"></i> نسخة احتياطية</div><p style="font-size:12px;color:var(--text2);margin-bottom:10px">تصدير جميع البيانات كملف JSON</p><button class="btn btn-g" onclick="doBackup()"><i class="ti ti-download" aria-hidden="true"></i> تنزيل النسخة</button></div>
-            <div class="card" style="margin-bottom:0"><div class="card-hd"><i class="ti ti-upload" aria-hidden="true"></i> استعادة نسخة</div><p style="font-size:12px;color:var(--text2);margin-bottom:10px">استيراد من ملف JSON</p><input type="file" accept=".json" onchange="doRestore(this)" style="font-size:11px;color:var(--text2)"/></div>
-          </div>
-          <div class="card" style="margin-top:1rem"><div class="card-hd"><i class="ti ti-info-circle" aria-hidden="true"></i> معلومات النظام</div><div id="sysInfo"></div></div>
-          <div class="card"><div class="card-hd"><i class="ti ti-code" aria-hidden="true"></i> معلومات البرنامج</div>
-            <div style="font-size:12px;color:var(--text2);line-height:2">
-              <div>اسم النظام: <b style="color:var(--text1)">الوحدة للبرمجيات — نظام صيانة الهواتف</b></div>
-              <div>الإصدار: <b style="color:var(--text1)">2.0 Pro</b></div>
-              <div>إعداد وبرمجة: <b style="color:var(--accent)">م. محمد عبدالله اليريمي</b></div>
-              <div>إعداد وبرمجة: <b style="color:var(--accent)">م. عبدالرحمن الشرعبي</b></div>
+            <div class="sidebar-section">
+                <div class="section-title">丕賱廿丿丕乇丞</div>
+                <div class="menu-item" id="menu-employees" onclick="switchView('employees-view', this)">馃懃 <span class="menu-text">丕賱賲賵馗賮賵賳</span></div>
+                <div class="menu-item" id="menu-engineers" onclick="switchView('engineers-view', this)">馃敡 <span class="menu-text">丕賱賲賴賳丿爻賵賳</span></div>
             </div>
-          </div>
-        </div>
+            <div class="sidebar-section">
+                <div class="section-title">丕賱廿毓丿丕丿丕鬲</div>
+                <div class="menu-item" id="menu-maintenance" onclick="switchView('sys-maintenance-view', this)">馃捑 <span class="menu-text">氐賷丕賳丞 丕賱賳馗丕賲</span></div>
+                <div class="menu-item" id="menu-printing" onclick="switchView('print-settings-view', this)">馃枿锔� <span class="menu-text">廿毓丿丕丿丕鬲 丕賱胤亘丕毓丞</span></div>
+            </div>
+        </aside>
 
-      </div>
+        <!-- 賲賳胤賯丞 丕賱毓賲賱 賵賲丨鬲賵賶 丕賱賱賵丨丕鬲 -->
+        <main id="content-area">
+
+            <!-- 1. 賵丕噩賴丞 廿賷氐丕賱 噩丿賷丿 -->
+            <section id="new-receipt-view" class="view-panel active">
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">廿賷氐丕賱 丕爻鬲賱丕賲 噩丿賷丿</h3>
+                <form id="receipt-form" onsubmit="saveNewReceipt(event)">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>乇賯賲 丕賱廿賷氐丕賱 (鬲賱賯丕卅賷)</label>
+                                <input type="text" id="rec-id" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group autocomplete-wrapper">
+                                <label>乇賯賲 賴丕鬲賮 丕賱毓賲賷賱</label>
+                                <input type="text" id="rec-phone" class="form-control" required oninput="searchClientByPhone(this.value)">
+                                <div class="suggestions-box" id="phone-suggestions"></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>丕爻賲 丕賱毓賲賷賱</label>
+                                <input type="text" id="rec-client-name" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col autocomplete-wrapper">
+                            <div class="form-group">
+                                <label>丕賱卮乇賰丞 (兀賵 賲賷賰乇賵鬲賰/乇丕賵鬲乇)</label>
+                                <input type="text" id="rec-brand" class="form-control" required oninput="suggestBrands(this.value)">
+                                <div class="suggestions-box" id="brand-suggestions"></div>
+                            </div>
+                        </div>
+                        <div class="col autocomplete-wrapper">
+                            <div class="form-group">
+                                <label>丕賱賲賵丿賷賱 丕賱賲乇鬲亘胤</label>
+                                <input type="text" id="rec-model" class="form-control" required oninput="suggestModels(this.value)">
+                                <div class="suggestions-box" id="model-suggestions"></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>丕賱乇賯賲 丕賱鬲爻賱爻賱賷 (丕禺鬲賷丕乇賷)</label>
+                                <input type="text" id="rec-imei" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>賳賵毓 丕賱毓胤賱</label>
+                                <select id="rec-fault-type" class="form-control">
+                                    <option value="賴丕乇丿賵賷乇">賴丕乇丿賵賷乇</option>
+                                    <option value="亘乇賲噩賷">亘乇賲噩賷</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>賳馗丕賮丞 丕賱噩賴丕夭</label>
+                                <select id="rec-condition" class="form-control">
+                                    <option value="噩丿賷丿 賳馗賷賮">噩丿賷丿 賳馗賷賮</option>
+                                    <option value="賲噩毓賵孬">賲噩毓賵孬</option>
+                                    <option value="胤丕賮賷">胤丕賮賷</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col autocomplete-wrapper">
+                            <div class="form-group">
+                                <label>丕賱毓胤賱 (鬲賳亘丐 匕賰賷)</label>
+                                <input type="text" id="rec-fault-desc" class="form-control" required oninput="suggestFaults(this.value)">
+                                <div class="suggestions-box" id="fault-suggestions"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>丕賱毓賲賱丞</label>
+                                <select id="rec-currency" class="form-control" onchange="updateRemainingCost()">
+                                    <option value="乇賷丕賱 賷賲賳賷">乇賷丕賱 賷賲賳賷</option>
+                                    <option value="爻毓賵丿賷">爻毓賵丿賷</option>
+                                    <option value="丿賵賱丕乇">丿賵賱丕乇</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>丕賱賲亘賱睾 丕賱廿噩賲丕賱賷</label>
+                                <input type="number" id="rec-total" class="form-control" value="0" oninput="updateRemainingCost()">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>丕賱丿賮毓 丕賱賲爻亘賯</label>
+                                <input type="number" id="rec-prepaid" class="form-control" value="0" oninput="updateRemainingCost()">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>丕賱賲亘賱睾 丕賱賲鬲亘賯賷</label>
+                                <input type="number" id="rec-remaining" class="form-control" value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>丕賱賲賴賳丿爻 丕賱賲禺鬲氐 亘丕賱丕爻鬲賱丕賲</label>
+                                <select id="rec-engineer" class="form-control" required></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button type="submit" class="btn btn-success">馃捑 丨賮馗 丕賱爻賳丿</button>
+                        <button type="button" class="btn btn-primary" onclick="triggerDirectPrint()">馃枿锔� 胤亘丕毓丞 丕賱爻賳丿</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- 2. 賵丕噩賴丞 丕賱亘丨孬 毓賳 丕賱兀噩賴夭丞 賵丕賱毓賲賱丕亍 -->
+            <section id="search-devices-view" class="view-panel">
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">丕賱亘丨孬 賵丕賱鬲賯丕乇賷乇 丕賱賮賵乇賷丞</h3>
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col">
+                        <input type="text" id="search-global-input" class="form-control" placeholder="丕亘丨孬 亘乇賯賲 丕賱廿賷氐丕賱貙 丕賱賴丕鬲賮貙 兀賵 丕爻賲 丕賱毓賲賷賱...">
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-primary" onclick="performGlobalSearch()">馃攳 亘丨孬</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>乇賯賲 丕賱爻賳丿</th>
+                                <th>丕賱毓賲賷賱</th>
+                                <th>丕賱賴丕鬲賮</th>
+                                <th>丕賱噩賴丕夭</th>
+                                <th>丕賱丨丕賱丞</th>
+                                <th>丕賱賲鬲亘賯賷</th>
+                            </tr>
+                        </thead>
+                        <tbody id="search-results-output"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 3. 賵丕噩賴丞 鬲賯丕乇賷乇 丕賱賲賴賳丿爻賷賳 賵丕賱鬲乇丨賷賱 -->
+            <section id="eng-reports-view" class="view-panel">
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">鬲乇丨賷賱 鬲賯丕乇賷乇 丕賱賲賴賳丿爻賷賳</h3>
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col">
+                        <input type="number" id="report-search-id" class="form-control" placeholder="兀丿禺賱 乇賯賲 丕賱廿賷氐丕賱...">
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-primary" onclick="loadReceiptToReport()">馃搨 噩賱亘 丕賱亘賷丕賳丕鬲</button>
+                    </div>
+                </div>
+
+                <div id="report-edit-card" style="display:none; background: var(--bg-sidebar); padding: 15px; border-radius: 6px;">
+                    <h4 id="report-card-title" style="margin-bottom: 12px;">鬲賮丕氐賷賱 丕賱爻賳丿 丕賱賮賳賷</h4>
+                    <div class="row">
+                        <div class="col">
+                            <label><b>丨丕賱丞 氐賷丕賳丞 丕賱噩賴丕夭:</b></label>
+                            <select id="rep-status" class="form-control">
+                                <option value="賯賷丿 丕賱毓賲賱">賯賷丿 丕賱毓賲賱 馃敡</option>
+                                <option value="鬲賲 丕賱鬲氐賱賷丨">鬲賲 丕賱鬲氐賱賷丨 鉁�</option>
+                                <option value="賱丕 賷賲賰賳 廿氐賱丕丨賴">賱丕 賷賲賰賳 廿氐賱丕丨賴 鉂�</option>
+                                <option value="賱丕 賷鬲賵賮乇 賱賴 賯胤毓 睾賷丕乇 丨丕賱賷丕賸">賱丕 賷鬲賵賮乇 賱賴 賯胤毓 睾賷丕乇 丨丕賱賷丕賸 鈴�</option>
+                                <option value="鬲賲 丕賱乇賮囟 賲賳 丕賱夭亘賵賳">鬲賲 丕賱乇賮囟 賲賳 丕賱夭亘賵賳 馃毇</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label><b>丕賱賲賴賳丿爻 丕賱賮賳賷:</b></label>
+                            <select id="rep-engineer" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 12px;">
+                        <div class="col">
+                            <label><input type="checkbox" id="rep-delivered" onchange="handleDeliveryCheckbox(this.checked)"> 鬲賲 鬲爻賱賷賲 丕賱噩賴丕夭 賳賴丕卅賷丕賸 賱賱毓賲賷賱</label>
+                        </div>
+                        <div class="col">
+                            <label><input type="checkbox" id="rep-paid"> 鬲賲 丕賱丿賮毓 賵亘乇丕亍丞 丕賱匕賲丞 丕賱賲丕賱賷丞</label>
+                        </div>
+                    </div>
+                    <div id="delivery-details-zone" class="row" style="margin-top: 12px; display: none;">
+                        <div class="col">
+                            <label>賵孬賷賯丞 丕賱鬲丨賯賯 毓賳丿 丕賱鬲爻賱賷賲:</label>
+                            <label><input type="radio" name="delivery-doc" value="丕賱爻賳丿 丕賱賲胤亘賵毓" checked> 丕賱爻賳丿 丕賱賲胤亘賵毓</label>
+                            <label><input type="radio" name="delivery-doc" value="亘胤丕賯丞 卮禺氐賷丞"> 亘胤丕賯丞 卮禺氐賷丞</label>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <button class="btn btn-success" onclick="saveReportModifications()">馃捑 丨賮馗 賵鬲丨丿賷孬 丕賱爻賳丿 丕賱賮賵乇賷</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. 賵丕噩賴丞 丕賱賲賵馗賮賷賳 賵丕賱氐賱丕丨賷丕鬲 -->
+            <section id="employees-view" class="view-panel">
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">廿丿丕乇丞 丕賱賲賵馗賮賷賳 賵丕賱氐賱丕丨賷丕鬲</h3>
+                <form id="employee-form" onsubmit="addNewEmployee(event)">
+                    <div class="row">
+                        <div class="col"><input type="text" id="emp-name" class="form-control" placeholder="丕爻賲 丕賱賲賵馗賮" required></div>
+                        <div class="col"><input type="text" id="emp-user" class="form-control" placeholder="丕爻賲 丕賱賲爻鬲禺丿賲" required></div>
+                        <div class="col"><input type="password" id="emp-pass" class="form-control" placeholder="賰賱賲丞 丕賱爻乇" required></div>
+                    </div>
+                    <div style="margin: 12px 0; font-size: 0.9rem;">
+                        <p style="font-weight: bold; margin-bottom: 5px;">丕賱氐賱丕丨賷丕鬲 丕賱賲賲賳賵丨丞:</p>
+                        <label style="margin-left: 10px;"><input type="checkbox" id="perm-new-receipt" checked> 廿賷氐丕賱 噩丿賷丿</label>
+                        <label style="margin-left: 10px;"><input type="checkbox" id="perm-edit" checked> 鬲乇丨賷賱 賵鬲毓丿賷賱</label>
+                        <label style="margin-left: 10px;"><input type="checkbox" id="perm-delete"> 氐賱丕丨賷丞 丕賱丨匕賮</label>
+                        <label style="margin-left: 10px;"><input type="checkbox" id="perm-admin"> 賲爻丐賵賱 賰丕賲賱</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">鉃� 廿囟丕賮丞 賲賵馗賮 噩丿賷丿</button>
+                </form>
+                <div class="table-responsive">
+                    <table class="data-table" style="margin-top: 15px;">
+                        <thead><tr><th>丕賱丕爻賲</th><th>丕賱賲爻鬲禺丿賲</th><th>丕賱丨丕賱丞</th></tr></thead>
+                        <tbody id="employees-list-output"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 5. 賵丕噩賴丞 丕賱賲賴賳丿爻賷賳 -->
+            <section id="engineers-view" class="view-panel">
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">廿囟丕賮丞 賵鬲丨丿賷孬 賰丕丿乇 丕賱賲賴賳丿爻賷賳</h3>
+                <form id="engineer-form" onsubmit="addNewEngineer(event)">
+                    <div class="row">
+                        <div class="col"><input type="text" id="eng-name-input" class="form-control" placeholder="丕爻賲 丕賱賲賴賳丿爻 丕賱賮賳賷" required></div>
+                        <div class="col"><input type="text" id="eng-phone-input" class="form-control" placeholder="乇賯賲 賴丕鬲賮 丕賱賲賴賳丿爻" required></div>
+                        <div class="col"><input type="text" id="eng-spec-input" class="form-control" placeholder="丕賱鬲禺氐氐 丕賱賮賳賷" required></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 12px;">鉃� 鬲爻噩賷賱 賲賴賳丿爻</button>
+                </form>
+                <div class="table-responsive">
+                    <table class="data-table" style="margin-top: 15px;">
+                        <thead><tr><th>丕賱賲賴賳丿爻</th><th>丕賱賴丕鬲賮</th><th>丕賱鬲禺氐氐</th></tr></thead>
+                        <tbody id="engineers-list-output"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 6. 賵丕噩賴丞 氐賷丕賳丞 丕賱賳馗丕賲 賵丕賱賰賱丕賵丿 -->
+            <section id="sys-maintenance-view" class="view-panel">
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">丕賱賳爻禺 丕賱丕丨鬲賷丕胤賷 賵丕賱賲夭丕賲賳丞 丕賱爻丨丕亘賷丞</h3>
+                <div style="background: var(--bg-sidebar); padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+                    <p style="font-size: 0.85rem; color: var(--gray-muted); margin-bottom: 12px;">賷賯賵賲 丕賱賳馗丕賲 亘兀禺匕 賳爻禺丞 丕丨鬲賷丕胤賷丞 亘卮賰賱 鬲賱賯丕卅賷 賱囟賲丕賳 爻賱丕賲丞 丕賱亘賷丕賳丕鬲.</p>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button class="btn btn-success" onclick="exportSystemData()">馃摜 鬲丨賲賷賱 丕賱賳爻禺丞 丕賱丕丨鬲賷丕胤賷丞 (JSON)</button>
+                        <button class="btn btn-primary" onclick="document.getElementById('import-file-input').click()">馃摛 丕爻鬲乇噩丕毓 賵鬲丨丿賷孬 丕賱亘賷丕賳丕鬲</button>
+                        <input type="file" id="import-file-input" style="display: none;" onchange="importSystemData(event)">
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. 賵丕噩賴丞 廿毓丿丕丿丕鬲 丕賱胤亘丕毓丞 丕賱賲乇賳丞 (6.5爻賲 脳 21爻賲) -->
+            <section id="print-settings-view" class="view-panel">
+                <h3 style="margin-bottom: 15px; color: var(--brand-color);">賱賵丨丞 丕賱鬲丨賰賲 賮賷 廿丨丿丕孬賷丕鬲 賵賲賯丕爻 丕賱爻賳丿 丕賱賲胤亘賵毓 賲爻亘賯丕賸</h3>
+                <p style="font-size: 0.85rem; color: var(--gray-muted);">兀亘毓丕丿 丕賱爻賳丿: 6.5 爻賲 胤賵賱 脳 21 爻賲 毓乇囟.</p>
+                
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col">
+                        <label>丨噩賲 丕賱禺胤 (亘賰爻賱)</label>
+                        <input type="number" id="print-font-size" class="form-control" value="13" oninput="updateDesignerStyles()">
+                    </div>
+                    <div class="col">
+                        <label>賱賵賳 丨賯賵賱 丕賱胤亘丕毓丞</label>
+                        <input type="color" id="print-font-color" class="form-control" value="#000000" oninput="updateDesignerStyles()">
+                    </div>
+                </div>
+
+                <div id="print-designer-visual">
+                    <div style="position: absolute; top: 0; width: 100%; height: 22mm; background: #e2e8f0; text-align: center; line-height: 22mm; font-size: 11px; color: #718096;">
+                        丨賷夭 丕賱卮毓丕乇 丕賱賲胤亘賵毓 賲爻亘賯丕賸 (2.2 爻賲)
+                    </div>
+                    <div class="draggable-element" id="drag-p-id" style="top: 25mm; left: 5mm;">乇賯賲 丕賱爻賳丿: #1</div>
+                    <div class="draggable-element" id="drag-p-name" style="top: 25mm; left: 55mm;">丕賱毓賲賷賱: 賲丨賲丿 毓亘丿 丕賱乇丨賲賳</div>
+                    <div class="draggable-element" id="drag-p-device" style="top: 33mm; left: 5mm;">丕賱噩賴丕夭: 爻丕賲爻賵賳噩 S20 ZLT</div>
+                    <div class="draggable-element" id="drag-p-fault" style="top: 33mm; left: 100mm;">丕賱毓胤賱: 賮賰 賮賱丕卮丞 丕賱賲賵丿賲</div>
+                    <div class="draggable-element" id="drag-p-money" style="top: 42mm; left: 5mm;">丕賱廿噩賲丕賱賷: 15,000</div>
+                    <div class="draggable-element" id="drag-p-prepaid" style="top: 42mm; left: 65mm;">丕賱賲爻亘賯: 5,000</div>
+                    <div class="draggable-element" id="drag-p-rem" style="top: 42mm; left: 125mm;">丕賱賲鬲亘賯賷: 10,000</div>
+                    <div class="draggable-element" id="drag-p-dates" style="top: 52mm; left: 5mm;">賲賵毓丿 丕賱鬲爻賱賷賲 丕賱賲鬲賵賯毓: 亘毓丿 24 爻丕毓丞</div>
+                </div>
+                <button class="btn btn-success" style="margin-top: 15px;" onclick="savePrintLayoutCoordinates()">馃捑 丨賮馗 廿丨丿丕孬賷丕鬲 賵賲賵丕賯毓 丕賱胤亘丕毓丞</button>
+            </section>
+
+        </main>
     </div>
-  </div>
-</div>
 
-<!-- NEW RECEIPT MODAL -->
-<div class="modal-bg" id="mReceipt">
-  <div class="modal">
-    <div class="modal-hd"><h2><i class="ti ti-receipt" aria-hidden="true"></i> إيصال استلام جهاز جديد</h2><button class="modal-x" onclick="closeM('mReceipt')">✕</button></div>
-    <div class="fg"><label>رقم الإيصال</label><div class="rid-box" id="newRId">-</div></div>
-    <div class="fr">
-      <div class="fg"><label>رقم الهاتف *</label><input class="fi" id="rPhone" placeholder="771234567" oninput="lookupPh(this.value)"/></div>
-      <div class="fg"><label>اسم العميل *</label><input class="fi" id="rName" placeholder="اسم العميل"/></div>
+    <div id="notification-center">
+        <div style="padding: 10px; font-weight: bold; background: var(--brand-color); color: white; font-size: 0.9rem;">廿卮毓丕乇丕鬲 丕賱兀噩賴夭丞 丕賱賲鬲兀禺乇丞</div>
+        <div id="noti-list-container"></div>
     </div>
-    <div class="fr">
-      <div class="fg"><label>اسم الجهاز *</label><div class="acw"><input class="fi" id="rDev" placeholder="Apple, Samsung..." oninput="acDev(this.value)"/><div class="acl" id="aclDev"></div></div></div>
-      <div class="fg"><label>الموديل</label><div class="acw"><input class="fi" id="rMod" placeholder="iPhone 14, A54..." oninput="acMod(this.value)"/><div class="acl" id="aclMod"></div></div></div>
-    </div>
-    <div class="fr">
-      <div class="fg"><label>الرقم التسلسلي / IMEI (اختياري)</label><input class="fi" id="rSerial" placeholder="اختياري"/></div>
-      <div class="fg"><label>نوع العطل</label><select class="fi" id="rFT"><option>برمجي (Software)</option><option>هاردوير (Hardware)</option><option>برمجي وهاردوير</option></select></div>
-    </div>
-    <div class="fg"><label>وصف العطل *</label><input class="fi" id="rFD" placeholder="وصف المشكلة بالتفصيل"/></div>
-    <div class="extra-fields">
-      <div class="extra-title"><i class="ti ti-plus" aria-hidden="true"></i> بيانات إضافية اختيارية</div>
-      <div class="fr">
-        <div class="fg"><label>لون الجهاز</label><input class="fi" id="rColor" placeholder="أسود، أبيض..."/></div>
-        <div class="fg"><label>حالة الجهاز الظاهرية</label><select class="fi" id="rCondition"><option value="">اختر...</option><option>ممتازة</option><option>جيدة</option><option>متوسطة</option><option>سيئة</option></select></div>
-      </div>
-      <div class="fr">
-        <div class="fg"><label>الملحقات المستلمة</label><input class="fi" id="rAccessories" placeholder="شاحن، علبة..."/></div>
-        <div class="fg"><label>رمز القفل (اختياري)</label><input class="fi" id="rPin" placeholder="****"/></div>
-      </div>
-      <div class="fg"><label>ملاحظات إضافية</label><input class="fi" id="rNotes" placeholder="أي معلومات إضافية..."/></div>
-    </div>
-    <div class="divider"></div>
-    <div class="fr3">
-      <div class="fg"><label>العملة</label><select class="fi" id="rCur" onchange="calcRem()"><option>ريال يمني</option><option>دولار أمريكي</option><option>ريال سعودي</option></select></div>
-      <div class="fg"><label>المبلغ الإجمالي</label><input class="fi" id="rTotal" type="number" placeholder="0" oninput="calcRem()" min="0"/></div>
-      <div class="fg"><label>الدفع المسبق</label><input class="fi" id="rPaid" type="number" placeholder="0" oninput="calcRem()" min="0"/></div>
-    </div>
-    <div class="fg"><label>المبلغ المتبقي</label><input class="fi" id="rRem" readonly type="number" placeholder="0"/></div>
-    <div class="btn-row">
-      <button class="btn" onclick="closeM('mReceipt')">إلغاء</button>
-      <button class="btn btn-b" onclick="saveReceipt(false)"><i class="ti ti-device-floppy" aria-hidden="true"></i> حفظ فقط</button>
-      <button class="btn btn-g" onclick="saveReceipt(true)"><i class="ti ti-printer" aria-hidden="true"></i> حفظ وطباعة</button>
-    </div>
-  </div>
-</div>
 
-<!-- VIEW RECEIPT MODAL -->
-<div class="modal-bg" id="mView">
-  <div class="modal">
-    <div class="modal-hd"><h2 id="mViewTitle"><i class="ti ti-receipt" aria-hidden="true"></i> تفاصيل الإيصال</h2><button class="modal-x" onclick="closeM('mView')">✕</button></div>
-    <div id="mViewContent"></div>
-  </div>
-</div>
+    <div id="print-area-target"></div>
 
-<!-- EMP MODAL -->
-<div class="modal-bg" id="mEmp">
-  <div class="modal">
-    <div class="modal-hd"><h2><i class="ti ti-user-plus" aria-hidden="true"></i> إضافة موظف</h2><button class="modal-x" onclick="closeM('mEmp')">✕</button></div>
-    <div class="fr"><div class="fg"><label>الاسم *</label><input class="fi" id="eN"/></div><div class="fg"><label>اسم المستخدم *</label><input class="fi" id="eU"/></div></div>
-    <div class="fg"><label>كلمة المرور *</label><input class="fi" id="eP" type="password"/></div>
-    <div class="fg"><label>الصلاحيات</label>
-      <div class="perm-grid">
-        <div class="chk-row"><input type="checkbox" id="pAll" onchange="toggleAll(this)"/><label for="pAll">كل الصلاحيات</label></div>
-        <div class="chk-row"><input type="checkbox" id="p1"/><label for="p1">إيصال جديد</label></div>
-        <div class="chk-row"><input type="checkbox" id="p2"/><label for="p2">تعديل الإيصالات</label></div>
-        <div class="chk-row"><input type="checkbox" id="p3"/><label for="p3">حذف الإيصالات</label></div>
-        <div class="chk-row"><input type="checkbox" id="p4"/><label for="p4">إضافة مهندسين</label></div>
-        <div class="chk-row"><input type="checkbox" id="p5"/><label for="p5">إضافة موظفين</label></div>
-        <div class="chk-row"><input type="checkbox" id="p6"/><label for="p6">نسخة احتياطية</label></div>
-        <div class="chk-row"><input type="checkbox" id="p7"/><label for="p7">التقارير</label></div>
-      </div>
-    </div>
-    <div class="btn-row"><button class="btn" onclick="closeM('mEmp')">إلغاء</button><button class="btn btn-g" onclick="saveEmp()"><i class="ti ti-device-floppy" aria-hidden="true"></i> حفظ</button></div>
-  </div>
-</div>
+    <footer class="footer-credits">
+        賳馗丕賲 氐賷丕賳丞 丕賱賵丨丿賴 賱賱亘乇賲噩賷丕鬲 | 鬲氐賲賷賲 丕賱賲賴賳丿爻 毓亘丿丕賱乇丨賲賳 丕賱丕丨賲乇 772364042 &copy; 2026
+    </footer>
 
-<!-- ENG MODAL -->
-<div class="modal-bg" id="mEng">
-  <div class="modal">
-    <div class="modal-hd"><h2><i class="ti ti-tool" aria-hidden="true"></i> إضافة مهندس</h2><button class="modal-x" onclick="closeM('mEng')">✕</button></div>
-    <div class="fr"><div class="fg"><label>اسم المهندس *</label><input class="fi" id="gN"/></div><div class="fg"><label>التخصص</label><input class="fi" id="gS" placeholder="برمجة، هاردوير..."/></div></div>
-    <div class="btn-row"><button class="btn" onclick="closeM('mEng')">إلغاء</button><button class="btn btn-g" onclick="saveEng()"><i class="ti ti-device-floppy" aria-hidden="true"></i> حفظ</button></div>
-  </div>
-</div>
+    <script>
+        let db = {
+            receipts: [],
+            clients: [],
+            engineers: [
+                { id: 1, name: "毓亘丿丕賱乇丨賲賳 丕賱兀丨賲乇", phone: "772364042", spec: "氐賷丕賳丞 兀噩賴夭丞 賵卮亘賰丕鬲" }
+            ],
+            employees: [
+                { id: 1, name: "丕賱賲丿賷乇 丕賱毓丕賲", user: "admin", pass: "admin", perms: { new: true, edit: true, del: true, admin: true } }
+            ],
+            printLayout: {
+                fontSize: 13, color: "#000000",
+                positions: {
+                    id: { top: 95, left: 20 }, name: { top: 95, left: 210 },
+                    device: { top: 125, left: 20 }, fault: { top: 125, left: 380 },
+                    money: { top: 160, left: 20 }, prepaid: { top: 160, left: 240 }, remaining: { top: 160, left: 450 },
+                    dates: { top: 200, left: 20 }
+                }
+            },
+            suggestionsData: {
+                brands: ["Apple", "Samsung", "Huawei", "Xiaomi", "Infinix", "MikroTik Router", "Modem Huawei"],
+                models: ["iPhone 14 Pro Max", "Galaxy S23 Ultra", "Simax AX1800", "ZTE S20 ZLT"],
+                faults: ["鬲睾賷賷乇 卮丕卮丞 賲賰爻賵乇丞", "廿氐賱丕丨 賮賱丕卮丞 NAND 丕賱賲賯賮賱丞", "亘乇賲噩丞 丕賱爻賵賮鬲賵賷乇 賵賮賰 丕賱丨爻丕亘"]
+            }
+        };
 
-<!-- AI FAB -->
-<button class="ai-fab" onclick="toggleAI()" id="aiFab" title="مساعد الذكاء الاصطناعي"><i class="ti ti-robot" aria-hidden="true"></i></button>
-<div class="ai-panel" id="aiPanel">
-  <div class="ai-hd">
-    <div class="ai-hd-icon"><i class="ti ti-robot" aria-hidden="true"></i></div>
-    <div class="ai-hd-text"><div class="t">مساعد الذكاء الاصطناعي</div><div class="s">اسألني عن أي شيء في النظام</div></div>
-    <button class="ai-close" onclick="toggleAI()">✕</button>
-  </div>
-  <div class="ai-msgs" id="aiMsgs">
-    <div class="ai-msg bot">مرحباً! أنا مساعدك الذكي في نظام صيانة الهواتف. يمكنني مساعدتك في الاستعلام عن الإيصالات والإحصائيات. كيف يمكنني مساعدتك؟</div>
-  </div>
-  <div class="ai-inp-row">
-    <input class="ai-inp" id="aiInp" placeholder="اكتب سؤالك هنا..." onkeydown="if(event.key==='Enter')sendAI()"/>
-    <button class="ai-send" onclick="sendAI()"><i class="ti ti-send" aria-hidden="true"></i></button>
-  </div>
-</div>
+        let currentUser = null;
 
-<script>
-let DB={receipts:[],employees:[{id:1,name:'المدير',username:'admin',password:'admin',permissions:['all']}],engineers:[{id:1,name:'أحمد محمد',spec:'برمجة وهاردوير'},{id:2,name:'علي عبدالله',spec:'هاردوير'}],devices:['Apple','Samsung','Huawei','Xiaomi','Oppo','Vivo','Nokia','Realme','OnePlus','Google'],models:{'Apple':['iPhone 14 Pro Max','iPhone 14 Pro','iPhone 14','iPhone 13 Pro Max','iPhone 13','iPhone 12','iPhone 11','iPhone X','iPhone SE'],'Samsung':['Galaxy S23 Ultra','Galaxy S23','Galaxy S22','Galaxy A54','Galaxy A34','Galaxy A14'],'Huawei':['P60 Pro','P50 Pro','Nova 11'],'Xiaomi':['13 Pro','Redmi Note 12','Redmi 12C'],'Oppo':['Find X6','Reno 10','A78']},nextId:1};
-let currentUser=null;
-function sv(){try{localStorage.setItem('wms2_db',JSON.stringify(DB))}catch(e){}}
-function ld(){try{const d=localStorage.getItem('wms2_db');if(d)DB=JSON.parse(d)}catch(e){}}
-ld();
+        window.onload = function() {
+            if (localStorage.getItem("wahda_sys_db")) {
+                db = JSON.parse(localStorage.getItem("wahda_sys_db"));
+            } else {
+                localStorage.setItem("wahda_sys_db", JSON.stringify(db));
+            }
+            initSystemCore();
+            setupDraggableElements();
+        };
 
-function setTheme(t){
-  document.body.setAttribute('data-theme',t);
-  document.getElementById('tbLight').classList.toggle('active',t==='light');
-  document.getElementById('tbDark').classList.toggle('active',t==='dark');
-  try{localStorage.setItem('wms2_theme',t)}catch(e){}
-}
-try{const t=localStorage.getItem('wms2_theme');if(t)setTheme(t)}catch(e){}
+        function initSystemCore() {
+            document.getElementById("rec-id").value = db.receipts.length + 1;
+            populateEngineersDropdowns();
+            renderEngineersTable();
+            renderEmployeesTable();
+            updateDesignerVisualFromDB();
+            calculateSystemNotifications();
+        }
 
-function doLogin(){
-  const u=document.getElementById('lu').value.trim();
-  const p=document.getElementById('lp').value;
-  const emp=DB.employees.find(e=>e.username===u&&e.password===p);
-  if(!emp){document.getElementById('loginErr').style.display='block';return}
-  currentUser=emp;
-  document.getElementById('loginErr').style.display='none';
-  document.getElementById('loginPage').style.display='none';
-  document.getElementById('mainApp').style.display='block';
-  document.getElementById('userAv').textContent=emp.name.charAt(0);
-  document.getElementById('userN').textContent=emp.name;
-  go('dashboard');
-}
-function doLogout(){currentUser=null;document.getElementById('loginPage').style.display='';document.getElementById('mainApp').style.display='none';}
-document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('loginPage').style.display!=='none')doLogin()});
+        function handleLogin() {
+            const userIn = document.getElementById("login-user").value;
+            const passIn = document.getElementById("login-pass").value;
+            const matched = db.employees.find(e => e.user === userIn && e.pass === passIn);
+            
+            if (matched) {
+                currentUser = matched;
+                // 廿匕丕 丿禺賱 亘賰賱賲丞 爻乇 "admin" 丕賱賲亘丿卅賷丞貙 賷鬲賲 廿噩亘丕乇賴 毓賱賶 鬲睾賷賷乇賴丕 賯亘賱 賮鬲丨 賱賵丨丞 丕賱鬲丨賰賲
+                if (matched.user === "admin" && matched.pass === "admin") {
+                    document.getElementById("login-screen").style.display = "none";
+                    document.getElementById("password-reset-screen").style.display = "flex";
+                } else {
+                    document.getElementById("login-screen").style.display = "none";
+                    applyUserPermissions(matched);
+                }
+            } else {
+                alert("亘賷丕賳丕鬲 丕賱丿禺賵賱 禺丕胤卅丞.");
+            }
+        }
 
-function go(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  const pg=document.getElementById('page-'+id);
-  const nv=document.getElementById('n-'+id);
-  if(pg)pg.classList.add('active');
-  if(nv)nv.classList.add('active');
-  updatePendingCount();
-  if(id==='dashboard')renderDash();
-  if(id==='customers')renderCust();
-  if(id==='pending')renderPending();
-  if(id==='employees')renderEmp();
-  if(id==='engineers')renderEng();
-  if(id==='reports')renderReports();
-  if(id==='maintenance')renderSys();
-}
+        function forcePasswordChange() {
+            const newPass = document.getElementById("new-secure-pass").value;
+            const confirmPass = document.getElementById("confirm-secure-pass").value;
 
-function statusBadge(s){
-  const map={
-    'جديد':'<span class="sb sb-new"><i class="ti ti-clock" aria-hidden="true"></i>جديد</span>',
-    'قيد العمل':'<span class="sb sb-work"><i class="ti ti-settings" aria-hidden="true"></i>قيد العمل</span>',
-    'تم التصليح':'<span class="sb sb-done"><i class="ti ti-check-circle" aria-hidden="true"></i>تم التصليح</span>',
-    'لا يمكن إصلاحه':'<span class="sb sb-cant"><i class="ti ti-x-circle" aria-hidden="true"></i>لا يمكن إصلاحه</span>',
-    'تم الرفض من الزبون':'<span class="sb sb-reject"><i class="ti ti-ban" aria-hidden="true"></i>رفض الزبون</span>',
-    'لا يتوفر قطع غيار':'<span class="sb sb-nopart"><i class="ti ti-box-seam" aria-hidden="true"></i>لا قطع غيار</span>',
-    'محذوف':'<span class="sb sb-del"><i class="ti ti-trash" aria-hidden="true"></i>محذوف</span>'
-  };
-  return map[s]||`<span class="sb sb-new">${s||'جديد'}</span>`;
-}
+            if (!newPass || newPass.trim() === "" || newPass === "admin") {
+                alert("賷乇噩賶 廿丿禺丕賱 賰賱賲丞 賲乇賵乇 噩丿賷丿丞 賵賯賵賷丞 賵賲禺鬲賱賮丞 毓賳 賰賱賲丞 admin!");
+                return;
+            }
+            if (newPass !== confirmPass) {
+                alert("賰賱賲鬲丕 丕賱賲乇賵乇 睾賷乇 賲鬲胤丕亘賯鬲賷賳.");
+                return;
+            }
 
-function updatePendingCount(){
-  const cnt=DB.receipts.filter(r=>r.status==='قيد العمل'||r.status==='جديد').length;
-  const b=document.getElementById('pendingBadge');
-  if(b)b.textContent=cnt;
-  const nd=document.getElementById('notifCount');
-  if(nd){nd.textContent=cnt;nd.style.display=cnt>0?'flex':'none';}
-  const nb=document.getElementById('notifBtn');
-  if(nb)nb.style.color=cnt>0?'#ef4444':'';
-}
+            // 鬲丨丿賷孬 賰賱賲丞 丕賱爻乇 賱賱賲丿賷乇 丕賱毓丕賲 賮賷 賯丕毓丿丞 丕賱亘賷丕賳丕鬲 賵鬲兀賲賷賳賴丕
+            const adminUser = db.employees.find(e => e.user === "admin");
+            if (adminUser) {
+                adminUser.pass = newPass;
+                saveToLocalStorage();
+                alert("馃敀 賲賲鬲丕夭 賷丕 賲賴賳丿爻! 鬲賲 鬲丨丿賷孬 賰賱賲丞 賲乇賵乇 丕賱賲丿賷乇 丕賱毓丕賲 賵鬲兀賲賷賳 丕賱賳馗丕賲 亘賳噩丕丨.");
+                document.getElementById("password-reset-screen").style.display = "none";
+                applyUserPermissions(currentUser);
+            }
+        }
 
-function renderDash(){
-  const all=DB.receipts.filter(r=>r.status!=='محذوف');
-  const pending=all.filter(r=>r.status==='قيد العمل'||r.status==='جديد');
-  const done=all.filter(r=>r.status==='تم التصليح');
-  const tot=all.reduce((a,r)=>a+(parseFloat(r.total)||0),0);
-  document.getElementById('dashStats').innerHTML=`
-    <div class="stat-c green"><i class="ti ti-receipt stat-icon" aria-hidden="true"></i><div class="stat-num">${all.length}</div><div class="stat-lbl">إجمالي الإيصالات</div></div>
-    <div class="stat-c amber"><i class="ti ti-clock stat-icon" aria-hidden="true"></i><div class="stat-num">${pending.length}</div><div class="stat-lbl">قيد العمل</div></div>
-    <div class="stat-c blue"><i class="ti ti-check stat-icon" aria-hidden="true"></i><div class="stat-num">${done.length}</div><div class="stat-lbl">تم التصليح</div></div>
-    <div class="stat-c red"><i class="ti ti-currency-dollar stat-icon" aria-hidden="true"></i><div class="stat-num">${tot.toLocaleString()}</div><div class="stat-lbl">إجمالي المبالغ</div></div>
-  `;
-  const ab=document.getElementById('alertBanner');
-  if(pending.length>0){
-    ab.innerHTML=`<div class="alert-banner" onclick="go('pending')"><i class="ti ti-alert-triangle" aria-hidden="true"></i><div class="alert-banner-text">يوجد أجهزة تنتظر الصيانة — انقر للعرض</div><div class="alert-banner-count">${pending.length}</div><i class="ti ti-chevron-left" aria-hidden="true"></i></div>`;
-  } else {ab.innerHTML='';}
-  const recent=DB.receipts.filter(r=>r.status!=='محذوف').slice(-8).reverse();
-  document.getElementById('dashBody').innerHTML=recent.length?recent.map(r=>`
-    <tr><td><b>${r.id}</b></td><td>${r.name}</td><td style="font-size:11px">${r.device} ${r.model||''}</td><td style="font-size:11px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.faultDesc}</td><td style="white-space:nowrap">${r.total} ${curSym(r.currency)}</td><td>${statusBadge(r.status)}</td><td><button class="btn" style="padding:3px 8px;font-size:11px" onclick="viewR(${r.id})"><i class="ti ti-eye" aria-hidden="true"></i></button></td></tr>
-  `).join(''):`<tr><td colspan="7"><div class="empty-st"><i class="ti ti-receipt"></i>لا توجد إيصالات</div></td></tr>`;
-  updateNotifPanel();
-}
+        function applyUserPermissions(user) {
+            if (user.perms.admin) {
+                document.getElementById("menu-employees").style.display = "flex";
+                document.getElementById("menu-engineers").style.display = "flex";
+                document.getElementById("menu-maintenance").style.display = "flex";
+                document.getElementById("menu-printing").style.display = "flex";
+            } else {
+                document.getElementById("menu-employees").style.display = "none";
+                document.getElementById("menu-engineers").style.display = "none";
+                document.getElementById("menu-maintenance").style.display = "none";
+                document.getElementById("menu-printing").style.display = "none";
+            }
+        }
 
-function curSym(c){return c==='ريال يمني'?'ر.ي':c==='دولار أمريكي'?'$':'ر.س'}
+        function logout() {
+            currentUser = null;
+            document.getElementById("login-screen").style.display = "flex";
+            document.getElementById("password-reset-screen").style.display = "none";
+        }
 
-function renderCust(){
-  const q=(document.getElementById('custSearch')||{value:''}).value.toLowerCase();
-  const rows=DB.receipts.filter(r=>r.status!=='محذوف'&&(!q||r.id.toString().includes(q)||r.name.toLowerCase().includes(q)||r.phone.includes(q)));
-  document.getElementById('custBody').innerHTML=rows.length?rows.map(r=>`
-    <tr><td><b>${r.id}</b></td><td>${r.phone}</td><td>${r.name}</td><td style="font-size:11px">${r.device} ${r.model||''}</td><td style="white-space:nowrap">${r.total} ${curSym(r.currency)}</td><td>${statusBadge(r.status)}</td>
-    <td><div style="display:flex;gap:4px"><button class="btn" style="padding:3px 8px;font-size:11px" onclick="viewR(${r.id})"><i class="ti ti-eye" aria-hidden="true"></i></button><button class="btn" style="padding:3px 8px;font-size:11px" onclick="printR(${r.id})"><i class="ti ti-printer" aria-hidden="true"></i></button><button class="btn btn-r" style="padding:3px 8px;font-size:11px" onclick="delR(${r.id})"><i class="ti ti-trash" aria-hidden="true"></i></button></div></td></tr>
-  `).join(''):`<tr><td colspan="7"><div class="empty-st"><i class="ti ti-search"></i>لا توجد نتائج</div></td></tr>`;
-}
+        function switchView(viewId, element) {
+            document.querySelectorAll(".view-panel").forEach(p => p.classList.remove("active"));
+            document.querySelectorAll(".menu-item").forEach(m => m.classList.remove("active"));
+            document.getElementById(viewId).classList.add("active");
+            element.classList.add("active");
+        }
 
-function renderPending(){
-  const pending=DB.receipts.filter(r=>r.status==='قيد العمل'||r.status==='جديد').sort((a,b)=>a.id-b.id);
-  const el=document.getElementById('pendingList');
-  if(!pending.length){el.innerHTML=`<div class="empty-st"><i class="ti ti-check-circle" style="color:#1D9E75"></i><div style="color:#1D9E75;font-size:14px;font-weight:500">ممتاز! لا توجد أجهزة معلقة</div></div>`;return}
-  el.innerHTML=pending.map(r=>`
-    <div class="pending-item" onclick="viewR(${r.id})">
-      <div class="pending-num">${r.id}</div>
-      <div class="pending-info">
-        <div class="pending-name">${r.name} — ${r.device} ${r.model||''}</div>
-        <div class="pending-detail"><i class="ti ti-phone" aria-hidden="true" style="font-size:11px"></i> ${r.phone} &nbsp;|&nbsp; ${r.faultDesc.slice(0,40)}${r.faultDesc.length>40?'...':''}</div>
-        <div class="pending-date"><i class="ti ti-calendar" aria-hidden="true" style="font-size:10px"></i> ${r.date} &nbsp;|&nbsp; ${r.engineer?'المهندس: '+r.engineer:'لم يُعيَّن مهندس'}</div>
-      </div>
-      <div>${statusBadge(r.status)}</div>
-      <i class="ti ti-chevron-left" aria-hidden="true" style="color:var(--text3)"></i>
-    </div>
-  `).join('');
-}
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute("data-theme");
+            const newTheme = currentTheme === "light" ? "dark" : "light";
+            body.setAttribute("data-theme", newTheme);
+            document.getElementById("theme-toggle-btn").innerText = newTheme === "light" ? "馃寵" : "鈽�锔�";
+        }
 
-function updateNotifPanel(){
-  const pending=DB.receipts.filter(r=>r.status==='قيد العمل'||r.status==='جديد').slice(0,8);
-  document.getElementById('notifList').innerHTML=pending.length?pending.map(r=>`
-    <div class="notif-item" onclick="viewR(${r.id});toggleNotif()">
-      <div class="notif-title">#${r.id} — ${r.name}</div>
-      <div class="notif-sub">${r.device} ${r.model||''} | ${r.faultDesc.slice(0,50)}</div>
-    </div>
-  `).join(''):`<div style="padding:1.5rem;text-align:center;color:var(--text3);font-size:12px"><i class="ti ti-check-circle" style="font-size:24px;display:block;margin-bottom:6px;color:#1D9E75"></i>لا توجد أجهزة معلقة</div>`;
-}
+        function populateEngineersDropdowns() {
+            const html = db.engineers.map(e => `<option value="${e.id}">${e.name}</option>`).join("");
+            document.getElementById("rec-engineer").innerHTML = html;
+            document.getElementById("rep-engineer").innerHTML = html;
+        }
 
-function toggleNotif(){document.getElementById('notifPanel').classList.toggle('open')}
-document.addEventListener('click',e=>{if(!e.target.closest('.notif-badge')&&!e.target.closest('#notifPanel'))document.getElementById('notifPanel').classList.remove('open')});
+        function updateRemainingCost() {
+            const total = parseFloat(document.getElementById("rec-total").value) || 0;
+            const prepaid = parseFloat(document.getElementById("rec-prepaid").value) || 0;
+            document.getElementById("rec-remaining").value = Math.max(0, total - prepaid);
+        }
 
-function openNewReceipt(){
-  document.getElementById('newRId').textContent=DB.nextId;
-  ['rPhone','rName','rDev','rMod','rSerial','rFD','rColor','rAccessories','rPin','rNotes','rTotal','rPaid','rRem'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  document.getElementById('rFT').value='برمجي (Software)';
-  document.getElementById('rCur').value='ريال يمني';
-  document.getElementById('rCondition').value='';
-  openM('mReceipt');
-}
+        function searchClientByPhone(val) {
+            const box = document.getElementById("phone-suggestions");
+            if (!val) { box.style.display = "none"; return; }
+            let matches = db.receipts.filter(r => r.phone.includes(val));
+            if (matches.length > 0) {
+                box.innerHTML = matches.map(m => `<div class="suggestion-item" onclick="selectClientSuggestion('${m.phone}', '${m.clientName}')">${m.phone} (${m.clientName})</div>`).join("");
+                box.style.display = "block";
+            } else { box.style.display = "none"; }
+        }
 
-function lookupPh(ph){
-  if(ph.length<6)return;
-  const found=DB.receipts.find(r=>r.phone===ph&&r.status!=='محذوف');
-  if(found)document.getElementById('rName').value=found.name;
-}
+        function selectClientSuggestion(phone, name) {
+            document.getElementById("rec-phone").value = phone;
+            document.getElementById("rec-client-name").value = name;
+            document.getElementById("phone-suggestions").style.display = "none";
+        }
 
-function acDev(v){
-  const l=document.getElementById('aclDev');
-  if(!v){l.classList.remove('open');return}
-  const m=DB.devices.filter(d=>d.toLowerCase().includes(v.toLowerCase())).slice(0,6);
-  if(!m.length){l.classList.remove('open');return}
-  l.innerHTML=m.map(x=>`<div class="aci" onclick="selDev('${x}')">${x}</div>`).join('');
-  l.classList.add('open');
-}
-function selDev(v){document.getElementById('rDev').value=v;document.getElementById('aclDev').classList.remove('open');document.getElementById('rMod').value='';document.getElementById('rMod').focus();}
-function acMod(v){
-  const dev=document.getElementById('rDev').value;
-  const l=document.getElementById('aclMod');
-  let pool=DB.models[dev]?[...DB.models[dev]]:[];
-  DB.receipts.filter(r=>r.device===dev&&r.model).forEach(r=>{if(!pool.includes(r.model))pool.push(r.model)});
-  if(!v){l.classList.remove('open');return}
-  const m=pool.filter(x=>x.toLowerCase().includes(v.toLowerCase())).slice(0,8);
-  if(!m.length){l.classList.remove('open');return}
-  l.innerHTML=m.map(x=>`<div class="aci" onclick="selMod('${x}')">${x}</div>`).join('');
-  l.classList.add('open');
-}
-function selMod(v){document.getElementById('rMod').value=v;document.getElementById('aclMod').classList.remove('open');}
-document.addEventListener('click',e=>{if(!e.target.closest('.acw'))document.querySelectorAll('.acl').forEach(l=>l.classList.remove('open'))});
+        function suggestBrands(val) {
+            const box = document.getElementById("brand-suggestions");
+            if (!val) { box.style.display = "none"; return; }
+            let filtered = db.suggestionsData.brands.filter(b => b.toLowerCase().includes(val.toLowerCase()));
+            box.innerHTML = filtered.map(f => `<div class="suggestion-item" onclick="document.getElementById('rec-brand').value='${f}'; document.getElementById('brand-suggestions').style.display='none';">${f}</div>`).join("");
+            box.style.display = "block";
+        }
 
-function calcRem(){
-  const t=parseFloat(document.getElementById('rTotal').value)||0;
-  const p=parseFloat(document.getElementById('rPaid').value)||0;
-  document.getElementById('rRem').value=Math.max(0,t-p);
-}
+        function suggestModels(val) {
+            const box = document.getElementById("model-suggestions");
+            if (!val) { box.style.display = "none"; return; }
+            let filtered = db.suggestionsData.models.filter(m => m.toLowerCase().includes(val.toLowerCase()));
+            box.innerHTML = filtered.map(f => `<div class="suggestion-item" onclick="document.getElementById('rec-model').value='${f}'; document.getElementById('model-suggestions').style.display='none';">${f}</div>`).join("");
+            box.style.display = "block";
+        }
 
-function saveReceipt(doPrint){
-  const phone=document.getElementById('rPhone').value.trim();
-  const name=document.getElementById('rName').value.trim();
-  const dev=document.getElementById('rDev').value.trim();
-  const fd=document.getElementById('rFD').value.trim();
-  if(!phone||!name||!dev||!fd){alert('يرجى تعبئة: رقم الهاتف، الاسم، اسم الجهاز، وصف العطل');return}
-  if(!DB.devices.includes(dev))DB.devices.push(dev);
-  const mod=document.getElementById('rMod').value.trim();
-  if(mod){if(!DB.models[dev])DB.models[dev]=[];if(!DB.models[dev].includes(mod))DB.models[dev].push(mod);}
-  const r={
-    id:DB.nextId++,phone,name,device:dev,model:mod,
-    serial:document.getElementById('rSerial').value.trim(),
-    faultType:document.getElementById('rFT').value,
-    faultDesc:fd,
-    color:document.getElementById('rColor').value.trim(),
-    condition:document.getElementById('rCondition').value,
-    accessories:document.getElementById('rAccessories').value.trim(),
-    pin:document.getElementById('rPin').value.trim(),
-    notes:document.getElementById('rNotes').value.trim(),
-    currency:document.getElementById('rCur').value,
-    total:parseFloat(document.getElementById('rTotal').value)||0,
-    paid:parseFloat(document.getElementById('rPaid').value)||0,
-    remaining:parseFloat(document.getElementById('rRem').value)||0,
-    status:'جديد',engineer:'',delivered:false,paymentDone:false,
-    date:new Date().toLocaleDateString('ar-YE')
-  };
-  DB.receipts.push(r);sv();
-  closeM('mReceipt');renderCust();updatePendingCount();renderDash();
-  if(doPrint)printR(r.id);
-}
+        function suggestFaults(val) {
+            const box = document.getElementById("fault-suggestions");
+            if (!val) { box.style.display = "none"; return; }
+            let filtered = db.suggestionsData.faults.filter(f => f.toLowerCase().includes(val.toLowerCase()));
+            box.innerHTML = filtered.map(f => `<div class="suggestion-item" onclick="document.getElementById('rec-fault-desc').value='${f}'; document.getElementById('fault-suggestions').style.display='none';">${f}</div>`).join("");
+            box.style.display = "block";
+        }
 
-function viewR(id){
-  const r=DB.receipts.find(x=>x.id===id);
-  if(!r)return;
-  const engs=DB.engineers.map(e=>`<option value="${e.name}" ${r.engineer===e.name?'selected':''}>${e.name}</option>`).join('');
-  document.getElementById('mViewTitle').innerHTML=`<i class="ti ti-receipt" aria-hidden="true"></i> إيصال رقم ${r.id}`;
-  const extra=[];
-  if(r.color)extra.push(`<span style="color:var(--text2)">اللون:</span> ${r.color}`);
-  if(r.condition)extra.push(`<span style="color:var(--text2)">الحالة:</span> ${r.condition}`);
-  if(r.accessories)extra.push(`<span style="color:var(--text2)">الملحقات:</span> ${r.accessories}`);
-  if(r.notes)extra.push(`<span style="color:var(--text2)">ملاحظات:</span> ${r.notes}`);
-  document.getElementById('mViewContent').innerHTML=`
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem;font-size:12px;background:var(--bg3);border-radius:10px;padding:12px">
-      <div><span style="color:var(--text2)">التاريخ:</span> ${r.date}</div>
-      <div><span style="color:var(--text2)">رقم الهاتف:</span> ${r.phone}</div>
-      <div><span style="color:var(--text2)">الاسم:</span> <b>${r.name}</b></div>
-      <div><span style="color:var(--text2)">الجهاز:</span> ${r.device} ${r.model||''}</div>
-      <div><span style="color:var(--text2)">نوع العطل:</span> ${r.faultType}</div>
-      <div><span style="color:var(--text2)">الإجمالي:</span> <b style="color:#1D9E75">${r.total} ${curSym(r.currency)}</b></div>
-      <div style="grid-column:1/-1"><span style="color:var(--text2)">العطل:</span> ${r.faultDesc}</div>
-      ${extra.map(e=>`<div style="grid-column:1/-1">${e}</div>`).join('')}
-    </div>
-    <div class="divider"></div>
-    <div class="fg"><label>حالة الصيانة</label>
-      <select class="fi" id="vStat" onchange="updR(${r.id})">
-        <option ${r.status==='جديد'?'selected':''}>جديد</option>
-        <option ${r.status==='قيد العمل'?'selected':''}>قيد العمل</option>
-        <option ${r.status==='تم التصليح'?'selected':''}>تم التصليح</option>
-        <option ${r.status==='لا يمكن إصلاحه'?'selected':''}>لا يمكن إصلاحه</option>
-        <option ${r.status==='لا يتوفر قطع غيار'?'selected':''}>لا يتوفر قطع غيار</option>
-        <option ${r.status==='تم الرفض من الزبون'?'selected':''}>تم الرفض من الزبون</option>
-      </select>
-    </div>
-    <div class="fg"><label>المهندس المسؤول</label><select class="fi" id="vEng" onchange="updR(${r.id})"><option value="">-- اختر المهندس --</option>${engs}</select></div>
-    <div class="fr" style="margin-top:8px">
-      <div class="chk-row"><input type="checkbox" id="vDel" ${r.delivered?'checked':''} onchange="updR(${r.id})"/><label for="vDel"><i class="ti ti-package" aria-hidden="true"></i> تم التسليم</label></div>
-      <div class="chk-row"><input type="checkbox" id="vPay" ${r.paymentDone?'checked':''} onchange="updR(${r.id})"/><label for="vPay"><i class="ti ti-cash" aria-hidden="true"></i> تم الدفع</label></div>
-    </div>
-    <div class="btn-row">
-      <button class="btn" onclick="closeM('mView')">إغلاق</button>
-      <button class="btn btn-b" onclick="printR(${r.id})"><i class="ti ti-printer" aria-hidden="true"></i> طباعة</button>
-    </div>
-  `;
-  openM('mView');
-}
+        function saveNewReceipt(e) {
+            e.preventDefault();
+            const newRec = {
+                id: db.receipts.length + 1,
+                phone: document.getElementById("rec-phone").value,
+                clientName: document.getElementById("rec-client-name").value,
+                brand: document.getElementById("rec-brand").value,
+                model: document.getElementById("rec-model").value,
+                imei: document.getElementById("rec-imei").value,
+                faultType: document.getElementById("rec-fault-type").value,
+                condition: document.getElementById("rec-condition").value,
+                faultDesc: document.getElementById("rec-fault-desc").value,
+                currency: document.getElementById("rec-currency").value,
+                total: document.getElementById("rec-total").value,
+                prepaid: document.getElementById("rec-prepaid").value,
+                remaining: document.getElementById("rec-remaining").value,
+                engineerId: document.getElementById("rec-engineer").value,
+                status: "賯賷丿 丕賱毓賲賱",
+                delivered: false,
+                paid: false,
+                createdAt: new Date().getTime(),
+                expectedDelivery: new Date().getTime() + (24 * 60 * 60 * 1000)
+            };
+            db.receipts.push(newRec);
+            saveToLocalStorage();
+            alert(`鬲賲 丨賮馗 丕賱爻賳丿 乇賯賲 ${newRec.id}`);
+            initSystemCore();
+            document.getElementById("receipt-form").reset();
+        }
 
-function updR(id){
-  const r=DB.receipts.find(x=>x.id===id);
-  if(!r)return;
-  r.status=document.getElementById('vStat').value;
-  r.engineer=document.getElementById('vEng').value;
-  r.delivered=document.getElementById('vDel').checked;
-  r.paymentDone=document.getElementById('vPay').checked;
-  sv();renderCust();updatePendingCount();
-}
+        function performGlobalSearch() {
+            const val = document.getElementById("search-global-input").value.toLowerCase();
+            const output = document.getElementById("search-results-output");
+            let filtered = db.receipts.filter(r => r.id.toString() === val || r.phone.includes(val) || r.clientName.toLowerCase().includes(val));
+            output.innerHTML = filtered.map(r => `
+                <tr onclick="openReceiptFromTable(${r.id})">
+                    <td>${r.id}</td><td>${r.clientName}</td><td>${r.phone}</td><td>${r.brand} ${r.model}</td><td>${r.status}</td><td>${r.remaining} ${r.currency}</td>
+                </tr>
+            `).join("");
+        }
 
-function delR(id){
-  if(!confirm(`حذف الإيصال رقم ${id}؟ سيتم تصفير البيانات مع الاحتفاظ بالرقم`))return;
-  const r=DB.receipts.find(x=>x.id===id);
-  if(!r)return;
-  const sid=r.id;
-  Object.assign(r,{phone:'',name:'',device:'',model:'',serial:'',faultType:'',faultDesc:'',color:'',condition:'',accessories:'',pin:'',notes:'',total:0,paid:0,remaining:0,engineer:'',delivered:false,paymentDone:false,status:'محذوف'});
-  r.id=sid;sv();renderCust();updatePendingCount();
-}
+        function openReceiptFromTable(id) {
+            switchView('eng-reports-view', document.getElementById('menu-engineers'));
+            document.getElementById("report-search-id").value = id;
+            loadReceiptToReport();
+        }
 
-function printR(id){
-  const r=DB.receipts.find(x=>x.id===id);
-  if(!r||r.status==='محذوف')return;
-  const sym=curSym(r.currency);
-  const extra=[];
-  if(r.color)extra.push(`<div class="pr"><span class="pl">اللون</span><span>${r.color}</span></div>`);
-  if(r.condition)extra.push(`<div class="pr"><span class="pl">الحالة الظاهرية</span><span>${r.condition}</span></div>`);
-  if(r.accessories)extra.push(`<div class="pr"><span class="pl">الملحقات</span><span>${r.accessories}</span></div>`);
-  if(r.serial)extra.push(`<div class="pr"><span class="pl">الرقم التسلسلي</span><span>${r.serial}</span></div>`);
-  if(r.notes)extra.push(`<div class="pr"><span class="pl">ملاحظات</span><span>${r.notes}</span></div>`);
-  const win=window.open('','_blank','width=380,height:720');
-  win.document.write(`<!DOCTYPE html><html dir="rtl"><head><meta charset="utf-8"><title>إيصال ${r.id}</title>
-  <style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;font-size:10.5px;width:9.5cm;direction:rtl;margin:0;padding:0}
-  .wrap{padding-top:2.2cm;padding-right:1cm;padding-left:0.5cm;width:4.5cm}
-  .rid{font-size:17px;font-weight:bold;text-align:center;border:2px solid #000;padding:3px;margin-bottom:6px;letter-spacing:2px}
-  .pr{display:flex;justify-content:space-between;border-bottom:1px dotted #ccc;padding:2.5px 0;font-size:10px}
-  .pl{color:#555}.val{font-weight:bold}
-  .big{font-size:12px;font-weight:bold}
-  .divider{border-top:1px dashed #999;margin:5px 0}
-  @media print{body{margin:0;padding:0}}</style>
-  </head><body>
-  <div class="wrap">
-    <div class="rid">رقم: ${r.id}</div>
-    <div class="pr"><span class="pl">التاريخ</span><span>${r.date}</span></div>
-    <div class="pr"><span class="pl">العميل</span><span class="big">${r.name}</span></div>
-    <div class="pr"><span class="pl">الهاتف</span><span>${r.phone}</span></div>
-    <div class="pr"><span class="pl">الجهاز</span><span>${r.device}</span></div>
-    <div class="pr"><span class="pl">الموديل</span><span>${r.model||'-'}</span></div>
-    <div class="pr"><span class="pl">نوع العطل</span><span>${r.faultType}</span></div>
-    <div class="pr"><span class="pl">العطل</span><span style="max-width:55%;text-align:left;word-break:break-word">${r.faultDesc}</span></div>
-    ${extra.join('')}
-    <div class="divider"></div>
-    <div class="pr"><span class="pl">الإجمالي</span><span class="big">${r.total} ${sym}</span></div>
-    <div class="pr"><span class="pl">المدفوع</span><span>${r.paid} ${sym}</span></div>
-    <div class="pr"><span class="pl">المتبقي</span><span class="big">${r.remaining} ${sym}</span></div>
-  </div>
-  <script>window.onload=function(){window.print()}<\/script></body></html>`);
-  win.document.close();
-}
+        let currentEditingReceiptId = null;
+        function loadReceiptToReport() {
+            const id = parseInt(document.getElementById("report-search-id").value);
+            const receipt = db.receipts.find(r => r.id === id);
+            if(!receipt) { alert("丕賱爻賳丿 睾賷乇 賲賵噩賵丿."); return; }
+            currentEditingReceiptId = id;
+            document.getElementById("report-card-title").innerText = `鬲毓丿賷賱 廿賷氐丕賱 氐賷丕賳丞: #${receipt.id}`;
+            document.getElementById("rep-status").value = receipt.status;
+            document.getElementById("rep-engineer").value = receipt.engineerId;
+            document.getElementById("rep-delivered").checked = receipt.delivered;
+            document.getElementById("rep-paid").checked = receipt.paid;
+            document.getElementById("report-edit-card").style.display = "block";
+        }
 
-function doSearch(){
-  const sid=document.getElementById('srId').value.trim();
-  const sph=document.getElementById('srPhone').value.trim();
-  const snm=document.getElementById('srName').value.trim().toLowerCase();
-  let res=[];
-  if(!sid&&!sph&&!snm){document.getElementById('srResults').innerHTML='';return}
-  if(sid)res=DB.receipts.filter(r=>r.id==sid&&r.status!=='محذوف');
-  else if(sph)res=DB.receipts.filter(r=>r.phone.includes(sph)&&r.status!=='محذوف');
-  else if(snm)res=DB.receipts.filter(r=>r.name.toLowerCase().includes(snm)&&r.status!=='محذوف');
-  res=res.sort((a,b)=>b.id-a.id);
-  if(!res.length){document.getElementById('srResults').innerHTML='<div class="empty-st"><i class="ti ti-search"></i>لا توجد نتائج</div>';return}
-  document.getElementById('srResults').innerHTML=`<div class="tw" style="margin-top:1rem"><table><thead><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>الجهاز</th><th>الحالة</th><th>المهندس</th><th>إجراء</th></tr></thead><tbody>${
-    res.map(r=>`<tr><td><b>${r.id}</b></td><td>${r.name}</td><td>${r.phone}</td><td style="font-size:11px">${r.device} ${r.model||''}</td><td>${statusBadge(r.status)}</td><td style="font-size:11px">${r.engineer||'-'}</td><td><button class="btn" style="padding:3px 8px;font-size:11px" onclick="viewR(${r.id})"><i class="ti ti-eye" aria-hidden="true"></i> عرض</button></td></tr>`).join('')
-  }</tbody></table></div>`;
-}
+        function saveReportModifications() {
+            if(!currentEditingReceiptId) return;
+            const receipt = db.receipts.find(r => r.id === currentEditingReceiptId);
+            if(receipt) {
+                receipt.status = document.getElementById("rep-status").value;
+                receipt.engineerId = document.getElementById("rep-engineer").value;
+                receipt.delivered = document.getElementById("rep-delivered").checked;
+                receipt.paid = document.getElementById("rep-paid").checked;
+                saveToLocalStorage();
+                alert("鬲賲 鬲丨丿賷孬 丕賱爻賳丿.");
+                initSystemCore();
+            }
+        }
 
-function renderEmp(){
-  document.getElementById('empBody').innerHTML=DB.employees.map(e=>`
-    <tr><td>${e.name}</td><td><code style="font-size:11px;background:var(--bg3);padding:2px 6px;border-radius:4px">${e.username}</code></td>
-    <td>${e.permissions.includes('all')?'<span class="sb sb-done"><i class="ti ti-check" aria-hidden="true"></i>كل الصلاحيات</span>':e.permissions.map(p=>`<span class="sb sb-work" style="margin-left:3px;font-size:10px">${p}</span>`).join('')}</td>
-    <td>${e.username!=='admin'?`<button class="btn btn-r" style="padding:3px 8px;font-size:11px" onclick="delEmp(${e.id})"><i class="ti ti-trash" aria-hidden="true"></i></button>`:'<span style="font-size:10px;color:var(--text3)">محمي</span>'}</td></tr>
-  `).join('');
-}
-function openEmp(){['eN','eU','eP'].forEach(id=>document.getElementById(id).value='');for(let i=1;i<=7;i++)document.getElementById('p'+i).checked=false;document.getElementById('pAll').checked=false;openM('mEmp');}
-function toggleAll(cb){for(let i=1;i<=7;i++)document.getElementById('p'+i).checked=cb.checked;}
-function saveEmp(){
-  const n=document.getElementById('eN').value.trim(),u=document.getElementById('eU').value.trim(),p=document.getElementById('eP').value;
-  if(!n||!u||!p){alert('يرجى تعبئة جميع الحقول');return}
-  const pnames=['إيصال جديد','تعديل','حذف','إضافة مهندسين','إضافة موظفين','نسخة احتياطية','التقارير'];
-  const perms=document.getElementById('pAll').checked?['all']:[];
-  if(!document.getElementById('pAll').checked)for(let i=1;i<=7;i++){if(document.getElementById('p'+i).checked)perms.push(pnames[i-1]);}
-  DB.employees.push({id:Math.max(0,...DB.employees.map(e=>e.id))+1,name:n,username:u,password:p,permissions:perms});
-  sv();closeM('mEmp');renderEmp();
-}
-function delEmp(id){if(!confirm('حذف هذا الموظف؟'))return;DB.employees=DB.employees.filter(e=>e.id!==id);sv();renderEmp();}
+        function addNewEmployee(e) {
+            e.preventDefault();
+            const emp = {
+                id: db.employees.length + 1,
+                name: document.getElementById("emp-name").value,
+                user: document.getElementById("emp-user").value,
+                pass: document.getElementById("emp-pass").value,
+                perms: {
+                    new: document.getElementById("perm-new-receipt").checked,
+                    edit: document.getElementById("perm-edit").checked,
+                    del: document.getElementById("perm-delete").checked,
+                    admin: document.getElementById("perm-admin").checked
+                }
+            };
+            db.employees.push(emp);
+            saveToLocalStorage();
+            renderEmployeesTable();
+            document.getElementById("employee-form").reset();
+        }
 
-function renderEng(){
-  document.getElementById('engBody').innerHTML=DB.engineers.map(e=>`
-    <tr><td>${e.name}</td><td style="font-size:11px">${e.spec||'-'}</td><td>${DB.receipts.filter(r=>r.engineer===e.name).length}</td>
-    <td><button class="btn btn-r" style="padding:3px 8px;font-size:11px" onclick="delEng(${e.id})"><i class="ti ti-trash" aria-hidden="true"></i></button></td></tr>
-  `).join('');
-}
-function openEng(){document.getElementById('gN').value='';document.getElementById('gS').value='';openM('mEng');}
-function saveEng(){const n=document.getElementById('gN').value.trim();if(!n){alert('يرجى إدخال الاسم');return}DB.engineers.push({id:Math.max(0,...DB.engineers.map(e=>e.id))+1,name:n,spec:document.getElementById('gS').value.trim()});sv();closeM('mEng');renderEng();}
-function delEng(id){if(!confirm('حذف هذا المهندس؟'))return;DB.engineers=DB.engineers.filter(e=>e.id!==id);sv();renderEng();}
+        function renderEmployeesTable() {
+            document.getElementById("employees-list-output").innerHTML = db.employees.map(e => `
+                <tr><td>${e.name}</td><td>${e.user}</td><td>${e.perms.admin?'賰丕賲賱':'賲丨丿丿'}</td></tr>
+            `).join("");
+        }
 
-function renderReports(){
-  const all=DB.receipts.filter(r=>r.status!=='محذوف');
-  const done=all.filter(r=>r.status==='تم التصليح').length;
-  const pend=all.filter(r=>r.status==='قيد العمل'||r.status==='جديد').length;
-  const totAmt=all.reduce((a,r)=>a+(r.total||0),0);
-  const paidAmt=all.reduce((a,r)=>a+(r.paid||0),0);
-  const remAmt=all.reduce((a,r)=>a+(r.remaining||0),0);
-  document.getElementById('repStats').innerHTML=`
-    <div class="stat-c green"><div class="stat-num">${all.length}</div><div class="stat-lbl">إجمالي</div></div>
-    <div class="stat-c blue"><div class="stat-num">${done}</div><div class="stat-lbl">تم تصليحها</div></div>
-    <div class="stat-c amber"><div class="stat-num">${pend}</div><div class="stat-lbl">معلقة</div></div>
-    <div class="stat-c red"><div class="stat-num">${all.length?Math.round(done/all.length*100):0}%</div><div class="stat-lbl">نسبة الإنجاز</div></div>
-  `;
-  const statuses=[['جديد','#888780'],['قيد العمل','#ca8a04'],['تم التصليح','#16a34a'],['لا يمكن إصلاحه','#dc2626'],['تم الرفض من الزبون','#db2777'],['لا يتوفر قطع غيار','#ea580c']];
-  document.getElementById('repChart').innerHTML=statuses.map(([s,c])=>{
-    const cnt=all.filter(r=>r.status===s).length;
-    const pct=all.length?Math.round(cnt/all.length*100):0;
-    return `<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>${statusBadge(s)}</span><span style="color:var(--text2)">${cnt} (${pct}%)</span></div><div style="background:var(--bg3);border-radius:4px;height:7px"><div style="background:${c};width:${pct}%;height:7px;border-radius:4px"></div></div></div>`;
-  }).join('');
-  const engStats=DB.engineers.map(e=>{
-    const cnt=all.filter(r=>r.engineer===e.name).length;
-    const done2=all.filter(r=>r.engineer===e.name&&r.status==='تم التصليح').length;
-    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px"><div><b>${e.name}</b><br><span style="font-size:11px;color:var(--text2)">${e.spec||''}</span></div><div style="text-align:center"><div style="font-size:16px;font-weight:500;color:var(--text1)">${cnt}</div><div style="font-size:10px;color:var(--text2)">إيصال</div></div><div style="text-align:center"><div style="font-size:16px;font-weight:500;color:#1D9E75">${done2}</div><div style="font-size:10px;color:var(--text2)">أنجز</div></div></div>`;
-  }).join('')||'<div class="empty-st" style="padding:1rem"><i class="ti ti-tool"></i>لا توجد بيانات</div>';
-  document.getElementById('repEng').innerHTML=engStats;
-  document.getElementById('repAmt').innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;text-align:center">
-    <div><div style="font-size:20px;font-weight:500;color:#1D9E75">${totAmt.toLocaleString()}</div><div style="font-size:11px;color:var(--text2)">الإجمالي</div></div>
-    <div><div style="font-size:20px;font-weight:500;color:#378ADD">${paidAmt.toLocaleString()}</div><div style="font-size:11px;color:var(--text2)">المدفوع</div></div>
-    <div><div style="font-size:20px;font-weight:500;color:#ef4444">${remAmt.toLocaleString()}</div><div style="font-size:11px;color:var(--text2)">المتبقي</div></div>
-  </div>`;
-}
+        function addNewEngineer(e) {
+            e.preventDefault();
+            const eng = {
+                id: db.engineers.length + 1,
+                name: document.getElementById("eng-name-input").value,
+                phone: document.getElementById("eng-phone-input").value,
+                spec: document.getElementById("eng-spec-input").value
+            };
+            db.engineers.push(eng);
+            saveToLocalStorage();
+            renderEngineersTable();
+            populateEngineersDropdowns();
+            document.getElementById("engineer-form").reset();
+        }
 
-function renderSys(){
-  document.getElementById('sysInfo').innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px">
-    <div><span style="color:var(--text2)">إجمالي الإيصالات:</span> ${DB.receipts.filter(r=>r.status!=='محذوف').length}</div>
-    <div><span style="color:var(--text2)">الموظفون:</span> ${DB.employees.length}</div>
-    <div><span style="color:var(--text2)">المهندسون:</span> ${DB.engineers.length}</div>
-    <div><span style="color:var(--text2)">آخر رقم إيصال:</span> ${DB.nextId-1}</div>
-    <div><span style="color:var(--text2)">حجم البيانات:</span> ${(JSON.stringify(DB).length/1024).toFixed(1)} KB</div>
-    <div><span style="color:var(--text2)">التاريخ:</span> ${new Date().toLocaleDateString('ar-YE')}</div>
-  </div>`;
-}
+        function renderEngineersTable() {
+            document.getElementById("engineers-list-output").innerHTML = db.engineers.map(e => `
+                <tr><td>${e.name}</td><td>${e.phone}</td><td>${e.spec}</td></tr>
+            `).join("");
+        }
 
-function doBackup(){
-  const blob=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;a.download=`backup_wms_${new Date().toISOString().split('T')[0]}.json`;
-  a.click();URL.revokeObjectURL(url);
-}
-function doRestore(input){
-  if(!input.files[0])return;
-  if(!confirm('سيتم استبدال جميع البيانات. هل أنت متأكد؟'))return;
-  const reader=new FileReader();
-  reader.onload=e=>{try{DB=JSON.parse(e.target.result);sv();alert('تمت الاستعادة بنجاح');renderDash()}catch{alert('خطأ: ملف غير صالح')}};
-  reader.readAsText(input.files[0]);
-}
+        function calculateSystemNotifications() {
+            const container = document.getElementById("noti-list-container");
+            const now = new Date().getTime();
+            let delayed = db.receipts.filter(r => !r.delivered && r.status === "賯賷丿 丕賱毓賲賱" && now > r.expectedDelivery);
+            document.getElementById("noti-count").innerText = delayed.length;
+            container.innerHTML = delayed.length > 0 ? delayed.map(r => `<div class="noti-item">爻賳丿 #${r.id} 賲鬲兀禺乇!</div>`).join("") : "賱丕 鬲賵噩丿 賲鬲兀禺乇丕鬲.";
+        }
 
-function openM(id){document.getElementById(id).classList.add('open')}
-function closeM(id){document.getElementById(id).classList.remove('open')}
-document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open')}));
+        function toggleNotifications() {
+            const panel = document.getElementById("notification-center");
+            panel.style.display = panel.style.display === "block" ? "none" : "block";
+        }
 
-// AI Assistant
-function toggleAI(){document.getElementById('aiPanel').classList.toggle('open')}
+        function saveToLocalStorage() {
+            localStorage.setItem("wahda_sys_db", JSON.stringify(db));
+        }
 
-async function sendAI(){
-  const inp=document.getElementById('aiInp');
-  const msg=inp.value.trim();
-  if(!msg)return;
-  inp.value='';
-  const msgs=document.getElementById('aiMsgs');
-  msgs.innerHTML+=`<div class="ai-msg user">${msg}</div>`;
-  msgs.innerHTML+=`<div class="ai-msg typing" id="aiTyping">جاري التفكير...</div>`;
-  msgs.scrollTop=msgs.scrollHeight;
+        function exportSystemData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db));
+            const dl = document.createElement('a');
+            dl.setAttribute("href", dataStr);
+            dl.setAttribute("download", "Wahda_Database.json");
+            dl.click();
+        }
 
-  const all=DB.receipts.filter(r=>r.status!=='محذوف');
-  const pending=all.filter(r=>r.status==='قيد العمل'||r.status==='جديد');
-  const done=all.filter(r=>r.status==='تم التصليح');
-  const systemContext=`أنت مساعد ذكي لنظام إدارة صيانة الهواتف "الوحدة للبرمجيات". إليك بيانات النظام الحالية:
-- إجمالي الإيصالات: ${all.length}
-- قيد العمل: ${pending.length} (${pending.map(r=>`#${r.id} ${r.name} - ${r.device}`).slice(0,5).join('، ')})
-- تم التصليح: ${done.length}
-- المهندسون: ${DB.engineers.map(e=>e.name).join('، ')}
-- آخر 5 إيصالات: ${all.slice(-5).map(r=>`#${r.id} ${r.name} ${r.device} (${r.status})`).join('، ')}
-أجب بالعربية بشكل مختصر ومفيد. إذا سألك المستخدم عن إيصال معين، أخبره بالتفاصيل من البيانات المتاحة.`;
+        function importSystemData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    db = JSON.parse(e.target.result);
+                    saveToLocalStorage();
+                    initSystemCore();
+                    alert("鬲賲 丕爻鬲賷乇丕丿 賯丕毓丿丞 丕賱亘賷丕賳丕鬲.");
+                } catch(err) { alert("賲賱賮 睾賷乇 氐丕賱丨."); }
+            };
+            reader.readAsText(file);
+        }
 
-  try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-6',
-        max_tokens:400,
-        system:systemContext,
-        messages:[{role:'user',content:msg}]
-      })
-    });
-    const data=await res.json();
-    const reply=data.content?.[0]?.text||'عذراً، حدث خطأ في الاتصال.';
-    document.getElementById('aiTyping').remove();
-    msgs.innerHTML+=`<div class="ai-msg bot">${reply}</div>`;
-  }catch(e){
-    document.getElementById('aiTyping').remove();
-    const all2=DB.receipts.filter(r=>r.status!=='محذوف');
-    const pend2=all2.filter(r=>r.status==='قيد العمل'||r.status==='جديد');
-    let fallback='';
-    if(msg.includes('كم')||msg.includes('عدد'))fallback=`إجمالي الإيصالات: ${all2.length} | قيد العمل: ${pend2.length} | تم التصليح: ${all2.filter(r=>r.status==='تم التصليح').length}`;
-    else if(msg.includes('معلق')||msg.includes('قيد'))fallback=`الأجهزة قيد العمل (${pend2.length}): ${pend2.map(r=>`#${r.id} ${r.name}`).join('، ')||'لا يوجد'}`;
-    else fallback='أنا مساعدك في نظام الصيانة. يمكنني مساعدتك في الاستعلام عن الإيصالات والإحصائيات.';
-    msgs.innerHTML+=`<div class="ai-msg bot">${fallback}</div>`;
-  }
-  msgs.scrollTop=msgs.scrollHeight;
-}
-document.getElementById('aiInp').addEventListener('keydown',e=>{if(e.key==='Enter')sendAI()});
+        function setupDraggableElements() {
+            document.querySelectorAll('.draggable-element').forEach(el => {
+                let isDragging = false;
+                let currentX, currentY, initialX, initialY;
+                let xOffset = 0, yOffset = 0;
 
-updatePendingCount();
-</script>
+                el.addEventListener('mousedown', dragStart);
+                el.addEventListener('touchstart', dragStart, {passive: false});
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('touchmove', drag, {passive: false});
+                document.addEventListener('mouseup', dragEnd);
+                document.addEventListener('touchend', dragEnd);
+
+                function dragStart(e) {
+                    let clientX = e.type === "touchstart" ? e.touches[0].clientX : e.clientX;
+                    let clientY = e.type === "touchstart" ? e.touches[0].clientY : e.clientY;
+                    initialX = clientX - xOffset;
+                    initialY = clientY - yOffset;
+                    if (e.target === el) isDragging = true;
+                }
+
+                function drag(e) {
+                    if (isDragging) {
+                        e.preventDefault();
+                        let clientX = e.type === "touchmove" ? e.touches[0].clientX : e.clientX;
+                        let clientY = e.type === "touchmove" ? e.touches[0].clientY : e.clientY;
+                        currentX = clientX - initialX;
+                        currentY = clientY - initialY;
+                        xOffset = currentX;
+                        yOffset = currentY;
+                        el.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+                    }
+                }
+
+                function dragEnd() {
+                    initialX = currentX;
+                    initialY = currentY;
+                    isDragging = false;
+                }
+            });
+        }
+
+        function updateDesignerStyles() {
+            const fs = document.getElementById("print-font-size").value + "px";
+            const col = document.getElementById("print-font-color").value;
+            document.querySelectorAll('.draggable-element').forEach(el => {
+                el.style.fontSize = fs;
+                el.style.color = col;
+            });
+            db.printLayout.fontSize = parseInt(document.getElementById("print-font-size").value);
+            db.printLayout.color = col;
+        }
+
+        function savePrintLayoutCoordinates() {
+            const visualBounds = document.getElementById("print-designer-visual").getBoundingClientRect();
+            document.querySelectorAll('.draggable-element').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const key = el.id.replace('drag-p-', '');
+                if (db.printLayout.positions[key]) {
+                    db.printLayout.positions[key].top = rect.top - visualBounds.top;
+                    db.printLayout.positions[key].left = rect.left - visualBounds.left;
+                }
+            });
+            saveToLocalStorage();
+            alert("鬲賲 丨賮馗 兀亘毓丕丿 賵賲賵丕賯毓 丕賱胤亘丕毓丞 丕賱賲丨丿孬丞.");
+        }
+
+        function updateDesignerVisualFromDB() {
+            document.getElementById("print-font-size").value = db.printLayout.fontSize || 13;
+            document.getElementById("print-font-color").value = db.printLayout.color || "#000000";
+            updateDesignerStyles();
+        }
+
+        function triggerDirectPrint() {
+            const printArea = document.getElementById("print-area-target");
+            const fs = db.printLayout.fontSize + "px";
+            const col = db.printLayout.color;
+            const lastRec = db.receipts[db.receipts.length - 1] || { id: 1, clientName: "毓賲賷賱 鬲噩乇賷亘賷", brand: "爻丕賲爻賵賳噩", model: "S20", faultDesc: "賮丨氐", total: 0, prepaid: 0, remaining: 0 };
+
+            printArea.innerHTML = `
+                <div style="position: relative; width: 210mm; height: 65mm; color: ${col}; font-size: ${fs};">
+                    <div style="position: absolute; top: ${db.printLayout.positions.id.top}px; left: ${db.printLayout.positions.id.left}px;">乇賯賲 丕賱廿賷氐丕賱: #${lastRec.id}</div>
+                    <div style="position: absolute; top: ${db.printLayout.positions.name.top}px; left: ${db.printLayout.positions.name.left}px;">丕賱丕爻賲: ${lastRec.clientName}</div>
+                    <div style="position: absolute; top: ${db.printLayout.positions.device.top}px; left: ${db.printLayout.positions.device.left}px;">丕賱噩賴丕夭: ${lastRec.brand} ${lastRec.model}</div>
+                    <div style="position: absolute; top: ${db.printLayout.positions.fault.top}px; left: ${db.printLayout.positions.fault.left}px;">丕賱毓胤賱: ${lastRec.faultDesc}</div>
+                    <div style="position: absolute; top: ${db.printLayout.positions.money.top}px; left: ${db.printLayout.positions.money.left}px;">丕賱廿噩賲丕賱賷: ${lastRec.total}</div>
+                    <div style="position: absolute; top: ${db.printLayout.positions.prepaid.top}px; left: ${db.printLayout.positions.prepaid.left}px;">丕賱賲爻亘賯: ${lastRec.prepaid}</div>
+                    <div style="position: absolute; top: ${db.printLayout.positions.remaining.top}px; left: ${db.printLayout.positions.remaining.left}px;">丕賱賲鬲亘賯賷: ${lastRec.remaining}</div>
+                </div>
+            `;
+            window.print();
+        }
+    </script>
+</body>
+</html>
